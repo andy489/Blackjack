@@ -7,7 +7,7 @@ build/
 build/
 gradlew
 gradle/
-gradle.bat
+gradlew.bat
 HELP.md
 settings.gradle
 
