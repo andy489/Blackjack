@@ -5,63 +5,61 @@
     <th:block th:insert="~{fragment/common::head}"></th:block>
     <title>Blackjack</title>
     <script defer th:src="@{/js/weather/weather.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
 </head>
 
 <body class="body-index">
 
-<header th:replace="~{fragment/common::header}"></header>
-
+<header th:replace="~{fragment/common::navbar}"></header>
 
 <main>
     <div>
-        <div class="container bg-blur rounded mt-5 ">
-            <h1>
-                Welcome to BLACKJACK
-            </h1>
-            <hr class="my-3 bg-white w-90"/>
+        <div class="container-index rounded mt-4">
+            <span class="welcome-msg">Welcome to BLACKJACK</span>
 
-            <h2 class="h4">
-                Enjoy the most widely played casino banking game in the world.
-            </h2>
-            <hr class="my-3 bg-white w-75"/>
+            <hr class="my-3 bg-white w-80"/>
+
+            <span class="enjoy-msg">Enjoy the most widely played casino banking game in the world.</span>
+
+            <hr class="my-3 bg-white w-80"/>
 
             <h3>
-                <a class="text-primary" th:href="@{/auth/login}">Login</a> if you have an account or
-                <a class="text-primary" th:href="@{/auth/register}">Register</a> now and play.
+                <a class="index-text-link" th:href="@{/auth/login}">Login</a>
+                <span class="info-msg">if you have an account or</span>
+                <a class="index-text-link" th:href="@{/auth/register}">Register</a>
+                <span class="info-msg">now and play.</span>
             </h3>
         </div>
 
         <div class="container mt-5">
             <div class="row">
-                <div class="col-1"></div>
+                <div class="col-sm-0 col-md-1 col-lg-2"></div>
 
-                <div class="top-box col-4">
-                    <h4>Weather in
-                        <h2>Las Vegas</h2>
-                    </h4>
-
-                    <h4>
-                        <span id="box-b-temp">{0}</span>
-                        <span>&#8451;</span>
-                    </h4>
-                    <img id="box-b-img" th:src="@{/images/weather/cloudy.png}" height="150px" alt="cloudy" src="">
-                </div>
-
-                <div class="col-2"></div>
-
-                <div class="top-box col-4">
-                    <h4>Weather in
-                        <h2>Sofia</h2>
-                    </h4>
-                    <h5>(The Little Las Vegas)</h5>
-                    <h4>
+                <div class="weather-box col-sm-5 col-md-4 col-lg-3">
+                    <span class="weather-msg">Weather in</span>
+                    <span class="city-msg">Sofia</span>
+                    <span class="celsius-msg">
                         <span id="box-a-temp">{0}</span>
                         <span>&#8451;</span>
-                    </h4>
+                    </span>
                     <img id="box-a-img" th:src="@{/images/weather/sun.png}" height="150px" alt="sunny" src="">
                 </div>
 
-                <div class="col-1"></div>
+                <div class="col-sm-2 col-md-2 col-lg-2"></div>
+
+                <div class="weather-box col-sm-5 col-md-4 col-lg-3">
+
+                    <span class="weather-msg">Weather in</span>
+                    <span class="city-msg">Las Vegas</span>
+
+                    <span class="celsius-msg">
+                        <span id="box-b-temp">{0}</span>
+                        <span>&#8451;</span>
+                    </span>
+                    <img id="box-b-img" th:src="@{/images/weather/cloudy.png}" height="150px" alt="cloudy" src="">
+                </div>
+
+                <div class="col-sm-0 col-md-1 col-lg-2"></div>
 
             </div>
         </div>
@@ -69,6 +67,10 @@
 </main>
 
 <footer th:replace="~{fragment/common::footer}"></footer>
+
+<link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+<script defer th:src="@{/js/bootstrap/bootstrap5.js}"></script>
+<script defer th:src="@{/js/jquery/jquery.js}"></script>
 
 </body>
 

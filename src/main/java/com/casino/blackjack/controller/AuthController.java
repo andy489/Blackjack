@@ -1,10 +1,14 @@
 package com.casino.blackjack.controller;
 
+import com.casino.blackjack.model.dto.RecaptchaResponseDTO;
 import com.casino.blackjack.model.dto.UserRegistrationDTO;
+import com.casino.blackjack.service.RecaptchaService;
 import com.casino.blackjack.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 //import org.springframework.security.web.context.SecurityContextRepository;
@@ -20,14 +25,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/auth")
 public class AuthController extends BaseController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+
     private static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
 
     private final UserService userService;
 
+    private final RecaptchaService recaptchaService;
+
     private final SecurityContextRepository securityContextRepository;
 
-    public AuthController(UserService userService, SecurityContextRepository securityContextRepository) {
+    public AuthController(UserService userService,
+                          RecaptchaService recaptchaService,
+                          SecurityContextRepository securityContextRepository) {
+
         this.userService = userService;
+        this.recaptchaService = recaptchaService;
         this.securityContextRepository = securityContextRepository;
     }
 
@@ -54,7 +67,17 @@ public class AuthController extends BaseController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
             HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response,
+            @RequestParam("g-recaptcha-response") String recaptchaResponse) {
+
+        boolean isBot = !recaptchaService.verify(recaptchaResponse)
+                .map(RecaptchaResponseDTO::isSuccess)
+                .orElse(false);
+
+        if (isBot) {
+            LOGGER.warn("reCAPTCHA protected your website from spam and abuse");
+            return super.redirect("/");
+        }
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userRegistrationDTO", userRegistrationDTO);

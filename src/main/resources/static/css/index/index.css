@@ -1,0 +1,71 @@
+:root {
+    --primary: #639c9c;
+    --shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+    --weather-box-border-color: #4e555b;
+}
+
+.body-index {
+    background-image: url('./../../images/background/02-bj-table.png');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin-bottom: 5rem;
+}
+
+.container-index {
+    margin:auto;
+    width: 77%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+    color: whitesmoke;
+    font-weight: bold;
+    border: 4px solid var(--weather-box-border-color);
+    z-index: 2;
+    padding: 20px;
+    text-align: center;
+}
+
+.weather-box {
+    background: var(--primary);
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    border: 4px solid var(--weather-box-border-color);
+    border-color: var(--weather-box-border-color);
+}
+
+.welcome-msg {
+    font-size: 3em;
+}
+
+.enjoy-msg {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.info-msg {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.index-text-link {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.weather-msg{
+    font-size: 1.5em;
+}
+
+.city-msg{
+    font-size: 2em;
+}
+
+.celsius-msg{
+    font-size: 1.5em;
+}
+
+a.index-text-link:hover {
+    color: indianred;
+}

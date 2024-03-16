@@ -5,66 +5,82 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap5.min.css}"/>
-
-    <script defer th:src="@{/js/bootstrap/bootstrap5.js}"></script>
-    <script defer th:src="@{/js/jquery/jquery.js}"></script>
-
-    <link rel="stylesheet" th:href="@{/css/fragment/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!--https://developers.google.com/fonts/docs/material_symbols-->
+    <!--https://fonts.google.com/icons-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap/google-icons.css}"/>
 </head>
+
 
 <body>
 
-<header class="navbar navbar-expand-lg navbar-light">
+<header th:fragment="navbar" class="container-header p-0 mb-5">
 
-    <a class="nav-link text-white active h5" th:href="@{/index}">
-            <span class="col-md-1">
-            <img th:src="@{/images/navbar/spade-chip-logo.png}" alt="Logo" width="40" height="40" src="">
-        </span>Cayetano Cards
-    </a>
+    <div class="container-header-left">
+        <a class="nav-link active mb-0" th:href="@{/}">
+            <span class="material-symbols-outlined nav-icon align-middle">casino</span>
+            <span class="nav-func align-middle">Lobby</span>
+        </a>
 
-    <a class="nav-link text-white active h5" th:href="@{/}">
-            <span class="col-md-1">
-        <img th:src="@{/images/navbar/deposit.png}" alt="Logo" width="40" height="40">
-        </span> Deposit
-    </a>
+        <a class="nav-link active mb-0" th:href="@{/}">
+            <span class="material-symbols-outlined nav-icon align-middle">credit_card</span>
+            <span class="nav-func align-middle">Deposit</span>
+        </a>
 
-    <a class="nav-link text-white active h5" th:href="@{/}">
-            <span class="col-md-1">
-        <img th:src="@{/images/navbar/cash-out.png}" alt="Logo" width="40" height="40">
-        </span> Cash Out
-    </a>
+        <a class="nav-link active mb-0" th:href="@{/}">
+            <span class="material-symbols-outlined nav-icon align-middle">savings</span>
+            <span class="nav-func align-middle">Cash out</span>
+        </a>
+    </div>
 
-    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+    <div class="container-header-right">
 
-        <ul class="navbar-nav row">
-            <li class="nav-item col-md-4">
-                <a class="nav-link text-white active h5" th:href="@{/user/logout}">Logout</a>
-            </li>
-            <li></li>
-        </ul>
+        <a class="nav-link active align-middle" th:href="@{/auth/logout}">Logout</a>
 
-        <ul class="navbar-nav row">
-            <li class="nav-item col-md-4">
-                <a class="nav-link text-white active h5" th:href="@{/user/login}">Login</a>
-            </li>
+        <a class="nav-link active align-middle" th:href="@{/auth/login}">Login</a>
 
-            <li class="nav-item col-md-4">
-                <a class="nav-link text-white active h5" th:href="@{/user/register}">Register</a>
-            </li>
-        </ul>
+        <a class="nav-link active align-middle" th:href="@{/auth/register}">Register</a>
 
     </div>
+
 </header>
 
+<footer th:fragment="footer" class="container-footer text-center col-12">
 
-<footer class="footer bg-transparent py-2">
-    <div class="container-fluid text-center">
-        <div class="footer-background h5 text-white fixed-bottom">
-            <div>
-                &copy; Blackjack 2024. All rights reserved. Developed by andy489.
-            </div>
-        </div>
+    <div class="mb-2">
+        <span>
+            Blackjack was introduced into the casino in the 20th century and has become one of the most popular
+            casino games.
+        </span>
+        <span class="d-block">
+            The rules of Blackjack can vary from casino to casino - if in doubt, use the casino's house rules.
+        </span>
+        <span>
+            Learn more about
+
+            <a th:href="@{/}" class="text-link">THE RULES</a> of this particular blackjack game
+        </span>
+        <span>.</span>
     </div>
+
+    <div class="mb-1">
+
+        <a class="icon-link text-white m-3" th:href="@{/}">
+            <i class="fab fa-github"></i>
+        </a>
+
+        <a class="icon-link text-white m-3" th:href="@{/}">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+
+        <a class="icon-link text-white m-3" th:href="@{/}">
+            <i class="fab fa-instagram"></i>
+        </a>
+
+    </div>
+
+    <div class="text-center">© 2024 Blackjack Spring Boot Project</div>
 </footer>
 
 </body>

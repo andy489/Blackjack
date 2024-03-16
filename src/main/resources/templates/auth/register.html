@@ -3,86 +3,85 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Auth</title>
-    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
-
-    <script th:defer th:src="@{/js/jquery/jquery.js}"></script>
-    <script th:defer th:src="@{/js/auth/datepicker.js}"></script>
-    <script th:defer th:src="@{/js/auth/datepicker-place.js}"></script>
-
-    <link rel="stylesheet" th:href="@{/css/auth/style.css}"/>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
     <link rel="stylesheet" th:href="@{/css/auth/datepicker.css}"/>
     <link rel="stylesheet" th:href="@{/css/auth/ajax-datepicker.css}"/>
-    <link rel="stylesheet" th:href="@{/css/auth/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/css/auth/font-awesome.css}"/>
 
-    <!--https://developers.google.com/fonts/docs/material_symbols-->
-    <!--https://fonts.google.com/icons-->
-    <link rel="stylesheet" th:href="@{/css/bootstrap/google-icons.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
+
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
 </head>
-<body>
+
+<body class="body-auth">
+
+<header th:replace="~{fragment/common::header}"></header>
 
 <div class="auth-box">
-    <h2>Register</h2>
-    <form th:action="@{/auth/register}"
+    <div class="register-form-title">Register</div>
+    <form id="registration-form"
+          th:action="@{/auth/register}"
           th:method="post"
           th:object="${userRegistrationDTO}">
 
         <div class="user-box">
-            <div class="invalid-feedback">
-                <div th:each="err : ${#fields.errors('username')}" th:text="${err}"></div>
-            </div>
-            <input type="text" name="" required="" autocomplete="off"
+            <input type="text" name="" required="yes" autocomplete="off"
                    th:field="*{username}"
                    th:errorclass="'is-invalid bg-danger'">
             <label>Username</label>
+            <div class="invalid-feedback">
+                <div th:if="${#fields.errors('username').size() > 0}"
+                     th:text="${#fields.errors('username').get(0)}"></div>
+            </div>
         </div>
 
         <div class="user-box">
-            <div class="invalid-feedback">
-                <div th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></div>
-            </div>
             <input type="text" name="" required="" autocomplete="off"
                    th:field="*{firstName}"
                    th:errorclass="'is-invalid bg-danger'">
             <label>First Name</label>
+            <div class="invalid-feedback">
+                <div th:if="${#fields.errors('firstName').size() > 0}"
+                     th:text="${#fields.errors('firstName').get(0)}"></div>
+            </div>
         </div>
 
         <div class="user-box">
-            <div class="invalid-feedback">
-                <div th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></div>
-            </div>
             <input type="text" name="" required="" autocomplete="off"
                    th:field="*{lastName}"
                    th:errorclass="'is-invalid bg-danger'">
             <label>Last Name</label>
+            <div class="invalid-feedback">
+                <div th:if="${#fields.errors('lastName').size() > 0}"
+                     th:text="${#fields.errors('lastName').get(0)}"></div>
+            </div>
         </div>
 
         <div class="user-box">
-            <div class="invalid-feedback">
-                <div th:if="${#fields.errors('birthDate').size() > 0}"
-                     th:text="${#fields.errors('birthDate').get(0)}"></div>
-            </div>
             <input class="pick-date"
                    type="text" name="" required="" autocomplete="off"
                    th:field="*{birthDate}"
                    th:errorclass="'is-invalid bg-danger'">
             <label>Birth Date ("dd/MM/yyyy")</label>
+            <div class="invalid-feedback">
+                <div th:if="${#fields.errors('birthDate').size() > 0}"
+                     th:text="${#fields.errors('birthDate').get(0)}"></div>
+            </div>
             <span id="calendar"
                   class="material-symbols-outlined material-icon">calendar_month</span>
         </div>
 
         <div class="user-box">
-            <div class="invalid-feedback">
-                <div th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
-            </div>
             <input type="text" name="" required="" autocomplete="off"
                    th:field="*{email}"
                    th:errorclass="'is-invalid bg-danger'">
             <label>Email</label>
+            <div class="invalid-feedback">
+                <div th:if="${#fields.errors('email').size() > 0}"
+                     th:text="${#fields.errors('email').get(0)}"></div>
+            </div>
         </div>
 
         <div class="user-box user-box-icon">
@@ -94,7 +93,8 @@
                   class="material-symbols-outlined material-icon">visibility</span>
             <label>Password</label>
             <div class="invalid-feedback">
-                <div class="invalid-feedback-msg" th:each="err : ${#fields.errors('password')}" th:text="${err}"></div>
+                <div th:if="${#fields.errors('password').size() > 0}"
+                     th:text="${#fields.errors('password').get(0)}"></div>
             </div>
         </div>
 
@@ -107,13 +107,16 @@
             <span id="confirm-password-eye"
                   class="material-symbols-outlined material-icon">visibility</span>
             <div class="invalid-feedback">
-                <div class="invalid-feedback-msg" th:each="err : ${#fields.errors('confirmPassword')}"
-                     th:text="${err}"></div>
+                <div th:if="${#fields.errors('confirmPassword').size() > 0}"
+                     th:text="${#fields.errors('confirmPassword').get(0)}"></div>
             </div>
         </div>
 
         <div>
-            <button type="submit">
+            <button class="g-recaptcha" type="submit"
+                    th:attr="data-sitekey=${@recaptchaConfig.getSite()}"
+                    data-callback='onSubmit'
+                    data-action='submit'>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -124,7 +127,20 @@
     </form>
 </div>
 
+<script th:src="@{/js/jquery/jquery.js}"></script>
+
+<script th:src="@{/js/auth/datepicker.js}"></script>
+<script th:src="@{/js/auth/datepicker-place.js}"></script>
+
 <script th:src="@{/js/auth/toggle-password-eye.js}"></script>
+<script th:src="@{/js/auth/recaptcha.js}"></script>
+
+<script>
+    function onSubmit(token) {
+        document.getElementById("registration-form").submit();
+    }
+</script>
 
 </body>
+
 </html>

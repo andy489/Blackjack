@@ -1,0 +1,7 @@
+a:hover{
+    text-decoration: none;
+}
+
+.container-header{
+    border: 4px solid var(--weather-box-border-color) !important;
+}

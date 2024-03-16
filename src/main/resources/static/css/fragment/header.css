@@ -1,0 +1,33 @@
+span.nav-icon {
+    font-size: 36px;
+    color: indianred;
+}
+
+.container-header {
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+    font-weight: bold;
+    border: 4px solid var(--weather-box-border-color);
+    z-index: 2;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+a.nav-link {
+    color: whitesmoke !important;
+    float: left;
+    font-size: 1.25rem;
+}
+
+
+a.nav-link:hover {
+    color: indianred !important;
+}
+
+ul.navbar-nav {
+    float: right;
+}
