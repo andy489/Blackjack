@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Auth</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+
+    <script th:defer th:src="@{/js/jquery/jquery.js}"></script>
+    <script th:defer th:src="@{/js/auth/datepicker.js}"></script>
+    <script th:defer th:src="@{/js/auth/datepicker-place.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/auth/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/datepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/ajax-datepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/font-awesome.css}">
+
+    <!--https://developers.google.com/fonts/docs/material_symbols-->
+    <!--https://fonts.google.com/icons-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap/google-icons.css}"/>
+</head>
+<body>
+
+<div class="auth-box">
+    <h2>Register</h2>
+    <form th:action="@{/auth/register}"
+          th:method="post"
+          th:object="${userRegistrationDTO}">
+
+        <div class="user-box">
+            <div class="invalid-feedback">
+                <div th:each="err : ${#fields.errors('username')}" th:text="${err}"></div>
+            </div>
+            <input type="text" name="" required="" autocomplete="off"
+                   th:field="*{username}"
+                   th:errorclass="'is-invalid bg-danger'">
+            <label>Username</label>
+        </div>
+
+        <div class="user-box">
+            <div class="invalid-feedback">
+                <div th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></div>
+            </div>
+            <input type="text" name="" required="" autocomplete="off"
+                   th:field="*{firstName}"
+                   th:errorclass="'is-invalid bg-danger'">
+            <label>First Name</label>
+        </div>
+
+        <div class="user-box">
+            <div class="invalid-feedback">
+                <div th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></div>
+            </div>
+            <input type="text" name="" required="" autocomplete="off"
+                   th:field="*{lastName}"
+                   th:errorclass="'is-invalid bg-danger'">
+            <label>Last Name</label>
+        </div>
+
+        <div class="user-box">
+            <div class="invalid-feedback">
+                <div th:if="${#fields.errors('birthDate').size() > 0}"
+                     th:text="${#fields.errors('birthDate').get(0)}"></div>
+            </div>
+            <input class="pick-date"
+                   type="text" name="" required="" autocomplete="off"
+                   th:field="*{birthDate}"
+                   th:errorclass="'is-invalid bg-danger'">
+            <label>Birth Date ("dd/MM/yyyy")</label>
+            <span id="calendar"
+                  class="material-symbols-outlined material-icon">calendar_month</span>
+        </div>
+
+        <div class="user-box">
+            <div class="invalid-feedback">
+                <div th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+            </div>
+            <input type="text" name="" required="" autocomplete="off"
+                   th:field="*{email}"
+                   th:errorclass="'is-invalid bg-danger'">
+            <label>Email</label>
+        </div>
+
+        <div class="user-box user-box-icon">
+            <input id="password"
+                   type="password" name="" required=""
+                   th:field="*{password}"
+                   th:errorclass="'is-invalid bg-danger'">
+            <span id="password-eye"
+                  class="material-symbols-outlined material-icon">visibility</span>
+            <label>Password</label>
+            <div class="invalid-feedback">
+                <div class="invalid-feedback-msg" th:each="err : ${#fields.errors('password')}" th:text="${err}"></div>
+            </div>
+        </div>
+
+        <div class="user-box">
+            <input id="confirm-password"
+                   type="password" name="" required=""
+                   th:field="*{confirmPassword}"
+                   th:errorclass="'is-invalid bg-danger'">
+            <label>Confirm Password</label>
+            <span id="confirm-password-eye"
+                  class="material-symbols-outlined material-icon">visibility</span>
+            <div class="invalid-feedback">
+                <div class="invalid-feedback-msg" th:each="err : ${#fields.errors('confirmPassword')}"
+                     th:text="${err}"></div>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Register
+            </button>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/js/auth/toggle-password-eye.js}"></script>
+
+</body>
+</html>

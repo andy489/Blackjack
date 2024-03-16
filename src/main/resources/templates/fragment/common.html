@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap5.min.css}"/>
+
+    <script defer th:src="@{/js/bootstrap/bootstrap5.js}"></script>
+    <script defer th:src="@{/js/jquery/jquery.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/fragment/style.css}"/>
+</head>
+
+<body>
+
+<header class="navbar navbar-expand-lg navbar-light">
+
+    <a class="nav-link text-white active h5" th:href="@{/index}">
+            <span class="col-md-1">
+            <img th:src="@{/images/navbar/spade-chip-logo.png}" alt="Logo" width="40" height="40" src="">
+        </span>Cayetano Cards
+    </a>
+
+    <a class="nav-link text-white active h5" th:href="@{/}">
+            <span class="col-md-1">
+        <img th:src="@{/images/navbar/deposit.png}" alt="Logo" width="40" height="40">
+        </span> Deposit
+    </a>
+
+    <a class="nav-link text-white active h5" th:href="@{/}">
+            <span class="col-md-1">
+        <img th:src="@{/images/navbar/cash-out.png}" alt="Logo" width="40" height="40">
+        </span> Cash Out
+    </a>
+
+    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+
+        <ul class="navbar-nav row">
+            <li class="nav-item col-md-4">
+                <a class="nav-link text-white active h5" th:href="@{/user/logout}">Logout</a>
+            </li>
+            <li></li>
+        </ul>
+
+        <ul class="navbar-nav row">
+            <li class="nav-item col-md-4">
+                <a class="nav-link text-white active h5" th:href="@{/user/login}">Login</a>
+            </li>
+
+            <li class="nav-item col-md-4">
+                <a class="nav-link text-white active h5" th:href="@{/user/register}">Register</a>
+            </li>
+        </ul>
+
+    </div>
+</header>
+
+
+<footer class="footer bg-transparent py-2">
+    <div class="container-fluid text-center">
+        <div class="footer-background h5 text-white fixed-bottom">
+            <div>
+                &copy; Blackjack 2024. All rights reserved. Developed by andy489.
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+</html>

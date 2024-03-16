@@ -1,0 +1,120 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="andreystoev" id="1">
+        <createTable tableName="games">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="dealer_cards" type="VARCHAR(255)"/>
+            <column name="player_cards" type="VARCHAR(255)"/>
+            <column name="owner_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andreystoev" id="2">
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="role" type="ENUM('REGULAR','MODERATOR','ADMIN')">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andreystoev" id="3">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="birth_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="is_active" type="BIT(1)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="my_game_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
+            <column name="my_wallet_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andreystoev" id="4">
+        <createTable tableName="users_roles">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andreystoev" id="5">
+        <createTable tableName="wallets">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="balance" type="DECIMAL(38, 2)"/>
+            <column name="current_bet" type="DECIMAL(38, 2)"/>
+            <column name="last_win" type="DECIMAL(38, 2)"/>
+            <column name="owner_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andreystoev" id="6">
+        <createIndex indexName="FKj6m8fwv7oqv74fcehir1a9ffy" tableName="users_roles">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andreystoev" id="7">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles"
+                                 constraintName="FK2o0jvgh89lemvvo17cbqvdxaa" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="andreystoev" id="8">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="games"
+                                 constraintName="FK5tly2ihx4t84to6lfb4qrjo1b" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="andreystoev" id="9">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="wallets"
+                                 constraintName="FKd516f3xp7i3dfxiysb07g76wi" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="andreystoev" id="10">
+        <addForeignKeyConstraint baseColumnNames="my_wallet_id" baseTableName="users"
+                                 constraintName="FKg8hjels0rnpri0a1a7rwuosw2" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="wallets" validate="true"/>
+    </changeSet>
+    <changeSet author="andreystoev" id="11">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users_roles"
+                                 constraintName="FKj6m8fwv7oqv74fcehir1a9ffy" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="roles" validate="true"/>
+    </changeSet>
+    <changeSet author="andreystoev" id="12">
+        <addForeignKeyConstraint baseColumnNames="my_game_id" baseTableName="users"
+                                 constraintName="FKjp8yq920g76vn76huy2aih4ga" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="games" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

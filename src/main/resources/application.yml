@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: Blackjack
+  main:
+    banner-mode: off
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/blackjack?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
+    username: ${DB_USER}
+    password: ${DB_PASS}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      jakarta:
+        persistence:
+          shared-cache:
+            mode: UNSPECIFIED
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.xml
+
+
+
+auth:
+  login:
+    remember-me-key: asd

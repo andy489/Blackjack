@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <title>Blackjack</title>
+    <script defer th:src="@{/js/weather/weather.js}"></script>
+</head>
+
+<body class="body-index">
+
+<header th:replace="~{fragment/common::header}"></header>
+
+
+<main>
+    <div>
+        <div class="container bg-blur rounded mt-5 ">
+            <h1>
+                Welcome to BLACKJACK
+            </h1>
+            <hr class="my-3 bg-white w-90"/>
+
+            <h2 class="h4">
+                Enjoy the most widely played casino banking game in the world.
+            </h2>
+            <hr class="my-3 bg-white w-75"/>
+
+            <h3>
+                <a class="text-primary" th:href="@{/auth/login}">Login</a> if you have an account or
+                <a class="text-primary" th:href="@{/auth/register}">Register</a> now and play.
+            </h3>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-1"></div>
+
+                <div class="top-box col-4">
+                    <h4>Weather in
+                        <h2>Las Vegas</h2>
+                    </h4>
+
+                    <h4>
+                        <span id="box-b-temp">{0}</span>
+                        <span>&#8451;</span>
+                    </h4>
+                    <img id="box-b-img" th:src="@{/images/weather/cloudy.png}" height="150px" alt="cloudy" src="">
+                </div>
+
+                <div class="col-2"></div>
+
+                <div class="top-box col-4">
+                    <h4>Weather in
+                        <h2>Sofia</h2>
+                    </h4>
+                    <h5>(The Little Las Vegas)</h5>
+                    <h4>
+                        <span id="box-a-temp">{0}</span>
+                        <span>&#8451;</span>
+                    </h4>
+                    <img id="box-a-img" th:src="@{/images/weather/sun.png}" height="150px" alt="sunny" src="">
+                </div>
+
+                <div class="col-1"></div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragment/common::footer}"></footer>
+
+</body>
+
+</html>
