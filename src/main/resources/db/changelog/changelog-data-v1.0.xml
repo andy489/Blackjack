@@ -26,4 +26,12 @@
         </loadData>
     </changeSet>
 
+    <changeSet author="andy489" id="3">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="db/changelog/data/users_roles.csv"
+                  quotchar="&quot;" separator="," tableName="users_roles">
+            <column header="user_id" name="user_id" type="NUMERIC"/>
+            <column header="role_id" name="role_id" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+
 </databaseChangeLog>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/auth/reg-success.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
+    <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
+</head>
+
+<body class="body-auth-success">
+
+<header th:replace="~{fragment/common::header}"></header>
+
+<div class="container-index rounded mt-4">
+    <span class="enjoy-msg">You are all set. We have sent an email with an activation link to complete the registration.</span>
+
+    <hr class="my-3 bg-white w-80"/>
+
+    <h3>
+        <span class="info-msg">Back to</span>
+        <a class="index-text-link" th:href="@{/}">Lobby</a>
+    </h3>
+</div>
+
+<script defer th:src="@{/js/bootstrap/bootstrap5.js}"></script>
+<script defer th:src="@{/js/jquery/jquery.js}"></script>
+
+<footer th:replace="~{fragment/common::footer}"></footer>
+</body>
+
+</html>

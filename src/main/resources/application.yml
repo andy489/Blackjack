@@ -27,7 +27,8 @@ google.recaptcha:
   site: ${RECAPTCHA_SITE_KEY}
   secret: ${RECAPTCHA_SITE_SECRET}
 
-
 auth:
+  register:
+    auto-login: false
   login:
     remember-me-key: asd

@@ -9,6 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -44,17 +48,6 @@ public class AuthController extends BaseController {
         this.securityContextRepository = securityContextRepository;
     }
 
-    @ModelAttribute(name = "userRegistrationDTO")
-    public UserRegistrationDTO initUserRegisterDto() {
-        return new UserRegistrationDTO();
-    }
-
-    @GetMapping("/login")
-    public ModelAndView getLogin() {
-
-        return super.view("auth/login");
-    }
-
     @GetMapping("/register")
     public ModelAndView getRegister() {
 
@@ -87,21 +80,45 @@ public class AuthController extends BaseController {
             return super.redirect("/auth/register");
         }
 
-//        userService.registerAndLogin(userRegistrationDTO, successfulAuth -> {
-//            // populating security context
-//            SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
-//
-//            SecurityContext context = strategy.createEmptyContext();
-//            context.setAuthentication(successfulAuth);
-//
-//            strategy.setContext(context);
-//
-//            securityContextRepository.saveContext(context, request, response);
-//        });
+        userService.registerAndLogin(userRegistrationDTO, successfulAuth -> {
 
-        return super.redirect("/");
+            // populating security context
+            SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
+            SecurityContext context = strategy.createEmptyContext();
+            context.setAuthentication(successfulAuth);
+            strategy.setContext(context);
+            securityContextRepository.saveContext(context, request, response);
+        });
+
+        return super.redirect("register-success");
     }
 
+    @GetMapping("/register-success")
+    public ModelAndView registerSuccess() {
+        return super.view("auth/register-success");
+    }
+
+    @ModelAttribute(name = "userRegistrationDTO")
+    public UserRegistrationDTO initUserRegisterDto() {
+        return new UserRegistrationDTO();
+    }
+
+    @GetMapping("/login")
+    public ModelAndView getLogin() {
+
+        return super.view("auth/login");
+    }
+
+    @PostMapping("/login-error")
+    public ModelAndView onFailedLogin(
+            RedirectAttributes redirectAttributes,
+            @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username) {
+
+        redirectAttributes.addFlashAttribute("bad_credentials", true);
+        redirectAttributes.addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username);
+
+        return super.redirect("/auth/login");
+    }
 }
 
 

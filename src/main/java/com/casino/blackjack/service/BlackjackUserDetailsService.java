@@ -1,9 +1,14 @@
 package com.casino.blackjack.service;
 
+import com.casino.blackjack.model.entity.UserEntity;
 import com.casino.blackjack.model.user.CustomUserDetails;
 import com.casino.blackjack.repo.UserRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.List;
+import java.util.Optional;
 
 // NOTE: This is not annotated as @Service, because we will return it as a bean.
 public class BlackjackUserDetailsService implements UserDetailsService {
@@ -14,21 +19,29 @@ public class BlackjackUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Optional<CustomUserDetails> customUserDetails = userRepository.findByUsername(username)
-//                .map(u -> {
-//                    PathfinderUserDetails userDetails = mapper.toUserDetails(u);
-//
-//                    userDetails.setAuthorities(u.getRoles().stream().map(mapper::toGrantedAuthority)
-//                            .toList());
-//
-//                    return userDetails;
-//                });
+        Optional<UserEntity> userEntityOpt = userRepository.findByUsername(username);
 
-//        return pathfinderUserDetails
-//                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found"));
-        return null;
+        if(userEntityOpt.isEmpty()){
+            throw new UsernameNotFoundException("User with username " + username + " not found");
+        }
+
+        UserEntity userEntity = userEntityOpt.get();
+
+        List<SimpleGrantedAuthority> simpleGrantedAuthorities =
+                userEntity.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getRole().name())).toList();
+
+        CustomUserDetails customUserDetails = new CustomUserDetails()
+                .setId(userEntity.getId())
+                .setUsername(userEntity.getUsername())
+                .setPassword(userEntity.getPassword())
+                .setEmail(userEntity.getEmail())
+                .setBirthDate(userEntity.getBirthDate())
+                .setFirstName(userEntity.getFirstName())
+                .setLastName(userEntity.getLastName())
+                .setAuthorities(simpleGrantedAuthorities);
+
+        return customUserDetails;
     }
 }

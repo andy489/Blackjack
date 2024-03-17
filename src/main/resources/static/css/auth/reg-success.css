@@ -1,0 +1,8 @@
+.body-auth-success {
+    background-image: url('./../../images/background/01-auth.jpg');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin-bottom: 5rem;
+    font-family: sans-serif;
+}

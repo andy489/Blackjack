@@ -55,5 +55,8 @@ public class UserEntity extends BaseEntity {
     @OneToOne(fetch = FetchType.EAGER)
     private WalletEntity myWallet;
 
-
+    public UserEntity addRole(RoleEntity role) {
+        this.roles.add(role);
+        return this;
+    }
 }

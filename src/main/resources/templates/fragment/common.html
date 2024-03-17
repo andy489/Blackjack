@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap5.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <!--https://developers.google.com/fonts/docs/material_symbols-->
     <!--https://fonts.google.com/icons-->
     <link rel="stylesheet" th:href="@{/css/bootstrap/google-icons.css}"/>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
 </head>
 
 
@@ -36,12 +36,15 @@
 
     <div class="container-header-right">
 
-        <a class="nav-link active align-middle" th:href="@{/auth/logout}">Logout</a>
+<!--        <div>-->
+<!--            <a class="nav-link active align-middle" th:href="@{/auth/logout}">Logout</a>-->
+<!--        </div>-->
 
-        <a class="nav-link active align-middle" th:href="@{/auth/login}">Login</a>
+        <div>
+            <a class="nav-link active align-middle" th:href="@{/auth/login}">Login</a>
 
-        <a class="nav-link active align-middle" th:href="@{/auth/register}">Register</a>
-
+            <a class="nav-link active align-middle" th:href="@{/auth/register}">Register</a>
+        </div>
     </div>
 
 </header>
@@ -81,6 +84,9 @@
     </div>
 
     <div class="text-center">© 2024 Blackjack Spring Boot Project</div>
+
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.6/css/all.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
 </footer>
 
 </body>

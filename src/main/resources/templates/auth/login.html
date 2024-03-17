@@ -3,36 +3,59 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Auth</title>
-    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <title>Register</title>
     <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
+    <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
+
 </head>
-<body>
+
+<body class="body-auth">
+
+<header th:replace="~{fragment/common::header}"></header>
 
 <div class="auth-box">
-    <h2>Login</h2>
-    <form>
+    <div class="register-form-title">Login</div>
+    <form id="registration-form"
+          th:action="${loginProcessingUrl}"
+          th:method="post">
+
         <div class="user-box">
-            <input type="text" name="" required="">
+            <input type="text" name="username" required="yes" autocomplete="off"
+                   th:value="${username}"/>
             <label>Username</label>
         </div>
-        <div class="user-box">
-            <input type="password" name="" required="">
+
+        <div class="user-box user-box-icon">
+            <input id="password"
+                   type="password" name="password" required=""
+                   th:value="${password}"/>
+            <span id="password-eye"
+                  class="material-symbols-outlined material-icon">visibility</span>
             <label>Password</label>
         </div>
-        <a href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Login
-        </a>
+
+        <p th:if="${bad_credentials}"
+           class="errors alert alert-danger">
+            {Invalid username and password combination.}
+        </p>
+
+        <div>
+            <button type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Login
+            </button>
+        </div>
     </form>
 </div>
 
+<script th:src="@{/js/jquery/jquery.js}"></script>
+<script th:src="@{/js/auth/toggle-password-eye.js}"></script>
+
 </body>
+
 </html>

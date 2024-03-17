@@ -26,9 +26,11 @@ public class CustomUserDetails implements UserDetails {
 
     private Date birthDate;
 
-    private String fullName;
+    private String firstName;
 
-    private Collection<GrantedAuthority> authorities;
+    private String lastName;
+
+    private Collection<? extends GrantedAuthority> authorities;
 
     public Integer getAge() {
         if (birthDate == null) {
@@ -36,6 +38,10 @@ public class CustomUserDetails implements UserDetails {
         }
 
         return DateUtil.calcYearsBetween(birthDate, LocalDate.now());
+    }
+
+    public String getFullName(){
+        return firstName + " " + lastName;
     }
 
     @Override

@@ -18,11 +18,11 @@ html {
 
 .body-auth {
     background-image: url('./../../images/background/01-auth.jpg');
-    background-position: center !important;
-    background-attachment: fixed !important;
-    background-size: cover !important;
-    margin-bottom: 5rem !important;
-    font-family: sans-serif !important;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin-bottom: 5rem;
+    font-family: sans-serif
 }
 
 .auth-box {
@@ -68,7 +68,7 @@ html {
     top: 0;
     left: 0;
     padding: 20px 0 15px;
-    font-size: 16px;
+    font-size: 19px;
     color: var(--white);
     pointer-events: none;
     transition: .5s;
@@ -195,16 +195,14 @@ button {
 }
 
 .invalid-feedback {
+    text-align: left;
     color: indianred;
+    font-size: 0.5em;
+    font-weight: lighter;
 }
 
 .invalid-feedback-msg {
     padding-bottom: 1em;
-}
-
-.material-icon {
-    color: var(--electric);
-    float: right;
 }
 
 .user-box {
@@ -226,7 +224,9 @@ button {
 
 .material-icon {
     position: absolute;
+    color: var(--electric);
     right: 0;
+    top: 20px;
 }
 
 .material-icon:hover {

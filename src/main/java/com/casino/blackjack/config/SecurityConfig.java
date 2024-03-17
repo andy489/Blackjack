@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
@@ -44,26 +45,25 @@ public class SecurityConfig {
                             .requestMatchers(
                                     "/",
                                     "/index",
-                                    "/home",
-                                    "/users/logout",
-                                    "/users/login",
                                     "/auth/register",
-                                    "/users/login-error").permitAll()
+                                    "/auth/register-success",
+                                    "/auth/login",
+                                    "/auth/login-error").permitAll()
                             .anyRequest()
                             .authenticated();
                 })
-//                .formLogin(form -> {
-//                    form
-//                            .loginPage("/users/login")
-//                            .loginProcessingUrl("/users/login")
-//                            .failureForwardUrl("/users/login-error")
-//                            // where to go after login (use true arg if we want to go there, otherwise go to prev page)
-//                            .defaultSuccessUrl("/" /*,true*/) // arg alwaysUse: true
-//                            // the names of the "username" and "password" input fields in the custom login form
-//                            .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-//                            .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
-//                            .permitAll();
-//                })
+                .formLogin(form -> {
+                    form
+                            .loginPage("/auth/login")
+                            .loginProcessingUrl("/auth/login")
+                            .failureForwardUrl("/auth/login-error")
+                            // where to go after login (use true arg if we want to go there, otherwise go to prev page)
+                            .defaultSuccessUrl("/" /*,true*/) // arg alwaysUse: true
+                            // the names of the "username" and "password" input fields in the custom login form
+                            .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                            .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
+                            .permitAll();
+                })
 //                .logout(logout -> {
 //                    logout
 //                            .logoutUrl("/users/logout")
