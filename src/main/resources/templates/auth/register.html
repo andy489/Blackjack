@@ -5,14 +5,9 @@
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
     <title>Register</title>
-        <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
-        <link rel="stylesheet" th:href="@{/css/auth/datepicker.css}"/>
-        <link rel="stylesheet" th:href="@{/css/auth/ajax-datepicker.css}"/>
-
-        <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
-
-    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
-
+    <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/datepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/ajax-datepicker.css}"/>
 </head>
 
 <body class="body-auth">
@@ -33,7 +28,7 @@
             <label>Username</label>
             <span class="invalid-feedback">
                 <span th:if="${#fields.errors('username').size() > 0}"
-                     th:text="${#fields.errors('username').get(0)}"></span>
+                      th:text="${#fields.errors('username').get(0)}"></span>
             </span>
         </div>
 
@@ -44,7 +39,7 @@
             <label>First Name</label>
             <span class="invalid-feedback">
                 <span th:if="${#fields.errors('firstName').size() > 0}"
-                     th:text="${#fields.errors('firstName').get(0)}"></span>
+                      th:text="${#fields.errors('firstName').get(0)}"></span>
             </span>
         </div>
 
@@ -55,7 +50,7 @@
             <label>Last Name</label>
             <span class="invalid-feedback">
                 <span th:if="${#fields.errors('lastName').size() > 0}"
-                     th:text="${#fields.errors('lastName').get(0)}"></span>
+                      th:text="${#fields.errors('lastName').get(0)}"></span>
             </span>
         </div>
 
@@ -67,7 +62,7 @@
             <label>Birth Date ("dd/MM/yyyy")</label>
             <span class="invalid-feedback">
                 <span th:if="${#fields.errors('birthDate').size() > 0}"
-                     th:text="${#fields.errors('birthDate').get(0)}"></span>
+                      th:text="${#fields.errors('birthDate').get(0)}"></span>
             </span>
             <span id="calendar"
                   class="material-symbols-outlined material-icon">calendar_month</span>
@@ -80,7 +75,7 @@
             <label>Email</label>
             <span class="invalid-feedback">
                 <span th:if="${#fields.errors('email').size() > 0}"
-                     th:text="${#fields.errors('email').get(0)}"></span>
+                      th:text="${#fields.errors('email').get(0)}"></span>
             </span>
         </div>
 
@@ -94,7 +89,7 @@
             <label>Password</label>
             <span class="invalid-feedback">
                 <span th:if="${#fields.errors('password').size() > 0}"
-                     th:text="${#fields.errors('password').get(0)}"></span>
+                      th:text="${#fields.errors('password').get(0)}"></span>
             </span>
         </div>
 
@@ -108,7 +103,7 @@
                   class="material-symbols-outlined material-icon">visibility</span>
             <span class="invalid-feedback">
                 <span th:if="${#fields.errors('confirmPassword').size() > 0}"
-                     th:text="${#fields.errors('confirmPassword').get(0)}"></span>
+                      th:text="${#fields.errors('confirmPassword').get(0)}"></span>
             </span>
         </div>
 

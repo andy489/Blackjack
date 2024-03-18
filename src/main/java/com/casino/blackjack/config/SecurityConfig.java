@@ -1,12 +1,10 @@
 package com.casino.blackjack.config;
 
-import com.casino.blackjack.model.enumerated.UserRoleEnum;
 import com.casino.blackjack.repo.UserRepository;
 import com.casino.blackjack.service.BlackjackUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -101,5 +99,4 @@ public class SecurityConfig {
                 new HttpSessionSecurityContextRepository()
         );
     }
-
 }

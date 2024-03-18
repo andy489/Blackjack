@@ -1,6 +1,7 @@
-span.nav-icon {
-    font-size: 36px;
-    color: indianred;
+:root {
+    --primary: #639c9c;
+    --shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+    --weather-box-border-color: #4e555b;
 }
 
 .container-header {
@@ -15,6 +16,11 @@ span.nav-icon {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+}
+
+span.nav-icon {
+    font-size: 36px;
+    color: indianred;
 }
 
 a.nav-link {
@@ -47,4 +53,8 @@ ul.navbar-nav {
 
 .login-greeter{
     color: indianred;
+}
+
+.nav-link:hover{
+    text-decoration: none;
 }
