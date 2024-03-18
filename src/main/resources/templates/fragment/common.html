@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
     <meta charset="UTF-8"/>
@@ -36,11 +39,21 @@
 
     <div class="container-header-right">
 
-<!--        <div>-->
-<!--            <a class="nav-link active align-middle" th:href="@{/auth/logout}">Logout</a>-->
-<!--        </div>-->
 
-        <div>
+        <div sec:authorize="isAuthenticated()"
+             class="d-flex align-items-center logout-container">
+            <div class="d-inline-block login-greeter">
+                <th:block>Welcome,</th:block>
+                <th:block sec:authentication="name">{name}</th:block>!
+            </div>
+            <form th:action="@{/auth/logout}"
+                  th:method="post"
+                  class="d-inline-block btn-logout">
+                <button class="btn-logout btn btn-link nav-link align-middle active" type="submit">Logout</button>
+            </form>
+        </div>
+
+        <div sec:authorize="!isAuthenticated()">
             <a class="nav-link active align-middle" th:href="@{/auth/login}">Login</a>
 
             <a class="nav-link active align-middle" th:href="@{/auth/register}">Register</a>

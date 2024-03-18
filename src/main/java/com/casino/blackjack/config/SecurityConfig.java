@@ -64,16 +64,17 @@ public class SecurityConfig {
                             .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
                             .permitAll();
                 })
-//                .logout(logout -> {
-//                    logout
-//                            .logoutUrl("/users/logout")
-//                            // go to home page after logout
-//                            .logoutSuccessUrl("/")
-//                            .deleteCookies("JSESSIONID")
-//                            .clearAuthentication(true)
-//                            .invalidateHttpSession(true)
-//                            .permitAll();
-//                })
+                .logout(logout -> {
+                    logout
+                            // the URL where we should POST in order to perform the logout
+                            .logoutUrl("/auth/logout")
+                            // where to go when logged out
+                            .logoutSuccessUrl("/")
+                            .clearAuthentication(true)
+                            .invalidateHttpSession(true)
+                            .deleteCookies("JSESSIONID")
+                            .permitAll();
+                })
                 .securityContext(context -> {
                     context.securityContextRepository(securityContextRepository());
                 })

@@ -13,7 +13,7 @@
 }
 
 .container-index {
-    margin:auto;
+    margin: auto;
     width: 77%;
     background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
     color: whitesmoke;
@@ -54,15 +54,15 @@
     text-decoration: underline;
 }
 
-.weather-msg{
+.weather-msg {
     font-size: 1.5em;
 }
 
-.city-msg{
+.city-msg {
     font-size: 2em;
 }
 
-.celsius-msg{
+.celsius-msg {
     font-size: 1.5em;
 }
 

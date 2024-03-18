@@ -21,13 +21,30 @@ a.nav-link {
     color: whitesmoke !important;
     float: left;
     font-size: 1.25rem;
+    font-weight: bolder;
 }
 
 
-a.nav-link:hover {
+a.nav-link:hover, .btn-logout:hover {
     color: indianred !important;
 }
 
 ul.navbar-nav {
     float: right;
+}
+
+.logout-container{
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.btn-logout {
+    font-size: large;
+    font-weight: bolder;
+    color: whitesmoke;
+    text-align: center;
+}
+
+.login-greeter{
+    color: indianred;
 }
