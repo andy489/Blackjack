@@ -1,0 +1,32 @@
+.auth-box div.custom-checkbox-wrapper {
+    text-align: left;
+}
+
+.custom-checkbox-input, .custom-checkbox-label {
+    cursor: pointer;
+}
+
+.custom-checkbox-input {
+    width: 0.6em;
+    height: 0.6em;
+}
+
+.custom-checkbox-label {
+    font-size: 0.6em;
+    position: relative;
+    top: -1px
+}
+
+
+.custom-checkbox-input {
+    accent-color: var(--electric);
+
+}
+
+.custom-checkbox-input:checked {
+    box-shadow: 0 0 5px var(--electric);
+}
+
+
+
+

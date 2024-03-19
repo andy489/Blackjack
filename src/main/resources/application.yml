@@ -31,4 +31,4 @@ auth:
   register:
     auto-login: false
   login:
-    remember-me-key: asd
+    remember-me-key: ${REMEMBER_ME_KEY:}

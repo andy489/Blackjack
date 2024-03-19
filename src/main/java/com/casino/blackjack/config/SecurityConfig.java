@@ -2,6 +2,7 @@ package com.casino.blackjack.config;
 
 import com.casino.blackjack.repo.UserRepository;
 import com.casino.blackjack.service.BlackjackUserDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,11 +20,11 @@ import org.springframework.security.web.context.SecurityContextRepository;
 @Configuration
 public class SecurityConfig {
 
-//    private final String rememberMeKey;
+    private final String rememberMeKey;
 
-//    public SecurityConfig(@Value("${user.remember-me-key}") String rememberMeKey) {
-//        this.rememberMeKey = rememberMeKey;
-//    }
+    public SecurityConfig(@Value("${auth.login.remember-me-key}") String rememberMeKey) {
+        this.rememberMeKey = rememberMeKey;
+    }
 
     @Bean
     public PasswordEncoder encode() {
@@ -76,14 +77,15 @@ public class SecurityConfig {
                 .securityContext(context -> {
                     context.securityContextRepository(securityContextRepository());
                 })
-//                .rememberMe(mem -> {
-//                    mem
-//                            .key(rememberMeKey)
-//                            .tokenValiditySeconds(3600) // an hour
-//                            .rememberMeParameter("remember-me-par")
-//                            .rememberMeCookieName("remember-me-cookie");
-//                    // https://docs.spring.io/spring-security/reference/servlet/authentication/rememberme.html
-//                })
+                .rememberMe(rememberMeConfigurer -> {
+                    rememberMeConfigurer
+                            .key(rememberMeKey)
+                            .tokenValiditySeconds(3600) // an hour
+                            .rememberMeParameter("remember-me-parameter")
+                            .rememberMeCookieName("remember-me-cookie");
+                    // https://docs.spring.io/spring-security/reference/servlet/authentication/rememberme.html
+                    // https://www.base64decode.org/
+                })
                 .build();
     }
 

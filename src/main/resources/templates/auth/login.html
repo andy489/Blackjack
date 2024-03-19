@@ -4,11 +4,11 @@
 
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
-    <title>Register</title>
+    <title>Login</title>
     <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
     <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
     <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
-
+    <link rel="stylesheet" th:href="@{/css/auth/login-form.css}"/>
 </head>
 
 <body class="body-auth">
@@ -32,7 +32,7 @@
                    type="password" name="password" required=""
                    th:value="${password}"/>
             <span id="password-eye"
-                  class="material-symbols-outlined material-icon">visibility</span>
+            class="material-symbols-outlined material-icon">visibility</span>
             <label>Password</label>
         </div>
 
@@ -41,8 +41,17 @@
             {Invalid username and password combination.}
         </p>
 
-        <div>
-            <button type="submit">
+        <div class="custom-checkbox-wrapper pl-0">
+            <input id="remember-me" name="remember-me-parameter"
+                   type="checkbox" class="custom-checkbox-input"/>
+
+            <label for="remember-me" class="custom-checkbox-label">
+                remember me
+            </label>
+        </div>
+
+        <div class="">
+            <button class="w-50" type="submit">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -55,6 +64,7 @@
 
 <script th:src="@{/js/jquery/jquery.js}"></script>
 <script th:src="@{/js/auth/toggle-password-eye.js}"></script>
+
 
 </body>
 
