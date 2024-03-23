@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 //import org.springframework.security.web.context.SecurityContextRepository;
@@ -39,13 +40,17 @@ public class AuthController extends BaseController {
 
     private final SecurityContextRepository securityContextRepository;
 
+    private final LocaleResolver localeResolver;
+
     public AuthController(UserService userService,
                           RecaptchaService recaptchaService,
-                          SecurityContextRepository securityContextRepository) {
+                          SecurityContextRepository securityContextRepository,
+                          LocaleResolver localeResolver) {
 
         this.userService = userService;
         this.recaptchaService = recaptchaService;
         this.securityContextRepository = securityContextRepository;
+        this.localeResolver = localeResolver;
     }
 
     @GetMapping("/register")
@@ -80,7 +85,7 @@ public class AuthController extends BaseController {
             return super.redirect("/auth/register");
         }
 
-        userService.registerAndLogin(userRegistrationDTO, successfulAuth -> {
+        userService.registerAndLogin(userRegistrationDTO, localeResolver.resolveLocale(request), successfulAuth -> {
 
             // populating security context
             SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();

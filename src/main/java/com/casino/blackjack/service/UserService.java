@@ -4,9 +4,11 @@ import com.casino.blackjack.model.dto.UserRegistrationDTO;
 import com.casino.blackjack.model.entity.RoleEntity;
 import com.casino.blackjack.model.entity.UserEntity;
 import com.casino.blackjack.model.enumerated.UserRoleEnum;
+import com.casino.blackjack.model.event.UserRegisteredEvent;
 import com.casino.blackjack.repo.RoleRepository;
 import com.casino.blackjack.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -41,11 +44,14 @@ public class UserService {
 
     private final Boolean autoLogin;
 
+    private final ApplicationEventPublisher appEventPublisher;
+
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        PasswordEncoder encoder,
                        UserDetailsService userDetailsService,
-                       @Value("${auth.register.auto-login}") Boolean autoLogin) {
+                       @Value("${auth.register.auto-login}") Boolean autoLogin,
+                       ApplicationEventPublisher appEventPublisher) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -54,6 +60,7 @@ public class UserService {
         this.autoLogin = autoLogin;
 
         blackjackUserDetailsService = new BlackjackUserDetailsService(userRepository);
+        this.appEventPublisher = appEventPublisher;
     }
 
     public Optional<UserEntity> findByUsername(String username) {
@@ -65,6 +72,7 @@ public class UserService {
     }
 
     public void registerAndLogin(UserRegistrationDTO userRegistrationDTO,
+                                 Locale locale,
                                  Consumer<Authentication> successfulLoginProcessor) {
         // START: map birthDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -93,13 +101,12 @@ public class UserService {
                 .setMyGame(null)
                 .setMyWallet(null);
 
-
         newUser = userRepository.save(newUser);
 
-//        UserRegisteredEvent userRegisteredEvent = new UserRegisteredEvent("UserService",
-//                userRegistrationDto.getEmail(), userRegistrationDto.getUserFullName(), locale);
+        UserRegisteredEvent userRegisteredEvent = new UserRegisteredEvent(getClass().getName(),
+                userRegistrationDTO.getEmail(), userRegistrationDTO.getFullName(), locale);
 
-//        appEventPublisher.publishEvent(userRegisteredEvent);
+        appEventPublisher.publishEvent(userRegisteredEvent);
 
         if (autoLogin) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(newUser.getUsername());

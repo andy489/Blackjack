@@ -38,3 +38,13 @@ auth:
     auto-login: false
   login:
     remember-me-key: ${REMEMBER_ME_KEY}
+
+# mail-hog: "localhost:8025"
+mail:
+  app-mail: ${APP_MAIL}
+  host: ${MAIL_HOST}
+  port: ${MAIL_PORT}
+  username: ${MAIL_USER}
+  password: ${MAIL_PASS}
+  smtp-auth: true
+  transport-protocol: smtp

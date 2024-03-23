@@ -60,9 +60,9 @@
     color: whitesmoke;
     background-color: var(--electric);
     box-shadow: 0 0 5px var(--electric),
-    0 0 25px var(--electric),
-    0 0 50px var(--electric),
-    0 0 100px var(--electric);
+    0 0 6px var(--electric),
+    0 0 12px var(--electric),
+    0 0 24px var(--electric);
 
 }
 
