@@ -14,4 +14,10 @@ public class HomeController extends BaseController{
         return super.view("index");
     }
 
+    @GetMapping({"/email"})
+    public ModelAndView getRegistrationEmail() {
+
+        return super.view("email/registration-welcome");
+    }
+
 }

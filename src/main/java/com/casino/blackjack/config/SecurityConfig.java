@@ -49,7 +49,9 @@ public class SecurityConfig {
                                     "/auth/register",
                                     "/auth/register-success",
                                     "/auth/login",
-                                    "/auth/login-error").permitAll()
+                                    "/auth/login-error",
+                                    "/email"
+                            ).permitAll()
                             .anyRequest()
                             .authenticated();
                 })

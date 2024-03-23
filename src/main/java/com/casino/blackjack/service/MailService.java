@@ -68,6 +68,6 @@ public class MailService {
         context.setVariable("activation_token", activationToken);
         context.setLocale(locale);
 
-        return templateEngine.process("email/registration", context);
+        return templateEngine.process("email/registration-welcome", context);
     }
 }

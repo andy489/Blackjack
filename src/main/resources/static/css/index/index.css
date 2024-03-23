@@ -67,4 +67,5 @@
 
 a.index-text-link:hover {
     color: indianred;
+    text-decoration: none;
 }
