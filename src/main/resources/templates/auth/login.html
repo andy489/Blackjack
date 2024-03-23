@@ -9,6 +9,8 @@
     <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
     <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
     <link rel="stylesheet" th:href="@{/css/auth/login-form.css}"/>
+    <!--brands logos-->
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.6/css/all.css}">
 </head>
 
 <body class="body-auth">
@@ -32,7 +34,7 @@
                    type="password" name="password" required=""
                    th:value="${password}"/>
             <span id="password-eye"
-            class="material-symbols-outlined material-icon">visibility</span>
+                  class="material-symbols-outlined material-icon">visibility</span>
             <label>Password</label>
         </div>
 
@@ -59,12 +61,31 @@
                 Login
             </button>
         </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <div class="oauth-btn ms-1">
+                <a class="btn btn-outline-primary"
+                   th:href="@{/oauth2/authorization/github}">
+                    <i class="fab fa-github"></i>
+                    <span class="oauth-btn-label">Login via Github</span>
+                </a>
+
+            </div>
+
+            <div class="oauth-btn me-1">
+                <a class="btn btn-outline-primary"
+                   th:href="@{/oauth2/authorization/github}">
+                    <i class="fab fa-linkedin"></i>
+                    <span class="oauth-btn-label">Login via LinkedIn</span>
+                </a>
+            </div>
+        </div>
+
     </form>
 </div>
 
 <script th:src="@{/js/jquery/jquery.js}"></script>
 <script th:src="@{/js/auth/toggle-password-eye.js}"></script>
-
 
 </body>
 

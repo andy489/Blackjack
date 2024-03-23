@@ -9,6 +9,7 @@ import com.casino.blackjack.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @Service
@@ -34,6 +36,8 @@ public class UserService {
     private final PasswordEncoder encoder;
 
     private final UserDetailsService userDetailsService;
+
+    private final BlackjackUserDetailsService blackjackUserDetailsService;
 
     private final Boolean autoLogin;
 
@@ -48,6 +52,8 @@ public class UserService {
         this.encoder = encoder;
         this.userDetailsService = userDetailsService;
         this.autoLogin = autoLogin;
+
+        blackjackUserDetailsService = new BlackjackUserDetailsService(userRepository);
     }
 
     public Optional<UserEntity> findByUsername(String username) {
@@ -106,5 +112,45 @@ public class UserService {
 
             successfulLoginProcessor.accept(authentication);
         }
+    }
+
+    public void createUserIfNotExist(String username, String email, String firstName, String lastName) {
+        // Create manually a user in the database
+        // password not necessary (random uuid)
+        // make user change his password on first login
+
+        Optional<UserEntity> userWithEmail = userRepository.findByEmail(email);
+        if (userWithEmail.isEmpty()) {
+
+            Optional<UserEntity> userWithUsername = userRepository.findByUsername(username);
+
+            if (userWithUsername.isPresent()) {
+                username = username + "_" + UUID.randomUUID();
+            }
+
+            UserEntity userEntity = new UserEntity()
+                    .setUsername(username)
+                    .setEmail(email)
+                    .setPassword(UUID.randomUUID().toString())
+                    .setFirstName(firstName)
+                    .setLastName(lastName)
+                    .setIsActive(true);
+
+            userRepository.save(userEntity);
+        }
+    }
+
+    public Authentication login(String username) {
+        UserDetails userDetails = blackjackUserDetailsService.loadUserByUsername(username);
+
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                userDetails.getPassword(),
+                userDetails.getAuthorities()
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        return auth;
     }
 }

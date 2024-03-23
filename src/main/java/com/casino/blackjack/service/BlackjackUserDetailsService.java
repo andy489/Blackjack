@@ -23,11 +23,15 @@ public class BlackjackUserDetailsService implements UserDetailsService {
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserEntity> userEntityOpt = userRepository.findByUsername(username);
 
-        if(userEntityOpt.isEmpty()){
+        if (userEntityOpt.isEmpty()) {
             throw new UsernameNotFoundException("User with username " + username + " not found");
         }
 
         UserEntity userEntity = userEntityOpt.get();
+
+        if (!userEntity.getIsActive()) {
+            throw new UsernameNotFoundException("User with username " + username + " not found");
+        }
 
         List<SimpleGrantedAuthority> simpleGrantedAuthorities =
                 userEntity.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getRole().name())).toList();
@@ -41,6 +45,7 @@ public class BlackjackUserDetailsService implements UserDetailsService {
                 .setFirstName(userEntity.getFirstName())
                 .setLastName(userEntity.getLastName())
                 .setAuthorities(simpleGrantedAuthorities);
+
 
         return customUserDetails;
     }

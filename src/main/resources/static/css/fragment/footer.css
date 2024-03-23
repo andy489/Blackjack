@@ -1,3 +1,8 @@
+:root {
+    --linkedin: #0d64c4;
+    --instagram: #ee2a7b;
+}
+
 .container-footer {
     background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
     color: lightgrey;
@@ -12,7 +17,22 @@
 
 .fab {
     font-size: 42px;
-    color: var(--primary);
+}
+
+.fa-linkedin {
+    color: var(--linkedin);
+}
+
+.fa-instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    -webkit-background-clip: text;
+    /* define standard property for compatibility */
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fa-github {
+    color: lightgrey;
 }
 
 .icon-link {
@@ -24,6 +44,6 @@
     font-weight: bolder;
 }
 
-.fab:hover, .text-link:hover{
+.fab:hover, .text-link:hover {
     color: indianred;
 }

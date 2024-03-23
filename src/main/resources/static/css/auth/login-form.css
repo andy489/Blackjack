@@ -1,3 +1,8 @@
+:root {
+    --linkedin: #0d64c4;
+}
+
+
 .auth-box div.custom-checkbox-wrapper {
     text-align: left;
 }
@@ -27,6 +32,51 @@
     box-shadow: 0 0 5px var(--electric);
 }
 
+.oauth-btn a {
+    border-color: var(--electric);
+    color: whitesmoke;
+}
 
+.fab {
+    font-size: 2.2em;
+}
 
+.fa-github {
+    color: lightgrey;
+}
+
+.fa-linkedin {
+    color: var(--linkedin);
+}
+
+.oauth-btn-label {
+    position: relative;
+    top: -0.4em;
+    font-weight: bold;
+}
+
+.oauth-btn a:hover {
+    border-color: var(--electric);
+    color: whitesmoke;
+    background-color: var(--electric);
+    box-shadow: 0 0 5px var(--electric),
+    0 0 25px var(--electric),
+    0 0 50px var(--electric),
+    0 0 100px var(--electric);
+
+}
+
+.oauth-btn-label:hover {
+    box-shadow: 0 0 5px var(--electric);
+}
+
+/*.btn-outline-primary:hover {*/
+/*    background-color: var(--electric);*/
+/*    border-color: var(--electric);*/
+/*    color: whitesmoke;*/
+/*}*/
+
+/*.btn-outline-primary:hover .fab {*/
+/*    color: whitesmoke;*/
+/*}*/
 

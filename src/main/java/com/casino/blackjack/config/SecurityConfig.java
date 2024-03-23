@@ -2,6 +2,7 @@ package com.casino.blackjack.config;
 
 import com.casino.blackjack.repo.UserRepository;
 import com.casino.blackjack.service.BlackjackUserDetailsService;
+import com.casino.blackjack.service.oauth.OAuthSuccessHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +33,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http,
+                                           OAuthSuccessHandler oAuthSuccessHandler) throws Exception {
         return http // .csrf(AbstractHttpConfigurer::disable)
                 // defines which pages will be authorized
                 .authorizeHttpRequests((auth) -> {
@@ -85,6 +87,9 @@ public class SecurityConfig {
                             .rememberMeCookieName("remember-me-cookie");
                     // https://docs.spring.io/spring-security/reference/servlet/authentication/rememberme.html
                     // https://www.base64decode.org/
+                })
+                .oauth2Login(oauth -> {
+                    oauth.successHandler(oAuthSuccessHandler);
                 })
                 .build();
     }
