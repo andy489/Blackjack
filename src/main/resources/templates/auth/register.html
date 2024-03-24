@@ -4,7 +4,8 @@
 
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
-    <title>Register</title>
+    <title th:text="#{page.register.title}">{Register}</title>
+
     <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
     <link rel="stylesheet" th:href="@{/css/auth/datepicker.css}"/>
     <link rel="stylesheet" th:href="@{/css/auth/ajax-datepicker.css}"/>
@@ -15,7 +16,10 @@
 <header th:replace="~{fragment/common::header}"></header>
 
 <div class="auth-box">
-    <div class="register-form-title">Register</div>
+    <div class="register-form-title"
+         th:text="#{form.reg.title}">
+        {Register}
+    </div>
     <form id="registration-form"
           th:action="@{/auth/register}"
           th:method="post"
@@ -25,8 +29,8 @@
             <input type="text" name="" required="yes" autocomplete="off"
                    th:field="*{username}"
                    th:errorclass="'is-invalid'"/>
-            <label>Username</label>
-            <span class="invalid-feedback">
+            <label th:text="#{form.reg.username}">{Username}</label>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('username').size() > 0}"
                       th:text="${#fields.errors('username').get(0)}"></span>
             </span>
@@ -36,8 +40,8 @@
             <input type="text" name="" required="" autocomplete="off"
                    th:field="*{firstName}"
                    th:errorclass="'is-invalid'"/>
-            <label>First Name</label>
-            <span class="invalid-feedback">
+            <label th:text="#{form.reg.first.name}">{First Name}</label>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('firstName').size() > 0}"
                       th:text="${#fields.errors('firstName').get(0)}"></span>
             </span>
@@ -47,8 +51,8 @@
             <input type="text" name="" required="" autocomplete="off"
                    th:field="*{lastName}"
                    th:errorclass="'is-invalid'"/>
-            <label>Last Name</label>
-            <span class="invalid-feedback">
+            <label th:text="#{form.reg.last.name}">{Last Name}</label>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('lastName').size() > 0}"
                       th:text="${#fields.errors('lastName').get(0)}"></span>
             </span>
@@ -59,8 +63,8 @@
                    type="text" name="" required="" autocomplete="off"
                    th:field="*{birthDate}"
                    th:errorclass="'is-invalid'"/>
-            <label>Birth Date ("dd/MM/yyyy")</label>
-            <span class="invalid-feedback">
+            <label th:text="#{form.reg.birth.date}">{Birth Date ("dd/MM/yyyy")}</label>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('birthDate').size() > 0}"
                       th:text="${#fields.errors('birthDate').get(0)}"></span>
             </span>
@@ -72,8 +76,8 @@
             <input type="text" name="" required="" autocomplete="off"
                    th:field="*{email}"
                    th:errorclass="'is-invalid'">
-            <label>Email</label>
-            <span class="invalid-feedback">
+            <label th:text="#{form.reg.email}">{Email}</label>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('email').size() > 0}"
                       th:text="${#fields.errors('email').get(0)}"></span>
             </span>
@@ -86,8 +90,8 @@
                    th:errorclass="'is-invalid'"/>
             <span id="password-eye"
                   class="material-symbols-outlined material-icon">visibility</span>
-            <label>Password</label>
-            <span class="invalid-feedback">
+            <label th:text="#{form.reg.password}">{Password}</label>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('password').size() > 0}"
                       th:text="${#fields.errors('password').get(0)}"></span>
             </span>
@@ -98,10 +102,10 @@
                    type="password" name="" required=""
                    th:field="*{confirmPassword}"
                    th:errorclass="'is-invalid'"/>
-            <label>Confirm Password</label>
+            <label th:text="#{form.reg.conf.password}">{Confirm Password}</label>
             <span id="confirm-password-eye"
                   class="material-symbols-outlined material-icon">visibility</span>
-            <span class="invalid-feedback">
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('confirmPassword').size() > 0}"
                       th:text="${#fields.errors('confirmPassword').get(0)}"></span>
             </span>
@@ -116,7 +120,7 @@
                 <span></span>
                 <span></span>
                 <span></span>
-                Register
+                <th:block th:text="#{form.reg.btn}">{Register}</th:block>
             </button>
         </div>
     </form>
@@ -129,6 +133,8 @@
 
 <script th:src="@{/js/auth/toggle-password-eye.js}"></script>
 <script th:src="@{/js/auth/recaptcha.js}"></script>
+
+<link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap5.min.css}"/>
 
 <script>
     function onSubmit(token) {

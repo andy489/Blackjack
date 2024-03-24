@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = DateLeapValidator.class)
 public @interface DateLeap {
 
-    String message() default "{constraint.birth-date.invalid-date}";
+    String message() default "{constraint.birth.date.leap}";
 
     Class<?>[] groups() default {};
 

@@ -15,7 +15,7 @@ public @interface MinAge {
 
     int min() default 18;
 
-    String message() default "{constraint.birth-date.min-age}";
+    String message() default "{constraint.birth.date.min.age}";
 
     Class<?>[] groups() default {};
 

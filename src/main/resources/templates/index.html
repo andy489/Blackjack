@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
-    <title>Blackjack</title>
+    <title th:text="#{page.index.title}">{Blackjack}</title>
     <script defer th:src="@{/js/weather/weather.js}"></script>
     <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
 </head>
@@ -15,19 +15,27 @@
 <main>
     <div>
         <div class="container-index rounded mt-4">
-            <span class="welcome-msg">Welcome to BLACKJACK</span>
+            <span class="welcome-msg"
+                  th:text="#{index.welcome}">Welcome to BLACKJACK</span>
 
             <hr class="my-3 bg-white w-80"/>
 
-            <span class="enjoy-msg">Enjoy the most widely played casino banking game in the world.</span>
+            <span class="intro-msg"
+                  th:text="#{index.intro}">Enjoy the most widely played casino banking game in the world.</span>
 
             <hr class="my-3 bg-white w-80"/>
 
             <h3>
-                <a class="index-text-link fw-bolder" th:href="@{/auth/login}">Login</a>
-                <span class="info-msg">if you have an account or</span>
-                <a class="index-text-link fw-bolder" th:href="@{/auth/register}">Register</a>
-                <span class="info-msg">now and play.</span>
+                <a class="index-text-link fw-bolder"
+                   th:text="#{index.login}"
+                   th:href="@{/auth/login}">Login</a>
+                <span class="info-msg"
+                      th:text="#{index.account}">if you have an account or</span>
+                <a class="index-text-link fw-bolder"
+                   th:text="#{index.register}"
+                   th:href="@{/auth/register}">Register</a>
+                <span class="info-msg"
+                      th:text="#{index.play}">now and play.</span>
             </h3>
         </div>
 
@@ -36,8 +44,10 @@
                 <div class="col-sm-0 col-md-1 col-lg-2"></div>
 
                 <div class="weather-box col-sm-5 col-md-4 col-lg-3">
-                    <span class="weather-msg">Weather in</span>
-                    <span class="city-msg">Sofia</span>
+                    <span class="weather-msg"
+                          th:text="#{index.weather}">Weather in</span>
+                    <span class="city-msg"
+                          th:text="#{index.sofia}">Sofia</span>
                     <span class="celsius-msg">
                         <span id="box-a-temp">{0}</span>
                         <span>&#8451;</span>
@@ -49,8 +59,10 @@
 
                 <div class="weather-box col-sm-5 col-md-4 col-lg-3">
 
-                    <span class="weather-msg">Weather in</span>
-                    <span class="city-msg">Las Vegas</span>
+                    <span class="weather-msg"
+                          th:text="#{index.weather}">Weather in</span>
+                    <span class="city-msg"
+                          th:text="#{index.vegas}">Las Vegas</span>
 
                     <span class="celsius-msg">
                         <span id="box-b-temp">{0}</span>
@@ -67,9 +79,6 @@
 </main>
 
 <footer th:replace="~{fragment/common::footer}"></footer>
-
-<script defer th:src="@{/js/bootstrap/bootstrap5.js}"></script>
-<script defer th:src="@{/js/jquery/jquery.js}"></script>
 
 </body>
 

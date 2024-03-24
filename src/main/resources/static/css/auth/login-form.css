@@ -62,20 +62,10 @@
     0 0 6px var(--electric),
     0 0 12px var(--electric),
     0 0 24px var(--electric);
-
 }
 
 .oauth-btn-label:hover {
     box-shadow: 0 0 5px var(--electric);
 }
 
-/*.btn-outline-primary:hover {*/
-/*    background-color: var(--electric);*/
-/*    border-color: var(--electric);*/
-/*    color: whitesmoke;*/
-/*}*/
-
-/*.btn-outline-primary:hover .fab {*/
-/*    color: whitesmoke;*/
-/*}*/
 

@@ -87,9 +87,9 @@ public class AuthController extends BaseController {
 
         userService.registerAndLogin(userRegistrationDTO, localeResolver.resolveLocale(request), successfulAuth -> {
 
-            // populating security context
             SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
             SecurityContext context = strategy.createEmptyContext();
+            // populating security context
             context.setAuthentication(successfulAuth);
             strategy.setContext(context);
             securityContextRepository.saveContext(context, request, response);

@@ -1,10 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
-    <title>Login</title>
+    <title th:text="#{page.login.title}">Login</title>
     <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
     <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
     <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
@@ -18,7 +19,9 @@
 <header th:replace="~{fragment/common::header}"></header>
 
 <div class="auth-box">
-    <div class="register-form-title">Login</div>
+    <div class="register-form-title"
+         th:text="#{form.login.title}">{Login}
+    </div>
     <form id="registration-form"
           th:action="${loginProcessingUrl}"
           th:method="post">
@@ -26,7 +29,7 @@
         <div class="user-box">
             <input type="text" name="username" required="yes" autocomplete="off"
                    th:value="${username}"/>
-            <label>Username</label>
+            <label th:text="#{form.login.username}">Username</label>
         </div>
 
         <div class="user-box user-box-icon">
@@ -35,48 +38,52 @@
                    th:value="${password}"/>
             <span id="password-eye"
                   class="material-symbols-outlined material-icon">visibility</span>
-            <label>Password</label>
+            <label th:text="#{form.login.password}">Password</label>
         </div>
 
         <p th:if="${bad_credentials}"
-           class="errors alert alert-danger">
-            {Invalid username and password combination.}
+           class="errors alert alert-danger p-1"
+           th:text="#{constraint.username.password.combination}">
+            {wrong username or password}
         </p>
 
         <div class="custom-checkbox-wrapper pl-0">
             <input id="remember-me" name="remember-me-parameter"
                    type="checkbox" class="custom-checkbox-input"/>
 
-            <label for="remember-me" class="custom-checkbox-label">
-                remember me
+            <label for="remember-me" class="custom-checkbox-label"
+                   th:text="#{form.remember.me}">
+                {remember me}
             </label>
         </div>
 
-        <div class="">
+        <div>
             <button class="w-50" type="submit">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                Login
+                <th:block th:text="#{form.login.btn}">{Login}</th:block>
             </button>
         </div>
 
         <div class="d-flex justify-content-between mt-4">
-            <div class="oauth-btn ms-1">
+            <div class="oauth-btn">
                 <a class="btn btn-outline-primary"
                    th:href="@{/oauth2/authorization/github}">
                     <i class="fab fa-github"></i>
-                    <span class="oauth-btn-label">Login via Github</span>
+                    <span class="oauth-btn-label"
+                          th:text="#{form.login.oauth.github}">{Login via Github}</span>
                 </a>
 
             </div>
 
-            <div class="oauth-btn me-1">
+            <div class="oauth-btn">
                 <a class="btn btn-outline-primary"
                    th:href="@{/oauth2/authorization/github}">
                     <i class="fab fa-linkedin"></i>
-                    <span class="oauth-btn-label">Login via LinkedIn</span>
+                    <span class="oauth-btn-label"
+                          th:text="#{form.login.oauth.linkedin}">{Login via LinkedIn}</span>
                 </a>
             </div>
         </div>

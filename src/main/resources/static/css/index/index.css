@@ -38,7 +38,7 @@
     font-size: 3em;
 }
 
-.enjoy-msg {
+.intro-msg {
     font-size: 1.5em;
     font-weight: bold;
 }
@@ -50,7 +50,7 @@
 
 .index-text-link {
     color: var(--primary);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .weather-msg {

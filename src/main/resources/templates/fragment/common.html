@@ -12,7 +12,11 @@
     <!--https://developers.google.com/fonts/docs/material_symbols-->
     <!--https://fonts.google.com/icons-->
     <link rel="stylesheet" th:href="@{/css/bootstrap/google-icons.css}"/>
+    <link rel="stylesheet" th:href="@{/css/locale/locale.css}"/>
     <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+
+    <script defer th:src="@{/js/bootstrap/bootstrap5.js}"></script>
+    <script th:src="@{/js/locale/locale.js}"></script>
 </head>
 
 
@@ -23,61 +27,91 @@
     <div class="container-header-left">
         <a class="nav-link active mb-0" th:href="@{/}">
             <span class="material-symbols-outlined nav-icon align-middle">casino</span>
-            <span class="nav-func align-middle">Lobby</span>
+            <span class="nav-func align-middle"
+                  th:text="#{nav.lobby}">{Lobby}</span>
         </a>
 
         <a class="nav-link active mb-0" th:href="@{/}">
             <span class="material-symbols-outlined nav-icon align-middle">credit_card</span>
-            <span class="nav-func align-middle">Deposit</span>
+            <span class="nav-func align-middle"
+                  th:text="#{nav.deposit}">{Deposit}</span>
         </a>
 
         <a class="nav-link active mb-0" th:href="@{/}">
             <span class="material-symbols-outlined nav-icon align-middle">savings</span>
-            <span class="nav-func align-middle">Cash out</span>
+            <span class="nav-func align-middle"
+                  th:text="#{nav.cash.out}">{Cash out}</span>
         </a>
     </div>
 
-    <div class="container-header-right">
+    <div class="container-header-right d-flex align-items-center">
 
-
+        <div class="dropdown locale-dropdown me-3">
+            <button class="btn btn-secondary dropdown-toggle py-0"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    th:text="#{nav.locale}">
+                {Dropdown button}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
+                <li class="lang-opt text-center"
+                    th:each="l : ${T(com.casino.blackjack.model.enumerated.LocaleEnum).values()}"
+                    th:text="${l.getDisplayName()}"
+                    th:attrappend="localeBaseId=${l.getBaseLocaleId()}"
+                    th:onclick="|goto('lang', this.getAttribute('localeBaseId'))|">
+                </li>
+            </ul>
+        </div>
         <div sec:authorize="isAuthenticated()"
              class="d-flex align-items-center logout-container">
             <div class="d-inline-block login-greeter">
                 <th:block>Welcome,</th:block>
-                <th:block sec:authentication="name">{name}</th:block>!
+                <th:block sec:authentication="name">{name}</th:block>
+                !
             </div>
             <form th:action="@{/auth/logout}"
                   th:method="post"
                   class="d-inline-block btn-logout">
-                <button class="btn-logout btn btn-link nav-link align-middle active" type="submit">Logout</button>
+                <button class="btn-logout btn btn-link nav-link align-middle active"
+                        type="submit"
+                        th:text="#{nav.logout}">{Logout}
+                </button>
             </form>
         </div>
 
         <div sec:authorize="!isAuthenticated()">
-            <a class="nav-link active align-middle" th:href="@{/auth/login}">Login</a>
+            <a class="nav-link active align-middle"
+               th:href="@{/auth/login}"
+               th:text="#{nav.login}">{Login}</a>
 
-            <a class="nav-link active align-middle" th:href="@{/auth/register}">Register</a>
+            <a class="nav-link active align-middle"
+               th:href="@{/auth/register}"
+               th:text="#{nav.register}">Register</a>
         </div>
     </div>
-
 </header>
 
 <footer th:fragment="footer" class="container-footer text-center col-12">
 
     <div class="mb-2">
+        <span th:text="#{footer.bj.history}">
+            {Blackjack was introduced into the casino in the 20th century and has become one of the most popular
+            casino games.}
+        </span>
+        <span class="d-block" th:text="#{footer.bj.rules}">
+            {The rules of Blackjack can vary from casino to casino - if in doubt, use the casino's house rules.}
+        </span>
         <span>
-            Blackjack was introduced into the casino in the 20th century and has become one of the most popular
-            casino games.
+            <span th:text="#{footer.bj.learn.more}">Learn more about</span>
+            <a th:href="@{/}" class="text-link" th:text="#{footer.bj.rules.link}">
+                {THE RULES}
+            </a>
+            <span th:text="#{footer.bj.current.rules}">
+                {of this particular blackjack game}
+            </span>
         </span>
-        <span class="d-block">
-            The rules of Blackjack can vary from casino to casino - if in doubt, use the casino's house rules.
-        </span>
-        <span>
-            <span>Learn more about</span>
-
-            <a th:href="@{/}" class="text-link">THE RULES</a> of this particular blackjack game
-        </span>
-        <span>.</span>
     </div>
 
     <div class="mb-1">
@@ -96,7 +130,10 @@
 
     </div>
 
-    <div class="text-center">© 2024 Blackjack Spring Boot Project</div>
+    <div class="text-center">
+        <span>© 2024</span>
+        <span th:text="#{footer.bj.proj}">{Blackjack Spring Boot Project}</span>
+    </div>
 
     <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.6/css/all.css}">
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>

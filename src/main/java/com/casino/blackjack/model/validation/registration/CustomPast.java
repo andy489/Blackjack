@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = CustomPastValidator.class)
 public @interface CustomPast {
 
-    String message() default "{constraint.past.message}";
+    String message() default "{constraint.past.date}";
 
     Class<?>[] groups() default {};
 

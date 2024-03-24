@@ -17,7 +17,7 @@ public @interface FieldMatch {
 
     String secondField();
 
-    String message() default "{constraint.password.field-mismatch}";
+    String message() default "{constraint.fields.mismatch}";
 
     Class<?>[] groups() default {};
 
