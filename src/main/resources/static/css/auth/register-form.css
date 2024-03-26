@@ -226,7 +226,7 @@ button {
     position: absolute;
     color: var(--electric);
     right: 0;
-    top: 20px;
+    top: 16px;
 }
 
 .material-icon:hover {
@@ -239,4 +239,8 @@ button {
 
 input {
     margin: 0 !important;
+}
+
+.recaptcha div div{
+    color: #6a1a21;
 }

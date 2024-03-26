@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-//import org.springframework.security.web.context.SecurityContextRepository;
 
 @Controller
 @RequestMapping("/auth")
@@ -66,7 +65,7 @@ public class AuthController extends BaseController {
             RedirectAttributes redirectAttributes,
             HttpServletRequest request,
             HttpServletResponse response,
-            @RequestParam("g-recaptcha-response") String recaptchaResponse) {
+            @RequestParam(value = "g-recaptcha-response") String recaptchaResponse) {
 
         boolean isBot = !recaptchaService.verify(recaptchaResponse)
                 .map(RecaptchaResponseDTO::isSuccess)
@@ -89,7 +88,6 @@ public class AuthController extends BaseController {
 
             SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
             SecurityContext context = strategy.createEmptyContext();
-            // populating security context
             context.setAuthentication(successfulAuth);
             strategy.setContext(context);
             securityContextRepository.saveContext(context, request, response);
@@ -124,6 +122,22 @@ public class AuthController extends BaseController {
 
         return super.redirect("/auth/login");
     }
+
+    @GetMapping
+    public ModelAndView activateRegistration(@RequestParam(name = "token") String activationToken,
+                                             HttpServletRequest request,
+                                             HttpServletResponse response) {
+
+        return super.redirect(userService.loginAfterTokenActivate(activationToken, successfulAuth -> {
+
+            SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
+            SecurityContext context = strategy.createEmptyContext();
+            context.setAuthentication(successfulAuth);
+            strategy.setContext(context);
+            securityContextRepository.saveContext(context, request, response);
+        }));
+    }
+
 }
 
 

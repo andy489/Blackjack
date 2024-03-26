@@ -23,7 +23,6 @@ public class MailService {
 
     private final String appMail;
 
-
     public MailService(TemplateEngine templateEngine,
                        MessageSource messageSource,
                        JavaMailSender javaMailSender,
@@ -55,19 +54,15 @@ public class MailService {
     }
 
     private String getEmailSubject(Locale locale) {
-        return "test";
-        // TODO fix
-//        return messageSource.getMessage("registration_email_subject", new Object[0], locale);
+        return messageSource.getMessage("email.subject", new Object[0], locale);
     }
 
     private String generateMessageContent(Locale locale, String username, String activationToken) {
         Context context = new Context();
-
-        // TODO: url to append activation code: localhost...
         context.setVariable("username", username);
         context.setVariable("activation_token", activationToken);
         context.setLocale(locale);
 
-        return templateEngine.process("email/registration-welcome", context);
+        return templateEngine.process("email/registration-activate", context);
     }
 }

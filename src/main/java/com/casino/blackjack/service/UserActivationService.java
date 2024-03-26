@@ -35,8 +35,8 @@ public class UserActivationService {
 
     @EventListener(UserRegisteredEvent.class)
     public void userRegistered(UserRegisteredEvent event) {
-
         String activationToken = createActivationToken(event.getUserEmail());
+
         mailService.sendRegistrationEmail(event.getUserEmail(), event.getUserFullName(), event.getLocale(), activationToken);
     }
 

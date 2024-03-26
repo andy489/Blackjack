@@ -68,8 +68,7 @@
                 <span th:if="${#fields.errors('birthDate').size() > 0}"
                       th:text="${#fields.errors('birthDate').get(0)}"></span>
             </span>
-            <span id="calendar"
-                  class="material-symbols-outlined material-icon">calendar_month</span>
+            <i id="calendar" class="fa-regular fa-calendar-days material-icon"></i>
         </div>
 
         <div class="user-box">
@@ -88,8 +87,7 @@
                    type="password" name="" required=""
                    th:field="*{password}"
                    th:errorclass="'is-invalid'"/>
-            <span id="password-eye"
-                  class="material-symbols-outlined material-icon">visibility</span>
+            <i id="password-eye" class="fa-regular fa-eye material-icon"></i>
             <label th:text="#{form.reg.password}">{Password}</label>
             <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('password').size() > 0}"
@@ -103,15 +101,14 @@
                    th:field="*{confirmPassword}"
                    th:errorclass="'is-invalid'"/>
             <label th:text="#{form.reg.conf.password}">{Confirm Password}</label>
-            <span id="confirm-password-eye"
-                  class="material-symbols-outlined material-icon">visibility</span>
+            <i id="confirm-password-eye" class="fa-regular fa-eye material-icon"></i>
             <span class="invalid-feedback alert alert-danger fs-6 p-1">
                 <span th:if="${#fields.errors('confirmPassword').size() > 0}"
                       th:text="${#fields.errors('confirmPassword').get(0)}"></span>
             </span>
         </div>
 
-        <div>
+        <div class="recaptcha">
             <button class="g-recaptcha w-50" type="submit"
                     th:attr="data-sitekey=${@recaptchaConfig.getSite()}"
                     data-callback='onSubmit'

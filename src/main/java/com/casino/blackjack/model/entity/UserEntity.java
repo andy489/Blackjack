@@ -1,5 +1,6 @@
 package com.casino.blackjack.model.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -54,6 +55,9 @@ public class UserEntity extends BaseEntity {
 
     @OneToOne(fetch = FetchType.EAGER)
     private WalletEntity myWallet;
+
+    @OneToOne(cascade = {CascadeType.REMOVE})
+    private UserActivationTokenEntity activationToken;
 
     public UserEntity addRole(RoleEntity role) {
         this.roles.add(role);

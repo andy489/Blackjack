@@ -2,46 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to Blackjack</title>
+    <title th:text="#{email.title}">{Welcome to Blackjack}</title>
 </head>
 <body class="body-email">
-
 
 <div class="container-email">
 
     <div class="text-center">
-        <h1 class="p-3">Welcome to Blackjack</h1>
+        <h1 class="p-3" th:text="#{email.welcome}">{Welcome to Blackjack}</h1>
     </div>
 
     <hr class="my-3 bg-white w-80"/>
 
     <div class="text-center">
         <span>Hello, </span>
-        <th:block>{user}!</th:block>
-        <span> Welcome to our casino. We want our players to experience only good emotions from betting,</span>
-        <span>and therefore we advise them to bet responsibly and do it just for fun.</span>
+        <th:block th:text="${username} + '!'">{username}</th:block>
+        <span th:text="#{email.casino.welcome}">
+            Welcome to our casino. We want our players to experience only good emotions from betting,
+        </span>
+        <span th:text="#{email.casino.reminder}">
+            and therefore we advise them to bet responsibly and do it just for fun.
+        </span>
 
-        <a class="m-auto mt-3 w-50 d-block font-weight-bold btn btn-outline-primary">
+        <a class="m-auto mt-3 w-50 d-block font-weight-bold btn btn-outline-primary"
+           th:href="@{'http://localhost:8080/auth?token=' + ${activation_token}}" target="_blank"
+           th:text="#{email.login.btn}">
             Log in to your new account
         </a>
 
-        <p class="mt-3">We wish you all the luck!</p>
+        <p class="mt-3" th:text="#{email.wish.luck}">
+            We wish you all the luck!
+        </p>
     </div>
 
     <hr class="my-3 bg-white w-80"/>
 
     <div class="mb-2 text-center">
-        <span>
+        <span th:text="#{footer.bj.history}">
             Blackjack was introduced into the casino in the 20th century and has become one of the most popular
             casino games.
         </span>
-        <span class="d-block">
+        <span class="d-block" th:text="#{footer.bj.rules}">
             The rules of Blackjack can vary from casino to casino - if in doubt, use the casino's house rules.
         </span>
         <span>
-            <span>Learn more about</span>
+            <span th:text="#{footer.bj.learn.more}">Learn more about</span>
 
-            <a class="text-link">THE RULES</a> of this particular blackjack game
+            <a class="text-link" th:text="#{footer.bj.rules.link}">THE RULES</a> of this particular blackjack game
         </span>
         <span>.</span>
     </div>
@@ -62,7 +69,10 @@
 
     </div>
 
-    <div class="text-center">© 2024 Blackjack Spring Boot Project</div>
+    <div class="text-center">
+        <span>© 2024</span>
+        <span th:text="#{footer.bj.proj}">Blackjack Spring Boot Project</span>
+    </div>
 
     <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.6/css/all.css}">
 

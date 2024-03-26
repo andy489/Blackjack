@@ -8,10 +8,12 @@ for (let i = 0; i < fields.length; i++) {
     $("#" + eyes[i]).on("mousedown mouseup", function (e) {
         if (e.type === "mousedown") {
             passwordField.type = "text";
-            togglePassword.innerText = "visibility_off";
+            togglePassword.classList.remove('fa-eye');
+            togglePassword.classList.add('fa-eye-slash');
         } else {
             passwordField.type = "password";
-            togglePassword.innerText = "visibility";
+            togglePassword.classList.remove('fa-eye-slash');
+            togglePassword.classList.add('fa-eye');
         }
     });
 }

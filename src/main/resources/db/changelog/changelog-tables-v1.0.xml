@@ -62,6 +62,9 @@
             <column name="my_wallet_id" type="BIGINT">
                 <constraints unique="true"/>
             </column>
+            <column name="activation_token_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
         </createTable>
     </changeSet>
     <changeSet author="andreystoev" id="5">
@@ -133,6 +136,12 @@
                                  constraintName="FKjp8yq920g76vn76huy2aih4ga" deferrable="false"
                                  initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="id" referencedTableName="games" validate="true"/>
+    </changeSet>
+    <changeSet author="andreystoev" id="15">
+        <addForeignKeyConstraint baseColumnNames="activation_token_id" baseTableName="users"
+                                 constraintName="FKo964wjp2916caugrk9lr293tv" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="activation_tokens" validate="true"/>
     </changeSet>
 
 </databaseChangeLog>

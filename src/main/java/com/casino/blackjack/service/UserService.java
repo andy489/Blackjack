@@ -1,20 +1,30 @@
 package com.casino.blackjack.service;
 
+import com.casino.blackjack.controller.AuthController;
+import com.casino.blackjack.controller.ConsumerAuthentication;
 import com.casino.blackjack.model.dto.UserRegistrationDTO;
 import com.casino.blackjack.model.entity.RoleEntity;
+import com.casino.blackjack.model.entity.UserActivationTokenEntity;
 import com.casino.blackjack.model.entity.UserEntity;
 import com.casino.blackjack.model.enumerated.UserRoleEnum;
 import com.casino.blackjack.model.event.UserRegisteredEvent;
 import com.casino.blackjack.repo.RoleRepository;
+import com.casino.blackjack.repo.UserActivationTokenRepository;
 import com.casino.blackjack.repo.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -46,12 +56,18 @@ public class UserService {
 
     private final ApplicationEventPublisher appEventPublisher;
 
+    private final UserActivationTokenRepository userActivationTokenRepository;
+
+    private final SecurityContextRepository securityContextRepository;
+
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        PasswordEncoder encoder,
                        UserDetailsService userDetailsService,
                        @Value("${auth.register.auto-login}") Boolean autoLogin,
-                       ApplicationEventPublisher appEventPublisher) {
+                       ApplicationEventPublisher appEventPublisher,
+                       UserActivationTokenRepository userActivationTokenRepository,
+                       SecurityContextRepository securityContextRepository) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -61,6 +77,8 @@ public class UserService {
 
         blackjackUserDetailsService = new BlackjackUserDetailsService(userRepository);
         this.appEventPublisher = appEventPublisher;
+        this.userActivationTokenRepository = userActivationTokenRepository;
+        this.securityContextRepository = securityContextRepository;
     }
 
     public Optional<UserEntity> findByUsername(String username) {
@@ -69,6 +87,19 @@ public class UserService {
 
     public Optional<UserEntity> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public void deleteActivationTokenByUserId(Long userId) {
+        userActivationTokenRepository.deleteByUserId(userId);
+    }
+
+    public void deleteByUsername(String username) {
+        userRepository.deleteByUsername(username);
+    }
+
+
+    public void deleteByEmail(String email) {
+        userRepository.deleteByEmail(email);
     }
 
     public void registerAndLogin(UserRegistrationDTO userRegistrationDTO,
@@ -159,5 +190,36 @@ public class UserService {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         return auth;
+    }
+
+    @Transactional
+    public String loginAfterTokenActivate(String activationToken,
+                                          Consumer<Authentication> successfulLoginProcessor) {
+
+        Optional<UserActivationTokenEntity> byActivationToken =
+                userActivationTokenRepository.findByActivationToken(activationToken);
+
+        if (byActivationToken.isEmpty()) {
+            return "/";
+        }
+
+        UserActivationTokenEntity userActivationTokenEntity = byActivationToken.get();
+        Long userId = userActivationTokenEntity.getUser().getId();
+        UserEntity referenceById = userRepository.getReferenceById(userId);
+        referenceById.setIsActive(true);
+
+        userActivationTokenRepository.deleteById(userActivationTokenEntity.getId());
+
+        UserDetails userDetails = blackjackUserDetailsService.loadUserByUsername(referenceById.getUsername());
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                userDetails.getPassword(),
+                userDetails.getAuthorities()
+        );
+
+        successfulLoginProcessor.accept(authentication);
+
+        return "/";
     }
 }
