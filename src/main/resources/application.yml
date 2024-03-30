@@ -39,6 +39,7 @@ auth:
   login:
     remember-me-key: ${REMEMBER_ME_KEY}
   activation-token:
+    cleanup-cron: "* */15 * * * *"
     expires-after-minutes: 60
 
 # mail-hog: "localhost:8025"

@@ -29,7 +29,7 @@ public class ActivationTokenCleaner {
 
 
     // https://crontab.guru/
-    @Scheduled(cron = "*/20 * * * * *")
+    @Scheduled(cron = "${auth.activation-token.cleanup-cron}")
     public void cleanUp() {
 
         LocalDateTime timeBefore = getTimeBeforeMinutes(minutesBeforeActivationTokenExpires);
