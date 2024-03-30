@@ -1,4 +1,4 @@
-package com.casino.blackjack.config;
+package com.casino.blackjack.config.web;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

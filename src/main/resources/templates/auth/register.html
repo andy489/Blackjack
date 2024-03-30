@@ -72,6 +72,23 @@
         </div>
 
         <div class="user-box">
+            <select id="gender-select" class="form-select" type="text" name="" required="" autocomplete="off"
+                    th:field="*{gender}"
+                    th:errorclass="'is-invalid'">
+                <option value="" th:text="#{form.reg.gender}">{Select gender}</option>
+                <option value="" th:each="g : ${T(com.casino.blackjack.model.enumerated.GenderEnum).values()}"
+                        th:text="${g}"
+                        th:value="${g}">
+                    {Gender option}
+                </option>
+            </select>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
+                <span th:if="${#fields.errors('gender').size() > 0}"
+                      th:text="${#fields.errors('gender').get(0)}"></span>
+            </span>
+        </div>
+
+        <div class="user-box">
             <input type="text" name="" required="" autocomplete="off"
                    th:field="*{email}"
                    th:errorclass="'is-invalid'">

@@ -1,7 +1,7 @@
-package com.casino.blackjack.config;
+package com.casino.blackjack.config.security;
 
 import com.casino.blackjack.repo.UserRepository;
-import com.casino.blackjack.service.BlackjackUserDetailsService;
+import com.casino.blackjack.service.auth.BlackjackUserDetailsService;
 import com.casino.blackjack.service.oauth.OAuthSuccessHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

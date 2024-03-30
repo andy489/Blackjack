@@ -1,5 +1,6 @@
 package com.casino.blackjack.model.user;
 
+import com.casino.blackjack.model.enumerated.GenderEnum;
 import com.casino.blackjack.util.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,8 @@ public class CustomUserDetails implements UserDetails {
     private String username;
 
     private String password;
+
+    private GenderEnum gender;
 
     private String email;
 

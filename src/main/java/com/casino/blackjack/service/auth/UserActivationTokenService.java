@@ -1,8 +1,9 @@
-package com.casino.blackjack.service;
+package com.casino.blackjack.service.auth;
 
 import com.casino.blackjack.model.entity.UserActivationTokenEntity;
 import com.casino.blackjack.model.event.UserRegisteredEvent;
 import com.casino.blackjack.repo.UserActivationTokenRepository;
+import com.casino.blackjack.service.mail.MailService;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.time.Instant;
 import java.util.Random;
 
 @Service
-public class UserActivationService {
+public class UserActivationTokenService {
 
     private static final String ACTIVATION_TOKEN_SYM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY0123456789";
 
@@ -24,9 +25,9 @@ public class UserActivationService {
 
     private final UserActivationTokenRepository userActivationTokenRepository;
 
-    public UserActivationService(UserService userService,
-                                 MailService mailService,
-                                 UserActivationTokenRepository userActivationTokenRepository) {
+    public UserActivationTokenService(UserService userService,
+                                      MailService mailService,
+                                      UserActivationTokenRepository userActivationTokenRepository) {
 
         this.userService = userService;
         this.mailService = mailService;

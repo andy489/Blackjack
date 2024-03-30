@@ -1,6 +1,6 @@
-package com.casino.blackjack.service;
+package com.casino.blackjack.service.recaptcha;
 
-import com.casino.blackjack.config.RecaptchaConfig;
+import com.casino.blackjack.config.recaptcha.RecaptchaConfig;
 import com.casino.blackjack.model.dto.RecaptchaResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

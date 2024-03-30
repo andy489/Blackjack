@@ -1,6 +1,7 @@
 package com.casino.blackjack.model.dto;
 
 
+import com.casino.blackjack.model.enumerated.GenderEnum;
 import com.casino.blackjack.model.validation.registration.DateLeap;
 import com.casino.blackjack.model.validation.registration.CustomPast;
 import com.casino.blackjack.model.validation.registration.FieldMatch;
@@ -55,6 +56,9 @@ public class UserRegistrationDTO {
     @UniqueEmail
     private String email;
 
+    @NotNull(message = "{constraint.not.null}")
+    private GenderEnum gender;
+
     @NotBlank(message = "{constraint.not.blank}")
     @Size(min = 4, max = 20, message = "{constraint.password.size}")
     private String password;
@@ -72,6 +76,7 @@ public class UserRegistrationDTO {
                 ", fullName='" + getFullName() + '\'' +
                 ", birthDate=" + birthDate +
                 ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
                 ", password='" + (password != null ? "[PROVIDED]" : null) + '\'' +
                 ", confirmPassword='" + (confirmPassword != null ? "[PROVIDED]" : null) + '\'' +
                 '}';

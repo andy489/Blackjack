@@ -46,6 +46,9 @@
             <column name="birth_date" type="datetime">
                 <constraints nullable="false"/>
             </column>
+            <column name="gender" type="ENUM('MALE','FEMALE','UNSPECIFIED')">
+                <constraints nullable="false"/>
+            </column>
             <column name="email" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
             </column>

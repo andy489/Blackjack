@@ -1,7 +1,5 @@
-package com.casino.blackjack.service;
+package com.casino.blackjack.service.auth;
 
-import com.casino.blackjack.controller.AuthController;
-import com.casino.blackjack.controller.ConsumerAuthentication;
 import com.casino.blackjack.model.dto.UserRegistrationDTO;
 import com.casino.blackjack.model.entity.RoleEntity;
 import com.casino.blackjack.model.entity.UserActivationTokenEntity;
@@ -11,16 +9,13 @@ import com.casino.blackjack.model.event.UserRegisteredEvent;
 import com.casino.blackjack.repo.RoleRepository;
 import com.casino.blackjack.repo.UserActivationTokenRepository;
 import com.casino.blackjack.repo.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.casino.blackjack.service.auth.BlackjackUserDetailsService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -124,6 +119,7 @@ public class UserService {
                 .setUsername(userRegistrationDTO.getUsername())
                 .setPassword(encoder.encode(userRegistrationDTO.getPassword()))
                 .setEmail(userRegistrationDTO.getEmail())
+                .setGender(userRegistrationDTO.getGender())
                 .setBirthDate(date)
                 .setRoles(Set.of(regularRole))
                 .setFirstName(userRegistrationDTO.getFirstName())

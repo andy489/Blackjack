@@ -1,6 +1,6 @@
 package com.casino.blackjack.service.oauth;
 
-import com.casino.blackjack.service.UserService;
+import com.casino.blackjack.service.auth.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

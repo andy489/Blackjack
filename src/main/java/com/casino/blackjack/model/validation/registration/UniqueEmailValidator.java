@@ -1,7 +1,7 @@
 package com.casino.blackjack.model.validation.registration;
 
 import com.casino.blackjack.model.entity.UserEntity;
-import com.casino.blackjack.service.UserService;
+import com.casino.blackjack.service.auth.UserService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintValidator;
 

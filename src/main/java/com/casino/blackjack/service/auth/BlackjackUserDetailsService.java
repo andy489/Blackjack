@@ -1,4 +1,4 @@
-package com.casino.blackjack.service;
+package com.casino.blackjack.service.auth;
 
 import com.casino.blackjack.model.entity.UserEntity;
 import com.casino.blackjack.model.user.CustomUserDetails;
@@ -40,6 +40,7 @@ public class BlackjackUserDetailsService implements UserDetailsService {
                 .setId(userEntity.getId())
                 .setUsername(userEntity.getUsername())
                 .setPassword(userEntity.getPassword())
+                .setGender(userEntity.getGender())
                 .setEmail(userEntity.getEmail())
                 .setBirthDate(userEntity.getBirthDate())
                 .setFirstName(userEntity.getFirstName())

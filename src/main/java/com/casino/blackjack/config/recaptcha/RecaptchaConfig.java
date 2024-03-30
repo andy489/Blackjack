@@ -1,4 +1,4 @@
-package com.casino.blackjack.config;
+package com.casino.blackjack.config.recaptcha;
 
 import lombok.Getter;
 import lombok.Setter;

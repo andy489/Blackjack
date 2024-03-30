@@ -2,8 +2,8 @@ package com.casino.blackjack.controller;
 
 import com.casino.blackjack.model.dto.RecaptchaResponseDTO;
 import com.casino.blackjack.model.dto.UserRegistrationDTO;
-import com.casino.blackjack.service.RecaptchaService;
-import com.casino.blackjack.service.UserService;
+import com.casino.blackjack.service.recaptcha.RecaptchaService;
+import com.casino.blackjack.service.auth.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

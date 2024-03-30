@@ -1,4 +1,4 @@
-package com.casino.blackjack.service;
+package com.casino.blackjack.service.mail;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
