@@ -10,7 +10,7 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="activation_token" type="VARCHAR(255)"/>
-            <column name="create_time" type="datetime"/>
+            <column name="created_at" type="datetime"/>
             <column name="user_id" type="BIGINT">
                 <constraints unique="true"/>
             </column>

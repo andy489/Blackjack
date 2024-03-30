@@ -38,6 +38,8 @@ auth:
     auto-login: false
   login:
     remember-me-key: ${REMEMBER_ME_KEY}
+  activation-token:
+    expires-after-minutes: 60
 
 # mail-hog: "localhost:8025"
 mail:

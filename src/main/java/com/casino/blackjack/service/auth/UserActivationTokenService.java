@@ -4,12 +4,15 @@ import com.casino.blackjack.model.entity.UserActivationTokenEntity;
 import com.casino.blackjack.model.event.UserRegisteredEvent;
 import com.casino.blackjack.repo.UserActivationTokenRepository;
 import com.casino.blackjack.service.mail.MailService;
+import jakarta.transaction.Transactional;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Random;
 
 @Service
@@ -49,7 +52,7 @@ public class UserActivationTokenService {
                 .setActivationToken(token)
                 .setUser(userService.findByEmail(userEmail).orElseThrow(
                         () -> new UsernameNotFoundException("User with email " + userEmail + " not found")))
-                .setCreateTime(Instant.now());
+                .setCreatedAt(Instant.now());
 
         userActivationTokenRepository.save(userActivationTokenEntity);
 
@@ -68,5 +71,13 @@ public class UserActivationTokenService {
         }
 
         return activationToken.toString();
+    }
+
+    @Transactional
+    public void clearExpiredActivationTokens(LocalDateTime expiredTime){
+
+        Instant instant = expiredTime.toInstant(ZoneId.systemDefault().getRules().getOffset(expiredTime));
+
+        userActivationTokenRepository.deleteByCreatedAtBefore(instant);
     }
 }

@@ -21,6 +21,6 @@ public class UserActivationTokenEntity extends BaseEntity {
 
     private String activationToken;
 
-    private Instant createTime;
+    private Instant createdAt;
 
 }
