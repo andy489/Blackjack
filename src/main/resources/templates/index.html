@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
-    <title th:text="#{page.index.title}">{Blackjack}</title>
+    <title th:text="#{page.index.title}">Blackjack</title>
     <script defer th:src="@{/js/weather/weather.js}"></script>
     <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
 </head>
@@ -20,8 +20,13 @@
 
             <hr class="my-3 bg-white w-80"/>
 
+            <span class="intro-msg" th:if="${username}"
+                  th:text="#{index.after.activate.account.greeter}">Welcome,</span>
+            <span class="intro-msg color-indianred" th:if="${username}" th:text="${username} + '. '">username</span>
             <span class="intro-msg"
-                  th:text="#{index.intro}">Enjoy the most widely played casino banking game in the world.</span>
+                  th:text="#{index.intro}">
+                Enjoy the most widely played casino banking game in the world.
+            </span>
 
             <hr class="my-3 bg-white w-80"/>
 

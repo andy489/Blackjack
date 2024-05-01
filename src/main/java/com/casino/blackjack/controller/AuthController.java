@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
@@ -52,6 +51,11 @@ public class AuthController extends BaseController {
         this.recaptchaService = recaptchaService;
         this.securityContextRepository = securityContextRepository;
         this.localeResolver = localeResolver;
+    }
+
+    @GetMapping("/email")
+    public ModelAndView getActivationMail(){
+        return super.view("email/registration-activate");
     }
 
     @GetMapping("/register")
@@ -130,7 +134,8 @@ public class AuthController extends BaseController {
     @GetMapping
     public ModelAndView activateRegistration(@RequestParam(name = "token") String activationToken,
                                              HttpServletRequest request,
-                                             HttpServletResponse response) {
+                                             HttpServletResponse response,
+                                             RedirectAttributes redirectAttributes) {
 
         return super.redirect(userService.loginAfterTokenActivate(activationToken, successfulAuth -> {
 
@@ -139,7 +144,7 @@ public class AuthController extends BaseController {
             context.setAuthentication(successfulAuth);
             strategy.setContext(context);
             securityContextRepository.saveContext(context, request, response);
-        }));
+        }, redirectAttributes));
     }
 
     // TODO: add token as request param

@@ -70,4 +70,22 @@ public class UserEntity extends BaseEntity {
         this.roles.add(role);
         return this;
     }
+
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+
+        if (firstName != null) {
+            sb.append(firstName);
+        }
+
+        if (lastName != null) {
+            if (firstName != null) {
+                sb.append(' ');
+            }
+
+            sb.append(lastName);
+        }
+
+        return sb.toString();
+    }
 }

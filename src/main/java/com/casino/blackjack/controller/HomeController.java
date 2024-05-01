@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomeController extends BaseController{
+public class HomeController extends BaseController {
 
 
     @GetMapping({"/", "/index"})
@@ -18,6 +18,12 @@ public class HomeController extends BaseController{
     public ModelAndView getRegistrationEmail() {
 
         return super.view("email/registration-welcome");
+    }
+
+    @GetMapping("/rules")
+    public ModelAndView getRules() {
+
+        return super.view("rules");
     }
 
 }

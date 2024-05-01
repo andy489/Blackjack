@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 
 @FunctionalInterface
 public interface ConsumerAuthentication {
+
     void accept(Authentication authentication, HttpServletRequest httpServletRequest,
                 HttpServletResponse httpServletResponse);
 

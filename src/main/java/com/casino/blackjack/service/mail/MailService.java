@@ -34,7 +34,7 @@ public class MailService {
         this.appMail = appMail;
     }
 
-    public void sendRegistrationEmail(String userEmail, String username, Locale locale, String activationToken) {
+    public void sendRegistrationEmail(String userEmail, String username, String fullName, Locale locale, String activationToken) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         try {
@@ -44,7 +44,7 @@ public class MailService {
             mimeMessageHelper.setReplyTo(appMail);
             mimeMessageHelper.setTo(userEmail);
             mimeMessageHelper.setSubject(getEmailSubject(locale));
-            mimeMessageHelper.setText(generateMessageContent(locale, username, activationToken), true);
+            mimeMessageHelper.setText(generateMessageContent(locale, username, fullName, activationToken), true);
 
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
 
@@ -57,10 +57,12 @@ public class MailService {
         return messageSource.getMessage("email.subject", new Object[0], locale);
     }
 
-    private String generateMessageContent(Locale locale, String username, String activationToken) {
+    private String generateMessageContent(Locale locale, String username, String fullName, String activationToken) {
         Context context = new Context();
         context.setVariable("username", username);
+        context.setVariable("fullName", fullName);
         context.setVariable("activation_token", activationToken);
+        context.setVariable("rulesLink", "rules");
         context.setLocale(locale);
 
         return templateEngine.process("email/registration-activate", context);

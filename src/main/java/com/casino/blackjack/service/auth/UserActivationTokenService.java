@@ -41,7 +41,8 @@ public class UserActivationTokenService {
     public void userRegistered(UserRegisteredEvent event) {
         String activationToken = createActivationToken(event.getUserEmail());
 
-        mailService.sendRegistrationEmail(event.getUserEmail(), event.getUserFullName(), event.getLocale(), activationToken);
+        mailService.sendRegistrationEmail(event.getUserEmail(), event.getUsername(), event.getUserFullName(),
+                event.getLocale(), activationToken);
     }
 
     private String createActivationToken(String userEmail) {
@@ -74,7 +75,7 @@ public class UserActivationTokenService {
     }
 
     @Transactional
-    public void clearExpiredActivationTokens(LocalDateTime expiredTime){
+    public void clearExpiredActivationTokens(LocalDateTime expiredTime) {
 
         Instant instant = expiredTime.toInstant(ZoneId.systemDefault().getRules().getOffset(expiredTime));
 

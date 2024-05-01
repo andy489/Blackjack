@@ -18,8 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -126,7 +126,8 @@ public class UserService {
         newUser = userRepository.save(newUser);
 
         UserRegisteredEvent userRegisteredEvent = new UserRegisteredEvent(getClass().getName(),
-                userRegistrationDTO.getEmail(), userRegistrationDTO.getFullName(), locale);
+                userRegistrationDTO.getEmail(), userRegistrationDTO.getUsername(), userRegistrationDTO.getFullName(),
+                locale);
 
         appEventPublisher.publishEvent(userRegisteredEvent);
 
@@ -186,7 +187,8 @@ public class UserService {
 
     @Transactional
     public String loginAfterTokenActivate(String activationToken,
-                                          Consumer<Authentication> successfulLoginProcessor) {
+                                          Consumer<Authentication> successfulLoginProcessor,
+                                          RedirectAttributes redirectAttributes) {
 
         Optional<UserActivationTokenEntity> byActivationToken =
                 userActivationTokenRepository.findByActivationToken(activationToken);
@@ -202,7 +204,11 @@ public class UserService {
 
         userActivationTokenRepository.deleteById(userActivationTokenEntity.getId());
 
-        UserDetails userDetails = blackjackUserDetailsService.loadUserByUsername(referenceById.getUsername());
+        String username = referenceById.getUsername();
+
+        redirectAttributes.addFlashAttribute("username", username);
+
+        UserDetails userDetails = blackjackUserDetailsService.loadUserByUsername(username);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userDetails,
