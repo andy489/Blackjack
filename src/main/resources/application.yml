@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/blackjack?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
     username: ${DB_USER}
-    password: ${DB_PASS}
+    password:
   jpa:
     hibernate:
       ddl-auto: none
@@ -22,13 +22,7 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/changelog-master.xml
-  security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id: ${OAUTH2_GITHUB_CLIENT_ID}
-            client-secret: ${OAUTH2_GITHUB_SECRET}
+
 google.recaptcha:
   site: ${RECAPTCHA_SITE_KEY}
   secret: ${RECAPTCHA_SITE_SECRET}
@@ -39,7 +33,7 @@ auth:
   login:
     remember-me-key: ${REMEMBER_ME_KEY}
   activation-token:
-    cleanup-cron: "* */15 * * * *"
+    cleanup-cron: "*/60 */20 * * * *"
     expires-after-minutes: 60
 
 # mail-hog: "localhost:8025"
@@ -51,3 +45,9 @@ mail:
   password: ${MAIL_PASS}
   smtp-auth: true
   transport-protocol: smtp
+
+logging:
+  level:
+    org:
+      springframework:
+        security: INFO

@@ -4,10 +4,8 @@
 
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
-    <title>Register</title>
+    <title th:text="#{page.register.title}">{Register}</title>
     <link rel="stylesheet" th:href="@{/css/auth/reg-success.css}"/>
-    <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
-    <link rel="stylesheet" th:href="@{/css/index/index.css}"/>
 </head>
 
 <body class="body-auth-success">
@@ -15,18 +13,44 @@
 <header th:replace="~{fragment/common::header}"></header>
 
 <div class="container-index rounded mt-4">
-    <span class="enjoy-msg">You are all set. We have sent an email with an activation link to complete the registration.</span>
+    <h3 class="fw-bolder text-center">
+        <a class="reg-success-link fw-bolder"
+           th:href="@{/}"
+           th:text="#{reg.success.complete}"
+
+        >{Registration Complete}</a>
+    </h3>
 
     <hr class="my-3 bg-white w-80"/>
 
-    <h3>
-        <span class="info-msg">Back to</span>
-        <a class="index-text-link fw-bolder" th:href="@{/}">Lobby</a>
+    <div class="fs-3 fw-bolder" th:text="#{reg.success.thanks}">
+        {Thank you for registering to Blackjack.}
+    </div>
+    <div class="fs-5 mb-2" th:text="#{reg.success.account.created}">
+        {Your account has been created.}
+    </div>
+    <div class="fs-5 mb-2">
+        <span th:text="#{reg.success.email.sent}">
+            {Blackjack requires account activation prior to using your account. An activation link has been sent to your email at}
+        </span>
+        <span class="reg-success-email" th:if="${email}" th:text="${email}">EMAIL</span>
+        <span class="reg-success-email" th:unless="${email}" th:text="'your email'">EMAIL</span>.
+        <span th:text="#{reg.success.please.check}">{Please check your email for further information.}</span>
+    </div>
+    <div class="fs-5 mb-2" th:text="#{reg.success.spam.warn}">
+        {Some email providers incorrectly mark our email as spam. Please check your spam folder if the email des not arrive in your inbox.}
+    </div>
+
+    <hr class="my-3 bg-white w-80"/>
+
+    <h3 class="fw-bolder text-center">
+        <span class="info-msg" th:text="#{reg.success.back.to}">{Back to}</span>
+        <a class="reg-success-link fw-bolder" th:href="@{/}" th:text="#{reg.success.lobby}">{Lobby}</a>
     </h3>
 </div>
 
-<script defer th:src="@{/js/bootstrap/bootstrap5.js}"></script>
-<script defer th:src="@{/js/jquery/jquery.js}"></script>
+<script th:src="@{/js/jquery/jquery.js}"></script>
+<link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap5.min.css}"/>
 
 <footer th:replace="~{fragment/common::footer}"></footer>
 </body>

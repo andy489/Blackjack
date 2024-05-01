@@ -148,6 +148,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void createUserIfNotExist(String username, String email, String firstName, String lastName) {
         // Create manually a user in the database
         // password not necessary (random uuid)
