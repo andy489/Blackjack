@@ -27,13 +27,16 @@
           th:method="post">
 
         <div class="user-box">
-            <input type="text" required="yes" autocomplete="off"
+            <input id="username"
+                   name="username"
+                   type="text" required="yes" autocomplete="off"
                    th:value="${username}"/>
             <label th:text="#{form.login.username}">{username}</label>
         </div>
 
         <div class="user-box user-box-icon">
             <input id="password"
+                   name="password"
                    type="password" required=""
                    th:value="${password}"/>
             <i id="password-eye" class="fa-regular fa-eye material-icon"></i>
