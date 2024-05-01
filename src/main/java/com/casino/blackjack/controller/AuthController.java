@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.Banner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
@@ -42,6 +42,7 @@ public class AuthController extends BaseController {
 
     private final LocaleResolver localeResolver;
 
+
     public AuthController(UserService userService,
                           RecaptchaService recaptchaService,
                           SecurityContextRepository securityContextRepository,
@@ -67,6 +68,7 @@ public class AuthController extends BaseController {
             HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "g-recaptcha-response") String recaptchaResponse) {
+
 
         boolean isBot = !recaptchaService.verify(recaptchaResponse)
                 .map(RecaptchaResponseDTO::isSuccess)
@@ -142,12 +144,11 @@ public class AuthController extends BaseController {
 
     // TODO: add token as request param
     @GetMapping("/reset-password")
-    public ModelAndView resetPassword(){
+    public ModelAndView resetPassword() {
         // Check if query param is valid
         // extract query param value token...
 
         // add as hidden field
-
 
 
         return super.view("auth/change-password");

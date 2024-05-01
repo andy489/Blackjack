@@ -9,7 +9,6 @@ import com.casino.blackjack.model.event.UserRegisteredEvent;
 import com.casino.blackjack.repo.RoleRepository;
 import com.casino.blackjack.repo.UserActivationTokenRepository;
 import com.casino.blackjack.repo.UserRepository;
-import com.casino.blackjack.service.auth.BlackjackUserDetailsService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -53,16 +52,13 @@ public class UserService {
 
     private final UserActivationTokenRepository userActivationTokenRepository;
 
-    private final SecurityContextRepository securityContextRepository;
-
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        PasswordEncoder encoder,
                        UserDetailsService userDetailsService,
                        @Value("${auth.register.auto-login}") Boolean autoLogin,
                        ApplicationEventPublisher appEventPublisher,
-                       UserActivationTokenRepository userActivationTokenRepository,
-                       SecurityContextRepository securityContextRepository) {
+                       UserActivationTokenRepository userActivationTokenRepository) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -73,7 +69,6 @@ public class UserService {
         blackjackUserDetailsService = new BlackjackUserDetailsService(userRepository);
         this.appEventPublisher = appEventPublisher;
         this.userActivationTokenRepository = userActivationTokenRepository;
-        this.securityContextRepository = securityContextRepository;
     }
 
     public Optional<UserEntity> findByUsername(String username) {

@@ -26,15 +26,19 @@ public class RecaptchaService {
     }
 
     public Optional<RecaptchaResponseDTO> verify(String token) {
-        return Optional.ofNullable(webClient.post()
-                .uri(this::buildReCaptchaURI)
-                .body(BodyInserters.fromFormData("secret", recaptchaConfig.getSecret())
-                        .with("response", token))
-                .retrieve()
-                .bodyToMono(RecaptchaResponseDTO.class)
-                .doOnError(t -> LOGGER.error("Error fetching google response...", t))
-                .onErrorComplete()
-                .block());
+        if (recaptchaConfig.isEnabled()) {
+            return Optional.ofNullable(webClient.post()
+                    .uri(this::buildReCaptchaURI)
+                    .body(BodyInserters.fromFormData("secret", recaptchaConfig.getSecret())
+                            .with("response", token))
+                    .retrieve()
+                    .bodyToMono(RecaptchaResponseDTO.class)
+                    .doOnError(t -> LOGGER.error("Error fetching google response...", t))
+                    .onErrorComplete()
+                    .block());
+        }
+
+        return Optional.of(new RecaptchaResponseDTO().setSuccess(true));
     }
 
     private URI buildReCaptchaURI(UriBuilder uriBuilder) {

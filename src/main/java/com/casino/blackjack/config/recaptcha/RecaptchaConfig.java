@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Accessors(chain = true)
 public class RecaptchaConfig {
 
+    private boolean enabled;
+
     private String site;
 
     private String secret;
