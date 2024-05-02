@@ -24,8 +24,8 @@
                   th:text="#{index.after.activate.account.greeter}">Welcome,</span>
             <span class="intro-msg color-indianred" th:if="${username}" th:text="${username} + '. '">username</span>
             <span class="intro-msg"
-                  th:text="#{index.intro}">
-                Enjoy the most widely played casino banking game in the world.
+                  th:text="#{index.intro} + '.'">
+                Enjoy the most widely played casino banking game in the world
             </span>
 
             <hr class="my-3 bg-white w-80"/>
@@ -40,7 +40,7 @@
                    th:text="#{index.register}"
                    th:href="@{/auth/register}">Register</a>
                 <span class="info-msg"
-                      th:text="#{index.play}">now and play.</span>
+                      th:text="#{index.play} + '.'">now and play</span>
             </h3>
         </div>
 

@@ -32,8 +32,8 @@
             <span th:text="#{email.casino.welcome}">
                 Welcome to our casino. We want our players to experience only good emotions from betting,
             </span>
-            <span th:text="#{email.casino.reminder}">
-                and therefore we advise them to bet responsibly and do it only for fun.
+            <span th:text="#{email.casino.reminder} + '.'">
+                and therefore we advise them to bet responsibly and do it only for fun
             </span>
         </div>
 
@@ -59,9 +59,9 @@
     <hr class="my-3 bg-white w-80"/>
 
     <div class="mb-4 text-center">
-        <span th:text="#{footer.bj.history}">
+        <span th:text="#{footer.bj.history} + '.'">
             Blackjack was introduced into the casino in the 20th century and has become one of the most popular
-            casino games.
+            casino games
         </span>
         <span class="d-block" th:text="#{footer.bj.rules}">
             The rules of Blackjack can vary from casino to casino - if in doubt, use the casino's house rules.
@@ -75,9 +75,8 @@
             <a th:unless="${rulesLink} "class="text-link" th:text="#{footer.bj.rules.link}"
                th:href="@{'http://localhost:8080/rules'}" target="_blank">THE RULES
             </a>
-            <span>of this particular blackjack game</span>
+            <span th:text="#{footer.bj.current.rules} + '.'">of this particular blackjack game.</span>
         </span>
-        <span>.</span>
     </div>
 
     <div class="mb-3 text-center">

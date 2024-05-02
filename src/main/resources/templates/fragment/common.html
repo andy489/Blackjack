@@ -66,7 +66,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                     th:text="#{nav.locale}">
-                {Dropdown button}
+                Dropdown button
             </button>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
                 <li class="lang-opt text-center"
@@ -89,7 +89,7 @@
                   class="d-inline-block btn-logout">
                 <button class="btn-logout btn btn-link nav-link align-middle active"
                         type="submit"
-                        th:text="#{nav.logout}">{Logout}
+                        th:text="#{nav.logout}">Logout
                 </button>
             </form>
         </div>
@@ -97,7 +97,7 @@
         <div sec:authorize="!isAuthenticated()">
             <a class="nav-link active align-middle"
                th:href="@{/auth/login}"
-               th:text="#{nav.login}">{Login}</a>
+               th:text="#{nav.login}">Login</a>
 
             <a class="nav-link active align-middle"
                th:href="@{/auth/register}"
@@ -109,12 +109,12 @@
 <footer th:fragment="footer" class="container-footer text-center col-12">
 
     <div class="mb-2">
-        <span th:text="#{footer.bj.history}">
-            {Blackjack was introduced into the casino in the 20th century and has become one of the most popular
-            casino games.}
+        <span th:text="#{footer.bj.history} + '.'">
+            Blackjack was introduced into the casino in the 20th century and has become one of the most popular
+            casino games
         </span>
-        <span class="d-block" th:text="#{footer.bj.rules}">
-            {The rules of Blackjack can vary from casino to casino - if in doubt, use the casino's house rules.}
+        <span class="d-block" th:text="#{footer.bj.rules} + '.'">
+            The rules of Blackjack can vary from casino to casino - if in doubt, use the casino's house rules
         </span>
         <span>
             <span th:text="#{footer.bj.learn.more}">Learn more about</span>
@@ -122,7 +122,7 @@
                 {THE RULES}
             </a>
             <span th:text="#{footer.bj.current.rules}">
-                {of this particular blackjack game}
+                of this particular blackjack game
             </span>
         </span>
     </div>
