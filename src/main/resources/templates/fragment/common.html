@@ -27,9 +27,9 @@
     <div class="container-header-left">
         <a class="nav-link active mb-0" th:href="@{/}">
             <span class="nav-icon align-middle">
-                <i class="fa-solid fa-dice"></i>
+                <i class="fa-solid fa-martini-glass-citrus"></i>
             </span>
-            <span class="nav-func align-middle" th:text="#{nav.lobby}">{Lobby}</span>
+            <span class="nav-func align-middle" th:text="#{nav.lobby}">Lobby</span>
         </a>
 
         <a class="nav-link active mb-0" th:href="@{/}">
@@ -37,7 +37,7 @@
                 <i class="fa-regular fa-credit-card"></i>
             </span>
             <span class="nav-func align-middle"
-                  th:text="#{nav.deposit}">{Deposit}</span>
+                  th:text="#{nav.deposit}">Deposit</span>
         </a>
 
         <a class="nav-link active mb-0" th:href="@{/}">
@@ -45,7 +45,15 @@
                 <i class="fa-solid fa-sack-dollar"></i>
             </span>
             <span class="nav-func align-middle"
-                  th:text="#{nav.cash.out}">{Cash out}</span>
+                  th:text="#{nav.cash.out}">Cash out</span>
+        </a>
+
+        <a class="nav-link active mb-0" th:href="@{/rules}">
+            <span class="nav-icon align-middle">
+                <i class="fa-solid fa-dice"></i>
+            </span>
+            <span class="nav-func align-middle"
+                  th:text="#{nav.rules}">Rules</span>
         </a>
     </div>
 

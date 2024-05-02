@@ -5,7 +5,7 @@
 }
 
 .body-index {
-    background-image: url('./../../images/background/02-bj-table.png');
+    background-image: url('../images/background/02-bj-table.png');
     background-position: center;
     background-attachment: fixed;
     background-size: cover;

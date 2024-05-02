@@ -1,0 +1,38 @@
+:root {
+    --primary: #639c9c;
+    --shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+    --weather-box-border-color: #4e555b;
+}
+
+.body-rules {
+    background-image: url('../images/background/04-bj-table.png');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin-bottom: 5rem;
+}
+
+.container-rules{
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/opacity/see-through */
+    font-weight: bold;
+    font-size: larger;
+    border: 4px solid var(--weather-box-border-color);
+    border-radius: 0.5em;
+    padding: 1em 1em 0.5em 1em;
+}
+
+.tab{
+    color: var(--primary);
+}
+
+a.nav-tab.active{
+    background-color: lightgrey !important;
+}
+
+.tab-content{
+    color: whitesmoke;
+}
+
+.content-header{
+    font-size:xx-large;
+}

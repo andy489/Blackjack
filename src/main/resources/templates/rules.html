@@ -1,15 +1,132 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <title>Rules</title>
+    <link rel="stylesheet" th:href="@{/css/rules.css}"/>
 </head>
-<body>
+<body class="body-rules">
 
-<p>TODO</p>
+<header th:replace="~{fragment/common::navbar}"></header>
+
+<div class="col-10 m-auto">
+    <div class="m-4 container-rules">
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="nav-item">
+                <a href="#game-1" class="nav-link nav-tab active" data-bs-toggle="tab">
+                    <span class="tab" th:text="#{bj}">Blackjack</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#game-2" class="nav-link nav-tab" data-bs-toggle="tab">
+                    <span class="tab" th:text="#{rules.ng}">New Game</span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+
+            <div class="tab-pane fade show active" id="game-1">
+                <div class="mt-3 mb-3">
+                    <span class=" content-header" th:text="#{bj}">Blackjack</span>
+                </div>
+
+                <p th:text="#{rules.bj.p1}">
+                    Blackjack, or 21, is one of the most popular card games played in our casino. It is easy to learn
+                    and exciting to play. We provide Two Deck Blackjack where the cards are dealt from a box called the
+                    “shoe.”
+                </p>
+
+                <p th:text="#{rules.bj.p2}">
+                    In Blackjack, you play only against the dealer. Players receive all cards face up and the dealer’s
+                    first card is face up and the second is face down. The object of the game is to get closer to 21
+                    than the dealer without going over 21. If a hand goes over 21, it is called a “bust” or “break” and
+                    the wager is lost. In 21, Jacks, Queens, Kings and 10s count as 10. An Ace may be played as a one or
+                    an 11. All other cards are played at face value.
+                </p>
+
+                <p th:text="#{rules.bj.p3}">
+                    When you receive your first two cards, you may either “stand” or “hit.” When you “stand” it means
+                    you feel you are close enough to 21 and no longer wish any additional cards and indicated by waving
+                    off with your hand. If you wish to receive another card or “hit,” tap or scratch the table behind
+                    your wager with your finger. In either situation, you will never touch the cards, everything is
+                    communicated using hand signals. You may draw as many cards as you want until you are close to 21 or
+                    until you “bust”. In our online case all hand signals are represented as buttons.
+                </p>
+
+                <p th:text="#{rules.bj.p4}">
+                    If you are closer to 21 than the dealer, you win and are paid an amount equal to your original
+                    wager. If your hand is less than the dealer’s, you lose. If the dealer’s hand “busts” or “breaks”,
+                    you win as well. Ties are a standoff or “push” and your bet remains on the table.
+                </p>
+
+                <p th:text="#{rules.bj.p5}">
+                    If your initial two cards total 21, any Ace with a 10, Jack, Queen, or King, you have a Blackjack.
+                    Blackjack is paid 3 to 2 if the dealer does not have one as well, then is push.
+                </p>
+
+            </div>
+
+            <div class="tab-pane fade" id="game-2">
+                <div class="mt-3 mb-3">
+                    <span class=" content-header" th:text="#{rules.ng}">New Game</span>
+                </div>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra augue a metus scelerisque
+                    hendrerit. Donec quis erat sit amet neque condimentum imperdiet non in dolor. Sed mauris arcu,
+                    luctus vel leo in, tincidunt egestas risus. Aliquam elementum risus id dolor suscipit ornare. Etiam
+                    et ligula nec ex pulvinar convallis eu a nunc. Proin consectetur mi vitae nisi gravida, eget aliquam
+                    dolor varius. Integer nulla erat, condimentum non porttitor sed, finibus vel diam. Nulla nec nibh a
+                    metus dapibus varius non quis lacus. Praesent pulvinar tincidunt odio venenatis aliquet. Quisque ut
+                    urna vel arcu lacinia tristique. Fusce gravida diam vel sem mattis molestie. Vivamus ultrices
+                    ultrices euismod.
+                </p>
+
+                <p>
+                    Sed vulputate leo vitae sem consectetur pharetra. Vestibulum commodo libero ac erat scelerisque, nec
+                    auctor dui tempor. Maecenas tortor est, tincidunt et ultricies quis, posuere sit amet diam.
+                    Phasellus eu hendrerit eros, ac tincidunt ante. Donec consectetur ante et efficitur aliquam. Duis at
+                    elit eu sapien luctus varius. Nulla dignissim semper ligula et gravida. Cras vitae turpis finibus,
+                    dapibus ex eu, consectetur nunc. Cras ut nulla id purus blandit feugiat. Proin sit amet porta nisl.
+                    Donec interdum accumsan mi, non dictum massa commodo vel. Duis id facilisis quam. Duis blandit nisi
+                    risus, vel feugiat felis posuere ac. Etiam lorem sapien, egestas ac tellus ut, vulputate imperdiet
+                    nulla.
+                </p>
+
+                <p>
+                    Pellentesque at velit a nibh venenatis lobortis. Vivamus est leo, fermentum scelerisque eleifend et,
+                    vestibulum quis libero. Integer tristique, velit eu blandit luctus, sapien massa lobortis nisi, a
+                    aliquet ante diam eget tortor. Curabitur urna nunc, condimentum nec eleifend nec, vestibulum vel
+                    felis. In aliquam sapien eget vehicula porttitor. Sed vel gravida massa. Suspendisse sapien quam,
+                    tempor vitae felis vitae, dapibus rutrum velit. Sed placerat felis orci, sed iaculis justo viverra
+                    vitae. Donec tincidunt rhoncus sodales. Curabitur feugiat diam tellus, sit amet posuere enim euismod
+                    id. Vestibulum efficitur sodales nisi vitae aliquam. Phasellus sed vulputate risus.
+                </p>
+
+                <p>
+                    Quisque mattis gravida luctus. Phasellus libero magna, scelerisque at blandit ut, venenatis sit amet
+                    odio. Nulla facilisi. Duis tellus mauris, sagittis at elementum vitae, aliquet in tortor. Proin
+                    euismod, ex vel consequat sollicitudin, ipsum ligula commodo nibh, bibendum condimentum nibh nulla
+                    et massa. Nullam non magna non enim euismod facilisis ut nec felis. Maecenas id nisi a nisi
+                    efficitur elementum. Maecenas vitae pulvinar diam, vel congue lectus. Donec dapibus urna at
+                    efficitur suscipit. Etiam leo ligula, lacinia quis purus vel, lobortis venenatis velit. In
+                    ullamcorper, augue vel porta cursus, diam felis congue ex, euismod rutrum ligula nulla id felis.
+                    Aenean in dui libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in sapien
+                    luctus, imperdiet diam quis, pharetra nulla.
+                </p>
+
+                <p>
+                    Sed fringilla interdum leo non pellentesque. Mauris accumsan ante eget urna imperdiet, vitae
+                    tincidunt turpis maximus. Vestibulum quam eros, condimentum eu dapibus id, egestas sed felis. Morbi
+                    posuere ante sed sollicitudin porttitor. Maecenas tristique tincidunt leo, sit amet pellentesque
+                    metus euismod id. Praesent auctor feugiat orci. Aliquam in scelerisque quam. Vestibulum a justo
+                    varius, malesuada ipsum et, sollicitudin turpis.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
