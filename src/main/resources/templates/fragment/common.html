@@ -121,7 +121,7 @@
             <a th:href="@{/}" class="text-link" th:text="#{footer.bj.rules.link}">
                 {THE RULES}
             </a>
-            <span th:text="#{footer.bj.current.rules}">
+            <span th:text="#{footer.bj.current.rules} + '.'">
                 of this particular blackjack game
             </span>
         </span>
@@ -145,7 +145,7 @@
 
     <div class="text-center">
         <span>© 2024</span>
-        <span th:text="#{footer.bj.proj}">{Blackjack Spring Boot Project}</span>
+        <span th:text="#{footer.bj.proj}">Blackjack Spring Boot Project</span>
     </div>
 
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
