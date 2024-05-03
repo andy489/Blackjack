@@ -3,6 +3,8 @@
     --facebook: #0d64c4;
 }
 
+/* login form below */
+
 .auth-box div.custom-checkbox-wrapper {
     text-align: left;
 }
@@ -24,11 +26,23 @@
 
 .custom-checkbox-input {
     accent-color: var(--electric);
-
 }
 
 .custom-checkbox-input:checked {
     box-shadow: 0 0 5px var(--electric);
+}
+
+/* reset password form below */
+
+.reset-password-btn, .remembered-password-btn {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.reset-password-btn:hover, .remembered-password-btn:hover {
+    text-decoration: underline;
+    color: var(--electric);
+    shadow: 0 0 6px var(--electric);
 }
 
 

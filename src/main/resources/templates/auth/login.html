@@ -7,7 +7,6 @@
     <th:block th:insert="~{fragment/common::head}"></th:block>
     <title th:text="#{page.login.title}">Login</title>
     <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
-    <link rel="stylesheet" th:href="@{/css/auth/header-auth.css}"/>
     <link rel="stylesheet" th:href="@{/css/index.css}"/>
     <link rel="stylesheet" th:href="@{/css/auth/login-form.css}"/>
     <!--brands logos-->
@@ -18,61 +17,134 @@
 
 <header th:replace="~{fragment/common::header}"></header>
 
-<div class="auth-box">
+<div id="login-box" class="auth-box" th:unless="${forgot}">
     <div class="register-form-title"
-         th:text="#{form.login.title}">{Login}
+         th:text="#{form.login.title}">Login
     </div>
-    <form id="registration-form"
+    <form id="login-form"
           th:action="${loginProcessingUrl}"
           th:method="post">
 
         <div class="user-box">
-            <input id="username"
-                   name="username"
+            <input name="username"
                    type="text" required="yes" autocomplete="off"
                    th:value="${username}"/>
-            <label th:text="#{form.login.username}">{username}</label>
+            <label th:text="#{form.login.username}">username</label>
         </div>
 
         <div class="user-box user-box-icon">
-            <input id="password"
-                   name="password"
+            <input name="password"
                    type="password" required=""
                    th:value="${password}"/>
             <i id="password-eye" class="fa-regular fa-eye material-icon"></i>
-            <label th:text="#{form.login.password}">{password}</label>
+            <label th:text="#{form.login.password}">password</label>
         </div>
 
-        <p th:if="${bad_credentials}"
+        <p th:if="${bad_credentials_login}"
            class="errors alert alert-danger p-1"
            th:text="#{constraint.username.password.combination}">
-            {wrong username or password}
+            wrong username or password
         </p>
 
         <div class="custom-checkbox-wrapper pl-0">
             <input id="remember-me" name="remember-me-parameter"
                    type="checkbox" class="custom-checkbox-input"/>
 
-            <label for="remember-me" class="custom-checkbox-label"
-                   th:text="#{form.remember.me}">
-                {remember me}
+            <label for="remember-me" class="custom-checkbox-label" th:text="#{form.remember.me}">
+                remember me
             </label>
         </div>
 
-        <div>
-            <button class="w-50" type="submit">
+        <div id="g-recaptcha-login" class="recaptcha">
+            <button class="g-recaptcha w-50" type="submit"
+                    th:attr="data-sitekey=${@recaptchaConfig.getSite()}"
+                    data-callback='onSubmit1'
+                    data-action='submit'>
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                <th:block th:text="#{form.login.btn}">{Login}</th:block>
+                <th:block th:text="#{form.login.btn}">LOGIN</th:block>
             </button>
         </div>
     </form>
+
+    <div class="mt-5 fs-5">
+        <span class="me-2 fw-light" th:text="#{form.login.forgot} + '?'">Forgot your password?</span>
+        <span>
+            <a class="reset-password-btn" th:text="#{form.login.reset}"
+               th:onclick="|goto('forgot', true)|">Reset password</a>
+        </span>
+    </div>
+</div>
+
+
+<div id="reset-password-box" class="auth-box" th:if="${forgot}">
+    <div class="register-form-title" th:text="#{form.res.pass.title} + '?'">
+        Trouble Signing In?
+    </div>
+    <div class="fs-5 fw-lighter" th:text="#{form.res.pass.subtitle}">
+        Enter your username and email address, and we'll send you instructions for resetting your password.
+    </div>
+    <form id="reset-password-form"
+          th:action="@{/auth/reset-password}"
+          th:method="post">
+
+        <div class="user-box">
+            <input name="username"
+                   type="text" required="yes" autocomplete="off"/>
+            <label th:text="#{form.res.username}">username</label>
+        </div>
+
+        <div class="user-box user-box-icon">
+            <input name="email"
+                   type="text" required="yes"/>
+            <label th:text="#{form.res.email}">email</label>
+        </div>
+
+        <p th:if="${bad_credentials_reset_password}"
+           class="errors alert alert-danger p-1"
+           th:text="#{constraint.username.email.combination}">
+            wrong username or email address
+        </p>
+
+        <div id="g-recaptcha-forgot" class="recaptcha">
+            <button class="g-recaptcha w-75" type="submit"
+                    th:attr="data-sitekey=${@recaptchaConfig.getSite()}"
+                    data-callback='onSubmit2'
+                    data-action='submit'>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <th:block th:text="#{form.res.btn}">SEND INSTRUCTIONS</th:block>
+            </button>
+        </div>
+    </form>
+
+    <div class="mt-5 fs-5">
+        <span class="me-2 fw-light" th:text="#{form.res.remember} + '?'">Remembered you password?</span>
+        <span>
+            <a class="remembered-password-btn" th:text="#{form.res.link}"
+               th:onclick="|goto('forgot', false)|">Login</a>
+        </span>
+    </div>
 </div>
 
 <script th:src="@{/js/jquery/jquery.js}"></script>
 <script th:src="@{/js/auth/toggle-password-eye.js}"></script>
+<link rel="stylesheet" th:href="@{/css/toggle/toggle-request-param.css}"/>
+<script th:src="@{/js/auth/recaptcha.js}"></script>
+
+<script>
+    function onSubmit1(token) {
+        document.getElementById("login-form").submit();
+    }
+
+    function onSubmit2(token) {
+        document.getElementById("reset-password-form").submit();
+    }
+</script>
 
 </body>
 

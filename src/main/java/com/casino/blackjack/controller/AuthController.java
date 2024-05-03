@@ -2,6 +2,7 @@ package com.casino.blackjack.controller;
 
 import com.casino.blackjack.model.dto.RecaptchaResponseDTO;
 import com.casino.blackjack.model.dto.UserRegistrationDTO;
+import com.casino.blackjack.model.dto.UserResetPasswordDTO;
 import com.casino.blackjack.service.recaptcha.RecaptchaService;
 import com.casino.blackjack.service.auth.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,7 +55,7 @@ public class AuthController extends BaseController {
     }
 
     @GetMapping("/email")
-    public ModelAndView getActivationMail(){
+    public ModelAndView getActivationMail() {
         return super.view("email/registration-activate");
     }
 
@@ -72,7 +73,6 @@ public class AuthController extends BaseController {
             HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "g-recaptcha-response") String recaptchaResponse) {
-
 
         boolean isBot = !recaptchaService.verify(recaptchaResponse)
                 .map(RecaptchaResponseDTO::isSuccess)
@@ -115,7 +115,14 @@ public class AuthController extends BaseController {
     }
 
     @GetMapping("/login")
-    public ModelAndView getLogin() {
+    public ModelAndView getLogin(@RequestParam(required = false) Boolean forgot) {
+
+        if (forgot != null && forgot) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("forgot", true);
+
+            return super.view("auth/login", modelAndView);
+        }
 
         return super.view("auth/login");
     }
@@ -125,8 +132,9 @@ public class AuthController extends BaseController {
             RedirectAttributes redirectAttributes,
             @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username) {
 
-        redirectAttributes.addFlashAttribute("bad_credentials", true);
-        redirectAttributes.addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username);
+        redirectAttributes.addFlashAttribute("bad_credentials_login", true);
+        redirectAttributes.addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY,
+                username);
 
         return super.redirect("/auth/login");
     }
@@ -147,17 +155,52 @@ public class AuthController extends BaseController {
         }, redirectAttributes));
     }
 
-    // TODO: add token as request param
-    @GetMapping("/reset-password")
-    public ModelAndView resetPassword() {
-        // Check if query param is valid
-        // extract query param value token...
+    @PostMapping("/reset-password")
+    public ModelAndView sendResetPasswordInstructions(
+            @Valid @ModelAttribute(name = "userResetPasswordDTO") UserResetPasswordDTO userResetPasswordDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = "g-recaptcha-response") String recaptchaResponse) {
 
-        // add as hidden field
+        boolean isBot = !recaptchaService.verify(recaptchaResponse)
+                .map(RecaptchaResponseDTO::isSuccess)
+                .orElse(false);
 
+        if (isBot) {
+            LOGGER.warn("reCAPTCHA protected your website from spam and abuse");
+            return super.redirect("/");
+        }
 
-        return super.view("auth/change-password");
+        redirectAttributes.addFlashAttribute("email", userResetPasswordDTO.getEmail());
+        redirectAttributes.addFlashAttribute("username", userResetPasswordDTO.getUsername());
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userResetPasswordDTO", userResetPasswordDTO);
+            redirectAttributes.addFlashAttribute(BINDING_RESULT_PATH + "userResetPasswordDTO",
+                    bindingResult);
+
+            return super.redirect("/auth/reset?send=false");
+        }
+
+        // TODO send mail
+
+        return super.redirect("/auth/reset?send=true");
     }
+
+    @GetMapping("/reset")
+    public ModelAndView getReset(@RequestParam Boolean send) {
+
+        if (send != null && send) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("success", true);
+            return super.view("auth/reset-pass", modelAndView);
+        }
+
+        return super.view("auth/reset-pass");
+    }
+
 
 }
 

@@ -4,7 +4,7 @@
 
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
-    <title th:text="#{page.register.title}">{Register}</title>
+    <title th:text="#{page.register.title}">Register</title>
     <link rel="stylesheet" th:href="@{/css/auth/reg-success.css}"/>
 </head>
 
@@ -16,12 +16,11 @@
     <h3 class="fw-bolder text-center">
         <a class="reg-success-link fw-bolder"
            th:href="@{/}"
-           th:text="#{reg.success.complete}"
-
-        >{Registration Complete}</a>
+           th:text="#{reg.success.complete}">
+            Registration Complete</a>
     </h3>
 
-    <hr class="my-3 bg-white w-80"/>
+    <hr class="my-3 bg-white w-100"/>
 
     <div class="fs-3 fw-bolder" th:text="#{reg.success.thanks} + '.'">
         Thank you for registering to Blackjack
@@ -42,11 +41,11 @@
         arrive in your inbox
     </div>
 
-    <hr class="my-3 bg-white w-80"/>
+    <hr class="my-3 bg-white w-100"/>
 
     <h3 class="fw-bolder text-center">
-        <span class="info-msg" th:text="#{reg.success.back.to}">{Back to}</span>
-        <a class="reg-success-link fw-bolder" th:href="@{/}" th:text="#{reg.success.lobby}">Lobby</a>
+        <span class="info-msg" th:text="#{back.to}">Back to</span>
+        <a class="reg-success-link" th:href="@{/}" th:text="#{lobby}">Lobby</a>
     </h3>
 </div>
 

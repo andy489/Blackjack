@@ -12,7 +12,7 @@ function replaceQueryParam(requestParamKey, requestParamValue) {
     if (url.match(requestParamKey)) {
         url = url.replace(new RegExp(strRegExPattern), `${requestParamKey}=${requestParamValue}`)
     } else {
-        if (!url.endsWith("?")) {
+        if (!url.includes("?")) {
             url += '?'
         } else {
             url += "&"

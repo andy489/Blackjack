@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <title th:text="#{page.reset.title}">Forgot Password</title>
+    <link rel="stylesheet" th:href="@{/css/auth/pass-reset.css}"/>
+</head>
+
+<body class="body-auth-success">
+
+<header th:replace="~{fragment/common::header}"></header>
+
+<!--SUCCESS-->
+<div th:if="${success}" class="container-index rounded mt-4 text-center">
+    <h3 class="fw-bolder">
+        <i class="fa fa-check-circle success-color"></i>
+
+        <span class="fw-bolder success-title"
+              th:href="@{/}" th:text="#{forgot.success.title} + '!'">
+            Recovery email sent!
+        </span>
+    </h3>
+
+    <hr class="my-3 bg-white w-100"/>
+
+    <div class="fs-5 mb-2">
+        <span th:text="#{forgot.success.message.send}">A message has been sent to email</span>
+        <span class="success-color fw-bolder" th:if="${email}" th:text="${email}"></span>
+        <span class="success-color fw-bolder" th:unless="${else}">EMAIL</span>
+        <span th:text="#{forgot.success.with.instructions}">with instructions to reset the password of user</span>
+        <span class="success-color fw-bolder" th:if="${username}" th:text="${username}"></span>
+        <span class="success-color fw-bolder" th:unless="${else}">USERNAME.</span>
+    </div>
+
+    <div class="fs-5 mb-2">
+        <span th:text="#{forgot.success.request}">This password reset request will be valid for at least</span>
+        <span class="success-color fw-bolder" th:text="#{forget.success.duration}">1 hour</span>
+        <span th:text="#{forget.success.expire} + '.'">after which it will expire.</span>
+    </div>
+
+
+    <hr class="my-3 bg-white w-100"/>
+
+    <h3 class="fw-bold text-center">
+        <span class="info-msg" th:text="#{back.to}">Back to</span>
+        <a class="back-to-lobby" th:href="@{/}" th:text="#{lobby}">Lobby</a>
+    </h3>
+</div>
+
+<!--FAIL-->
+<div th:unless="${success}" class="container-index rounded mt-4 text-center">
+    <h3 class="fw-bolder">
+        <i class="fa-solid fa-circle-xmark fail-color"></i>
+
+        <span class="fw-bolder fail-title"
+              th:href="@{/}" th:text="#{forgot.fail.title} + '!'">
+            Failed to recover password!
+        </span>
+    </h3>
+
+    <hr class="my-3 bg-white w-100"/>
+
+    <div class="fs-5 mb-2">
+        <span th:text="#{forgot.fail.user}">User with email address</span>
+        <span class="fail-color fw-bolder" th:if="${email}" th:text="${email}"></span>
+        <span class="fail-color fw-bolder" th:unless="${email}">EMAIL</span>
+        <span th:text="#{forgot.fail.username}">and username</span>
+        <span class="fail-color fw-bolder" th:if="${username}" th:text="${username}"></span>
+        <span class="fail-color fw-bolder" th:unless="${username}">USERNAME</span>
+        <span th:text="#{forgot.fail.exist} + '.'">and username</span>
+    </div>
+
+    <div class="fs-5 mb-2">
+        <span th:text="#{forgot.fail.request} + '.'">Failed to send email with instructions to reset the password.</span>
+    </div>
+
+    <hr class="my-3 bg-white w-100"/>
+
+    <h3 class="fw-bold text-center">
+        <span class="info-msg" th:text="#{back.to}">Back to</span>
+        <a class="back-to-lobby" th:href="@{/}" th:text="#{lobby}">Lobby</a>
+    </h3>
+</div>
+
+<script th:src="@{/js/jquery/jquery.js}"></script>
+<link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap5.min.css}"/>
+<footer th:replace="~{fragment/common::footer}"></footer>
+</body>
+
+</html>
