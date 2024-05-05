@@ -66,6 +66,9 @@ public class UserEntity extends BaseEntity {
     @OneToOne(cascade = {CascadeType.REMOVE})
     private UserActivationTokenEntity activationToken;
 
+    @OneToOne(cascade = {CascadeType.REMOVE})
+    private UserForgotPassEntity resetPassToken;
+
     public UserEntity addRole(RoleEntity role) {
         this.roles.add(role);
         return this;

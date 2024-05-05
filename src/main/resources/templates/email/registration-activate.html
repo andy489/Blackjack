@@ -42,7 +42,7 @@
         </div>
 
         <a class="m-auto mt-3 w-50 d-block font-weight-bold btn btn-outline-primary mb-4"
-           th:href="@{'http://localhost:8080/auth?token=' + ${activation_token}}" target="_blank"
+           th:href="@{'http://localhost:8080/auth/activation?token=' + ${token}}" target="_blank"
            th:text="#{email.login.btn}">
             Log in to your new account
         </a>

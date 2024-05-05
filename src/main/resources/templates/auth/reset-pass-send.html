@@ -4,8 +4,8 @@
 
 <head>
     <th:block th:insert="~{fragment/common::head}"></th:block>
-    <title th:text="#{page.reset.title}">Forgot Password</title>
-    <link rel="stylesheet" th:href="@{/css/auth/pass-reset.css}"/>
+    <title th:text="#{page.reset.send.title}">Forgot Password</title>
+    <link rel="stylesheet" th:href="@{/css/auth/pass-reset-send.css}"/>
 </head>
 
 <body class="body-auth-success">
@@ -28,10 +28,8 @@
     <div class="fs-5 mb-2">
         <span th:text="#{forgot.success.message.send}">A message has been sent to email</span>
         <span class="success-color fw-bolder" th:if="${email}" th:text="${email}"></span>
-        <span class="success-color fw-bolder" th:unless="${else}">EMAIL</span>
-        <span th:text="#{forgot.success.with.instructions}">with instructions to reset the password of user</span>
-        <span class="success-color fw-bolder" th:if="${username}" th:text="${username}"></span>
-        <span class="success-color fw-bolder" th:unless="${else}">USERNAME.</span>
+        <span class="success-color fw-bolder" th:unless="${email}">EMAIL</span>
+        <span th:text="#{forgot.success.with.instructions} + '.'">with instructions for password reset.</span>
     </div>
 
     <div class="fs-5 mb-2">
@@ -66,10 +64,7 @@
         <span th:text="#{forgot.fail.user}">User with email address</span>
         <span class="fail-color fw-bolder" th:if="${email}" th:text="${email}"></span>
         <span class="fail-color fw-bolder" th:unless="${email}">EMAIL</span>
-        <span th:text="#{forgot.fail.username}">and username</span>
-        <span class="fail-color fw-bolder" th:if="${username}" th:text="${username}"></span>
-        <span class="fail-color fw-bolder" th:unless="${username}">USERNAME</span>
-        <span th:text="#{forgot.fail.exist} + '.'">and username</span>
+        <span th:text="#{forgot.fail.exist} + '.'">does not exist.</span>
     </div>
 
     <div class="fs-5 mb-2">

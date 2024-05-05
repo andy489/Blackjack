@@ -10,10 +10,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Constraint(validatedBy = UsernameAndEmailMatchValidator.class)
-public @interface UsernameAndEmailMatch {
-
-    String usernameField();
+@Constraint(validatedBy = EmailExistanceValidator.class)
+public @interface EmailExistance {
 
     String message() default "{constraint.fields.mismatch}";
 

@@ -24,7 +24,7 @@ spring:
     change-log: classpath:db/changelog/changelog-master.xml
 
 google.recaptcha:
-  enabled: false
+  enabled: true
   site: ${RECAPTCHA_SITE_KEY}
   secret: ${RECAPTCHA_SITE_SECRET}
 

@@ -1,6 +1,6 @@
 package com.casino.blackjack.service.scheduler;
 
-import com.casino.blackjack.service.auth.UserActivationTokenService;
+import com.casino.blackjack.service.token.UserTokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,15 +15,15 @@ public class ActivationTokenCleaner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActivationTokenCleaner.class);
 
-    private final UserActivationTokenService userActivationTokenService;
+    private final UserTokenService userTokenService;
 
     private final DateTimeFormatter dateTimeFormatter;
 
     @Value("${auth.activation-token.expires-after-minutes}")
     private Integer minutesBeforeActivationTokenExpires;
 
-    public ActivationTokenCleaner(UserActivationTokenService userActivationTokenService) {
-        this.userActivationTokenService = userActivationTokenService;
+    public ActivationTokenCleaner(UserTokenService userTokenService) {
+        this.userTokenService = userTokenService;
         this.dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, hh:mm:ss");
     }
 
@@ -36,7 +36,7 @@ public class ActivationTokenCleaner {
 
         LOGGER.info("Trigger cleanup of activation links at {}.", LocalDateTime.now().format(dateTimeFormatter));
 
-        userActivationTokenService.clearExpiredActivationTokens(timeBefore);
+        userTokenService.clearExpiredActivationTokens(timeBefore);
     }
 
     private LocalDateTime getTimeBeforeMinutes(int minutes) {

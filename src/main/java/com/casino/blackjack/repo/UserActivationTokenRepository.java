@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserActivationTokenRepository extends JpaRepository<UserActivationTokenEntity, Long> {
     void deleteByUserId(Long userId);
 
-    Optional<UserActivationTokenEntity> findByActivationToken(String activationToken);
+    Optional<UserActivationTokenEntity> findByToken(String token);
 
     @Modifying
     void deleteByCreatedAtBefore(Instant createdAt);

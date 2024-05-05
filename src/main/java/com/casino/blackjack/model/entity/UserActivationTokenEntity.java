@@ -19,8 +19,7 @@ public class UserActivationTokenEntity extends BaseEntity {
     @OneToOne
     private UserEntity user;
 
-    private String activationToken;
+    private String token;
 
     private Instant createdAt;
-
 }

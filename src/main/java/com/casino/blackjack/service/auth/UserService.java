@@ -1,14 +1,19 @@
 package com.casino.blackjack.service.auth;
 
 import com.casino.blackjack.model.dto.UserRegistrationDTO;
+import com.casino.blackjack.model.dto.UserResetPasswordSendInstructionsDTO;
 import com.casino.blackjack.model.entity.RoleEntity;
 import com.casino.blackjack.model.entity.UserActivationTokenEntity;
 import com.casino.blackjack.model.entity.UserEntity;
+import com.casino.blackjack.model.entity.UserForgotPassEntity;
 import com.casino.blackjack.model.enumerated.UserRoleEnum;
 import com.casino.blackjack.model.event.UserRegisteredEvent;
+import com.casino.blackjack.model.event.UserForgotPasswordEvent;
 import com.casino.blackjack.repo.RoleRepository;
 import com.casino.blackjack.repo.UserActivationTokenRepository;
 import com.casino.blackjack.repo.UserRepository;
+import com.casino.blackjack.repo.UserResetPassTokenRepository;
+import com.casino.blackjack.service.mail.MailService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -30,7 +35,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 @Service
@@ -52,23 +56,29 @@ public class UserService {
 
     private final UserActivationTokenRepository userActivationTokenRepository;
 
+    private final MailService mailService;
+    private final UserResetPassTokenRepository userResetPassTokenRepository;
+
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        PasswordEncoder encoder,
                        UserDetailsService userDetailsService,
                        @Value("${auth.register.auto-login}") Boolean autoLogin,
                        ApplicationEventPublisher appEventPublisher,
-                       UserActivationTokenRepository userActivationTokenRepository) {
+                       UserActivationTokenRepository userActivationTokenRepository,
+                       MailService mailService,
+                       UserResetPassTokenRepository userResetPassTokenRepository) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.userDetailsService = userDetailsService;
         this.autoLogin = autoLogin;
-
         blackjackUserDetailsService = new BlackjackUserDetailsService(userRepository);
         this.appEventPublisher = appEventPublisher;
         this.userActivationTokenRepository = userActivationTokenRepository;
+        this.mailService = mailService;
+        this.userResetPassTokenRepository = userResetPassTokenRepository;
     }
 
     public Optional<UserEntity> findByUsername(String username) {
@@ -144,33 +154,6 @@ public class UserService {
         }
     }
 
-    @Transactional
-    public void createUserIfNotExist(String username, String email, String firstName, String lastName) {
-        // Create manually a user in the database
-        // password not necessary (random uuid)
-        // make user change his password on first login
-
-        Optional<UserEntity> userWithEmail = userRepository.findByEmail(email);
-        if (userWithEmail.isEmpty()) {
-
-            Optional<UserEntity> userWithUsername = userRepository.findByUsername(username);
-
-            if (userWithUsername.isPresent()) {
-                username = username + "_" + UUID.randomUUID();
-            }
-
-            UserEntity userEntity = new UserEntity()
-                    .setUsername(username)
-                    .setEmail(email)
-                    .setPassword(UUID.randomUUID().toString())
-                    .setFirstName(firstName)
-                    .setLastName(lastName)
-                    .setIsActive(true);
-
-            userRepository.save(userEntity);
-        }
-    }
-
     public Authentication login(String username) {
         UserDetails userDetails = blackjackUserDetailsService.loadUserByUsername(username);
 
@@ -191,7 +174,7 @@ public class UserService {
                                           RedirectAttributes redirectAttributes) {
 
         Optional<UserActivationTokenEntity> byActivationToken =
-                userActivationTokenRepository.findByActivationToken(activationToken);
+                userActivationTokenRepository.findByToken(activationToken);
 
         if (byActivationToken.isEmpty()) {
             return "/";
@@ -219,5 +202,47 @@ public class UserService {
         successfulLoginProcessor.accept(authentication);
 
         return "/";
+    }
+
+    @Transactional
+    public void sendResetPasswordLink(UserResetPasswordSendInstructionsDTO userResetPasswordSendInstructionsDTO, Locale locale,
+                                      RedirectAttributes redirectAttributes) {
+
+        String email = userResetPasswordSendInstructionsDTO.getEmail();
+
+        Optional<UserEntity> byEmail = userRepository.findByEmail(email);
+
+        if (byEmail.isEmpty()) {
+            throw new IllegalStateException("No such user");
+        }
+
+        UserEntity userEntity = byEmail.get();
+
+        redirectAttributes.addFlashAttribute("username", userEntity.getUsername());
+
+        UserForgotPasswordEvent userForgotPasswordEvent = new UserForgotPasswordEvent(getClass().getName(),
+                userEntity.getEmail(), userEntity.getUsername(), userEntity.getFullName(), locale);
+
+        appEventPublisher.publishEvent(userForgotPasswordEvent);
+    }
+
+    @Transactional
+    public String changePassword(String token, String rawPass) {
+
+        Optional<UserForgotPassEntity> byToken = userResetPassTokenRepository.findByToken(token);
+
+        if(byToken.isEmpty()){
+            return "/auth/pass?changed=false";
+        }
+
+        UserForgotPassEntity userForgotPassEntity = byToken.get();
+
+        UserEntity currentUser = userRepository.getReferenceById(userForgotPassEntity.getUser().getId());
+
+        currentUser.setPassword(encoder.encode(rawPass));
+
+        userResetPassTokenRepository.deleteByUserId(currentUser.getId());
+
+        return "/auth/pass?changed=true";
     }
 }

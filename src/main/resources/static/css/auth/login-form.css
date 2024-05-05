@@ -42,7 +42,8 @@
 .reset-password-btn:hover, .remembered-password-btn:hover {
     text-decoration: underline;
     color: var(--electric);
-    shadow: 0 0 6px var(--electric);
+    text-shadow: 0 0 24px var(--electric);
+    cursor: pointer;
 }
 
 

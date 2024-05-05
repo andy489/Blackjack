@@ -84,17 +84,11 @@
         Trouble Signing In?
     </div>
     <div class="fs-5 fw-lighter" th:text="#{form.res.pass.subtitle}">
-        Enter your username and email address, and we'll send you instructions for resetting your password.
+        Enter your email address, and we'll send you instructions for resetting your password.
     </div>
     <form id="reset-password-form"
           th:action="@{/auth/reset-password}"
           th:method="post">
-
-        <div class="user-box">
-            <input name="username"
-                   type="text" required="yes" autocomplete="off"/>
-            <label th:text="#{form.res.username}">username</label>
-        </div>
 
         <div class="user-box user-box-icon">
             <input name="email"
@@ -104,8 +98,8 @@
 
         <p th:if="${bad_credentials_reset_password}"
            class="errors alert alert-danger p-1"
-           th:text="#{constraint.username.email.combination}">
-            wrong username or email address
+           th:text="#{constraint.email.missing}">
+            wrong email address
         </p>
 
         <div id="g-recaptcha-forgot" class="recaptcha">

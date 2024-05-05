@@ -11,11 +11,9 @@ import org.springframework.beans.PropertyAccessorFactory;
 
 import java.util.Optional;
 
-public class UsernameAndEmailMatchValidator implements ConstraintValidator<UsernameAndEmailMatch, Object> {
+public class EmailExistanceValidator implements ConstraintValidator<EmailExistance, Object> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UsernameAndEmailMatchValidator.class);
-
-    private String username;
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailExistanceValidator.class);
 
     private String email;
 
@@ -23,15 +21,14 @@ public class UsernameAndEmailMatchValidator implements ConstraintValidator<Usern
 
     private final UserService userService;
 
-    public UsernameAndEmailMatchValidator(UserService userService) {
+    public EmailExistanceValidator(UserService userService) {
         this.userService = userService;
     }
 
     @Override
-    public void initialize(UsernameAndEmailMatch constraintAnnotation) {
+    public void initialize(EmailExistance constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
 
-        username = constraintAnnotation.usernameField();
         email = constraintAnnotation.emailField();
 
         this.message = constraintAnnotation.message();
@@ -42,26 +39,16 @@ public class UsernameAndEmailMatchValidator implements ConstraintValidator<Usern
 
         BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(value);
 
-        String usernameValue = (String) beanWrapper.getPropertyValue(this.username);
         String emailValue = (String) beanWrapper.getPropertyValue(this.email);
 
-        Optional<UserEntity> byUsername = userService.findByUsername(usernameValue);
+        Optional<UserEntity> byEmail = userService.findByEmail(emailValue);
 
-        boolean empty = byUsername.isEmpty();
+        boolean empty = byEmail.isEmpty();
 
         if (empty) {
             return false;
         }
 
-        UserEntity userEntity = byUsername.get();
-
-        Boolean isActive = userEntity.getIsActive();
-        String emailFromEntity = userEntity.getEmail();
-
-        if (!isActive) {
-            return false;
-        }
-
-        return emailFromEntity.equals(emailValue);
+        return byEmail.get().getIsActive();
     }
 }

@@ -34,7 +34,9 @@ public class MailService {
         this.appMail = appMail;
     }
 
-    public void sendRegistrationEmail(String userEmail, String username, String fullName, Locale locale, String activationToken) {
+    public void sendRegistrationEmail(String email, String username, String fullName, Locale locale,
+                                      String token) {
+
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         try {
@@ -42,9 +44,9 @@ public class MailService {
 
             mimeMessageHelper.setFrom(appMail);
             mimeMessageHelper.setReplyTo(appMail);
-            mimeMessageHelper.setTo(userEmail);
-            mimeMessageHelper.setSubject(getEmailSubject(locale));
-            mimeMessageHelper.setText(generateMessageContent(locale, username, fullName, activationToken), true);
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setSubject(getEmailActivationSubject(locale));
+            mimeMessageHelper.setText(generateMessageContentActivation(locale, username, fullName, token), true);
 
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
 
@@ -53,18 +55,56 @@ public class MailService {
         }
     }
 
-    private String getEmailSubject(Locale locale) {
-        return messageSource.getMessage("email.subject", new Object[0], locale);
+    public void sendForgotPassEmail(String email, String username, String fullName,  Locale locale,
+                                    String token) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+
+            mimeMessageHelper.setFrom(appMail);
+            mimeMessageHelper.setReplyTo(appMail);
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setSubject(getEmailForgotPassSubject(locale));
+            mimeMessageHelper.setText(generateMessageContentForgotPass(locale, username, fullName, token), true);
+
+            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private String generateMessageContent(Locale locale, String username, String fullName, String activationToken) {
+    private String getEmailActivationSubject(Locale locale) {
+        return messageSource.getMessage("email.activation.subject", new Object[0], locale);
+    }
+
+    private String getEmailForgotPassSubject(Locale locale) {
+        return messageSource.getMessage("email.forgot.pass.subject", new Object[0], locale);
+    }
+
+    private String generateMessageContentActivation(Locale locale, String username, String fullName,
+                                                    String activationToken) {
+
         Context context = new Context();
         context.setVariable("username", username);
         context.setVariable("fullName", fullName);
-        context.setVariable("activation_token", activationToken);
+        context.setVariable("token", activationToken);
         context.setVariable("rulesLink", "rules");
         context.setLocale(locale);
 
         return templateEngine.process("email/registration-activate", context);
     }
+
+    private String generateMessageContentForgotPass(Locale locale, String username, String fullName, String activationToken) {
+
+        Context context = new Context();
+        context.setVariable("username", username);
+        context.setVariable("fullName", fullName);
+        context.setVariable("token", activationToken);
+        context.setLocale(locale);
+
+        return templateEngine.process("email/reset-pass", context);
+    }
 }
+

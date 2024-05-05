@@ -196,7 +196,6 @@ button {
 
 .invalid-feedback {
     text-align: left;
-    color: indianred;
     font-size: 0.5em;
     font-weight: lighter;
 }

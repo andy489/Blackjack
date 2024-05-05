@@ -3,6 +3,8 @@ package com.casino.blackjack.controller;
 import org.springframework.web.servlet.ModelAndView;
 
 public class BaseController {
+    protected static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
+
     private static final String REDIRECT = "redirect:";
 
     public ModelAndView view(String viewName, ModelAndView modelAndView) {
