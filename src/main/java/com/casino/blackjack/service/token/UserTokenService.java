@@ -18,6 +18,7 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -89,9 +90,17 @@ public class UserTokenService {
                 .setUser(userEntity)
                 .setCreatedAt(Instant.now());
 
-        userResetPassTokenRepository.deleteByUserId(userEntity.getId());
+        Optional<UserForgotPassEntity> byUserId = userResetPassTokenRepository.findByUserId(userEntity.getId());
 
-        userResetPassTokenRepository.save(userForgotPassEntity);
+        if(byUserId.isEmpty()){
+            userResetPassTokenRepository.save(userForgotPassEntity);
+        } else {
+            UserForgotPassEntity userForgotPassEntityToModify = byUserId.get();
+
+            userForgotPassEntityToModify
+                    .setCreatedAt(userForgotPassEntity.getCreatedAt())
+                    .setToken(userForgotPassEntity.getToken());
+        }
 
         return token;
     }

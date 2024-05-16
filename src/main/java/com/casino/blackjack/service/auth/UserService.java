@@ -56,7 +56,6 @@ public class UserService {
 
     private final UserActivationTokenRepository userActivationTokenRepository;
 
-    private final MailService mailService;
     private final UserResetPassTokenRepository userResetPassTokenRepository;
 
     public UserService(UserRepository userRepository,
@@ -66,7 +65,6 @@ public class UserService {
                        @Value("${auth.register.auto-login}") Boolean autoLogin,
                        ApplicationEventPublisher appEventPublisher,
                        UserActivationTokenRepository userActivationTokenRepository,
-                       MailService mailService,
                        UserResetPassTokenRepository userResetPassTokenRepository) {
 
         this.userRepository = userRepository;
@@ -77,7 +75,6 @@ public class UserService {
         blackjackUserDetailsService = new BlackjackUserDetailsService(userRepository);
         this.appEventPublisher = appEventPublisher;
         this.userActivationTokenRepository = userActivationTokenRepository;
-        this.mailService = mailService;
         this.userResetPassTokenRepository = userResetPassTokenRepository;
     }
 

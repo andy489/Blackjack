@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <title th:text="#{page.login.title}">Login</title>
+    <link rel="stylesheet" th:href="@{/css/auth/register-form.css}"/>
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/auth/login-form.css}"/>
+    <!--brands logos-->
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.6/css/all.css}">
+</head>
+
+<body class="body-auth">
+
+<header th:replace="~{fragment/common::header}"></header>
+
+<div id="login-box" class="auth-box">
+    <div class="register-form-title mb-2" th:text="#{form.reset.password.title}">
+        Reset your password
+    </div>
+    <div class="fs-5 fw-lighter mb-5" th:text="#{form.reset.password.info} + '.'">
+        Please enter your new password below.
+    </div>
+    <form id="reset-pass-form"
+          th:action="@{/auth/reset_pass}"
+          th:method="post"
+          th:object="${resetPasswordDTO}">
+
+        <div class="user-box user-box-icon">
+            <input id="password"
+                   type="password" name="" required=""
+                   th:field="*{password}"
+                   th:errorclass="'is-invalid'"/>
+            <i id="password-eye" class="fa-regular fa-eye material-icon"></i>
+            <label th:text="#{form.reset.password.new}">Enter new password</label>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
+                <span th:if="${#fields.errors('password').size() > 0}"
+                      th:text="${#fields.errors('password').get(0)}"></span>
+            </span>
+        </div>
+
+        <div class="user-box">
+            <input id="confirm-password"
+                   type="password" name="" required=""
+                   th:field="*{confirmPassword}"
+                   th:errorclass="'is-invalid'"/>
+            <label th:text="#{form.reset.password.re}">Re-enter new password</label>
+            <i id="confirm-password-eye" class="fa-regular fa-eye material-icon"></i>
+            <span class="invalid-feedback alert alert-danger fs-6 p-1">
+                <span th:if="${#fields.errors('confirmPassword').size() > 0}"
+                      th:text="${#fields.errors('confirmPassword').get(0)}"></span>
+            </span>
+        </div>
+
+        <input id="token" name="token" type="hidden" th:value="${param.token}"/>
+
+        <div id="g-recaptcha-login" class="recaptcha">
+            <button class="g-recaptcha" style="width: 81%" type="submit"
+                    th:attr="data-sitekey=${@recaptchaConfig.getSite()}"
+                    data-callback='onSubmit'
+                    data-action='submit'>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <th:block th:text="#{form.reset.password.btn}">RESET PASSWORD</th:block>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/js/jquery/jquery.js}"></script>
+<script th:src="@{/js/auth/toggle-password-eye.js}"></script>
+<script th:src="@{/js/auth/recaptcha.js}"></script>
+
+<script>
+    function onSubmit(token) {
+        document.getElementById("reset-pass-form").submit();
+    }
+</script>
+
+</body>
+
+</html>
