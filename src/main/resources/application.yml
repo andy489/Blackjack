@@ -36,6 +36,9 @@ auth:
   activation-token:
     cleanup-cron: "*/60 */20 * * * *"
     expires-after-minutes: 60
+  forgot-password-token:
+    cleanup-cron: "*/60 */10 * * * *"
+    expires-after-minutes: 30
 
 # mail-hog: "localhost:8025"
 mail:

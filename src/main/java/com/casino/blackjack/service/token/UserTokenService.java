@@ -126,4 +126,11 @@ public class UserTokenService {
 
         userActivationTokenRepository.deleteByCreatedAtBefore(instant);
     }
+
+    @Transactional
+    public void clearExpiredForgotPassTokens(LocalDateTime expiredTime) {
+        Instant instant = expiredTime.toInstant(ZoneId.systemDefault().getRules().getOffset(expiredTime));
+
+        userResetPassTokenRepository.deleteByCreatedAtBefore(instant);
+    }
 }
