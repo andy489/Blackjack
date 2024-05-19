@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
         expiredYearField = "expiredYear",
         message = "{constraint.expired.date}"
 )
-public class PayCardDTO {
+public class CreditCardDTO {
 
     @NotBlank
     @CustomCreditCardNumber(message = "{constraint.custom.credit.card.number}")
@@ -43,12 +43,12 @@ public class PayCardDTO {
     @Max(value = 999L, message = "{constraint.cvv}")
     private Integer cardCvv;
 
-    public PayCardDTO() {
+    public CreditCardDTO() {
     }
 
     @Override
     public String toString() {
-        return "PayCardDTO{" +
+        return "CreditCardDTO{" +
                 "cardNumber='" + cardNumber + '\'' +
                 ", cardName='" + cardHolder + '\'' +
                 ", cardMonth=" + expiredMonth +

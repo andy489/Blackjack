@@ -50,7 +50,7 @@ public class SecurityConfig {
                                     "/rules",
                                     "/test/**")
                             .permitAll()
-                            .requestMatchers("/pay-card/**")
+                            .requestMatchers("/credit-card/**")
                             .authenticated();
                 })
                 .formLogin(form -> {
