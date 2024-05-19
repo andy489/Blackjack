@@ -12,6 +12,5 @@ public interface UserActivationTokenRepository extends JpaRepository<UserActivat
 
     Optional<UserActivationTokenEntity> findByToken(String token);
 
-    @Modifying
     void deleteByCreatedAtBefore(Instant createdAt);
 }

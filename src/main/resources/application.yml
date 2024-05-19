@@ -34,7 +34,7 @@ auth:
   login:
     remember-me-key: ${REMEMBER_ME_KEY}
   activation-token:
-    cleanup-cron: "*/60 */20 * * * *"
+    cleanup-cron: "*/60 */10 * * * *"
     expires-after-minutes: 60
   forgot-password-token:
     cleanup-cron: "*/60 */10 * * * *"

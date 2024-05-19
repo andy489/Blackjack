@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "reset_pass_tokens")

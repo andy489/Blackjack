@@ -91,7 +91,7 @@ public class AuthController extends BaseController {
             redirectAttributes.addFlashAttribute(BINDING_RESULT_PATH + "userRegistrationDTO",
                     bindingResult);
 
-            return super.redirect("/auth/register");
+            return super.redirect("/pay-card/register");
         }
 
         userService.registerAndLogin(userRegistrationDTO, localeResolver.resolveLocale(request), successfulAuth -> {

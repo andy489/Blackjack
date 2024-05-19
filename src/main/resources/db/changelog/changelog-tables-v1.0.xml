@@ -9,7 +9,7 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="created_at" type="datetime"/>
+            <column name="created_at" type="TIMESTAMP"/>
             <column name="token" type="VARCHAR(255)"/>
             <column name="user_id" type="BIGINT">
                 <constraints unique="true"/>
@@ -33,7 +33,7 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="created_at" type="datetime"/>
+            <column name="created_at" type="TIMESTAMP"/>
             <column name="token" type="VARCHAR(255)"/>
             <column name="user_id" type="BIGINT">
                 <constraints unique="true"/>

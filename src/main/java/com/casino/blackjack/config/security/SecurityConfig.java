@@ -48,9 +48,9 @@ public class SecurityConfig {
                                     "/error/**",
                                     "/login-error",
                                     "/rules",
-                                    "/test/**"
-                            ).permitAll()
-                            .anyRequest()
+                                    "/test/**")
+                            .permitAll()
+                            .requestMatchers("/pay-card/**")
                             .authenticated();
                 })
                 .formLogin(form -> {

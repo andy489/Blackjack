@@ -20,4 +20,5 @@ public class BaseController {
     public ModelAndView redirect(String url) {
         return this.view(REDIRECT + url);
     }
+
 }

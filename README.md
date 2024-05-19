@@ -2,16 +2,16 @@
 
 ```bash
 
-cd Blackjack
+cd github/Blackjack
 
 open -a docker
 
-docker compose up -d
+docker-compose up -d
 
 ```
 
 ```bash
 
-docker stop (docker ps -q)
+docker container rm -f $(docker container ls -aq)
 
 ```

@@ -18,6 +18,7 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -124,12 +125,17 @@ public class UserTokenService {
 
         Instant instant = expiredTime.toInstant(ZoneId.systemDefault().getRules().getOffset(expiredTime));
 
+        System.out.println("[DEBUG] instant: " + instant);
+
         userActivationTokenRepository.deleteByCreatedAtBefore(instant);
     }
 
     @Transactional
     public void clearExpiredForgotPassTokens(LocalDateTime expiredTime) {
+
         Instant instant = expiredTime.toInstant(ZoneId.systemDefault().getRules().getOffset(expiredTime));
+
+        System.out.println("[DEBUG] instant: " + instant);
 
         userResetPassTokenRepository.deleteByCreatedAtBefore(instant);
     }
