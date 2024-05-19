@@ -57,17 +57,14 @@ public class UserEntity extends BaseEntity {
     )
     private Set<RoleEntity> roles = new HashSet<>();
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+    private CreditCardEntity creditCard;
+
     @OneToOne(fetch = FetchType.EAGER)
     private GameEntity myGame;
 
     @OneToOne(fetch = FetchType.EAGER)
     private WalletEntity myWallet;
-
-    @OneToOne(cascade = {CascadeType.REMOVE})
-    private UserActivationTokenEntity activationToken;
-
-    @OneToOne(cascade = {CascadeType.REMOVE})
-    private UserForgotPassEntity resetPassToken;
 
     public UserEntity addRole(RoleEntity role) {
         this.roles.add(role);

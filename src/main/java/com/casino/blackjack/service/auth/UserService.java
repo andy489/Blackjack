@@ -78,6 +78,10 @@ public class UserService {
         this.userResetPassTokenRepository = userResetPassTokenRepository;
     }
 
+    public Optional<UserEntity> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
     public Optional<UserEntity> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -93,7 +97,6 @@ public class UserService {
     public void deleteByUsername(String username) {
         userRepository.deleteByUsername(username);
     }
-
 
     public void deleteByEmail(String email) {
         userRepository.deleteByEmail(email);

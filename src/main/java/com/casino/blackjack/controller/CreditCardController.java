@@ -1,8 +1,11 @@
 package com.casino.blackjack.controller;
 
 import com.casino.blackjack.model.dto.CreditCardDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.casino.blackjack.model.user.CustomUserDetails;
+import com.casino.blackjack.service.CreditCardService;
+import com.casino.blackjack.service.auth.BlackjackUserDetailsService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/credit-card")
 public class CreditCardController extends BaseController {
 
-    public CreditCardController() {
+    private final CreditCardService creditCardService;
+
+    public CreditCardController(CreditCardService creditCardService) {
+        this.creditCardService = creditCardService;
     }
 
     @ModelAttribute(name = "creditCardDTO")
@@ -31,6 +37,7 @@ public class CreditCardController extends BaseController {
 
     @PostMapping("/register")
     public ModelAndView postCreditCardForm(
+            @AuthenticationPrincipal CustomUserDetails currentUser,
             @Valid @ModelAttribute(name = "creditCardDTO") CreditCardDTO creditCardDTO,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
@@ -42,6 +49,9 @@ public class CreditCardController extends BaseController {
             return super.redirect("/credit-card/register");
         }
 
+        creditCardService.registerNewCreditCard(creditCardDTO, currentUser.getId());
+
+        // TODO success
         return redirect("/");
     }
 }
