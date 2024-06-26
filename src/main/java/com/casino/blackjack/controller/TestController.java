@@ -2,6 +2,7 @@ package com.casino.blackjack.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +34,13 @@ public class TestController extends BaseController {
         }
 
         return super.view("auth/reset-pass-send");
+    }
 
+    @GetMapping({"/{statusCode}"})
+    public ModelAndView getForbiddenPage(@PathVariable(name = "statusCode") Integer code) {
+
+        System.out.println("[DEBUG]: " + "error/" + code);
+
+        return super.view("error/" + code);
     }
 }

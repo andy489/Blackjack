@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +20,7 @@ import org.springframework.security.web.context.RequestAttributeSecurityContextR
 import org.springframework.security.web.context.SecurityContextRepository;
 
 @Configuration
+@EnableMethodSecurity // for @PreAuthorize to work
 public class SecurityConfig {
 
     private final String rememberMeKey;
@@ -44,14 +47,19 @@ public class SecurityConfig {
                             .requestMatchers(
                                     "/",
                                     "/index",
-                                    "/auth/**",
                                     "/error/**",
                                     "/login-error",
                                     "/rules",
-                                    "/test/**")
+                                    "/test/**",
+                                    "/credit-card/**")
                             .permitAll()
-                            .requestMatchers("/credit-card/**")
-                            .authenticated();
+                            .requestMatchers(HttpMethod.POST, "/auth/**")
+                            .anonymous()
+                            .requestMatchers(HttpMethod.GET, "/auth/**")
+                            .permitAll()
+                            .anyRequest()
+                            .permitAll()
+                    ;
                 })
                 .formLogin(form -> {
                     form

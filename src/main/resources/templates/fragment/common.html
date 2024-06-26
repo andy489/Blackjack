@@ -32,7 +32,7 @@
             <span class="nav-func align-middle" th:text="#{nav.lobby}">Lobby</span>
         </a>
 
-        <a class="nav-link active mb-0" th:href="@{/credit-card/register}">
+        <a class="nav-link active mb-0" th:href="@{/credit-card/deposit}">
             <span class="nav-icon align-middle">
                 <i class="fa-regular fa-credit-card"></i>
             </span>
@@ -80,7 +80,11 @@
         <div sec:authorize="isAuthenticated()"
              class="d-flex align-items-center logout-container">
             <div class="d-inline-block login-greeter">
-                <th:block th:text="#{nav.greeter}">Welcome,</th:block>
+                <th:block th:if="${#authentication.getPrincipal().getGender().toString()} == 'FEMALE'"
+                          th:text="#{nav.greeter.female}">Welcome,</th:block>
+                <th:block th:unless="${#authentication.getPrincipal().getGender().toString()} == 'FEMALE'"
+                          th:text="#{nav.greeter.male}">Welcome,</th:block>
+
                 <th:block sec:authentication="name">{name}</th:block>
                 !
             </div>

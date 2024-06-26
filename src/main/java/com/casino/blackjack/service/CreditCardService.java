@@ -8,10 +8,13 @@ import com.casino.blackjack.service.auth.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CreditCardService {
+
+    private static final int MAX_REGISTERED_CREDIT_CARDS = 3;
 
     private final UserService userService;
 
@@ -24,24 +27,101 @@ public class CreditCardService {
 
 
     @Transactional
-    public void registerNewCreditCard(CreditCardDTO creditCardDTO, Long currentUserId) {
+    public Optional<CreditCardEntity> registerNewCreditCard(CreditCardDTO creditCardDTO, Long currentUserId) {
 
         Optional<UserEntity> byId = userService.findById(currentUserId);
 
-        if(byId.isEmpty()){
-            throw new IllegalStateException("You must be logged in to register credit card");
+        if (byId.isEmpty()) {
+            throw new IllegalStateException("You must be logged in to make card operations");
         }
 
         UserEntity currentUser = byId.get();
+
+        List<CreditCardEntity> currentCards = creditCardRepository.findByOwner(currentUser);
+
+        if (currentCards.size() >= MAX_REGISTERED_CREDIT_CARDS) {
+            return Optional.empty();
+        }
 
         CreditCardEntity creditCardEntity = new CreditCardEntity()
                 .setCardNumber(creditCardDTO.getCardNumber())
                 .setCardHolder(creditCardDTO.getCardHolder())
                 .setExpiredMonth(creditCardDTO.getExpiredMonth())
                 .setExpiredYear(creditCardDTO.getExpiredYear())
-                .setCardCvv(creditCardDTO.getCardCvv())
+                .setCardCvc(creditCardDTO.getCardCvc())
                 .setOwner(currentUser);
 
-        CreditCardEntity newlyRegisteredCreditCard = creditCardRepository.save(creditCardEntity);
+        return Optional.of(creditCardRepository.save(creditCardEntity));
+    }
+
+    public List<CreditCardDTO> getRegisteredCreditCards(Long currentUserId) {
+        Optional<UserEntity> byId = userService.findById(currentUserId);
+
+        if (byId.isEmpty()) {
+            throw new IllegalStateException("You must be logged in to make card operations");
+        }
+
+        UserEntity currentUser = byId.get();
+
+        List<CreditCardEntity> byOwner = creditCardRepository.findByOwner(currentUser);
+
+        return byOwner.stream()
+                .map(cce -> new CreditCardDTO()
+                        .setCardCvc(cce.getCardCvc())
+                        .setCardHolder(cce.getCardHolder())
+                        .setExpiredYear(cce.getExpiredYear())
+                        .setExpiredMonth(cce.getExpiredMonth())
+                        .setCardNumber(cce.getCardNumber())
+                ).toList();
+    }
+
+    public Optional<Long> getOwnerId(String cardNumber) {
+
+        Optional<CreditCardEntity> byCardNumber = creditCardRepository.findByCardNumber(cardNumber);
+
+        return byCardNumber.map(creditCardEntity -> creditCardEntity.getOwner().getId());
+    }
+
+    public Boolean checkCreditCardNumberAndCvcMatch(String cardNum, String cvc) {
+
+        Long currentLoggedUserId = userService.getCurrentLoggedUserId();
+
+        if (currentLoggedUserId == null) {
+            return false;
+        }
+
+        Optional<CreditCardEntity> byCardNumber = creditCardRepository.findByCardNumber(cardNum);
+
+        if (byCardNumber.isEmpty()) {
+            return false;
+        }
+
+        CreditCardEntity creditCardEntity = byCardNumber.get();
+
+
+        boolean cvcMatch = creditCardEntity.getCardCvc().toString().equals(cvc);
+        boolean cardNumMatch = creditCardEntity.getCardNumber().equals(cardNum);
+        boolean userIdMatch = creditCardEntity.getOwner().getId().equals(currentLoggedUserId);
+
+        return cvcMatch && cardNumMatch && userIdMatch;
+    }
+
+    public Optional<CreditCardDTO> getByCardNumber(String cardNum) {
+        Optional<CreditCardEntity> byCardNumber = creditCardRepository.findByCardNumber(cardNum);
+
+        if (byCardNumber.isEmpty()) {
+            return Optional.empty();
+        }
+
+        CreditCardEntity creditCardEntity = byCardNumber.get();
+
+        CreditCardDTO creditCardDTO = new CreditCardDTO()
+                .setCardCvc(creditCardEntity.getCardCvc())
+                .setCardNumber(creditCardEntity.getCardNumber())
+                .setExpiredYear(creditCardEntity.getExpiredYear())
+                .setExpiredMonth(creditCardEntity.getExpiredMonth())
+                .setCardHolder(creditCardEntity.getCardHolder());
+
+        return Optional.of(creditCardDTO);
     }
 }

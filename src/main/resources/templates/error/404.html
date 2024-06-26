@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Forbidden</title>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/error/error.css}"/>
+</head>
+
+<body class="err-body">
+
+<main class="container">
+    <div>
+        <div class="container-err rounded mt-4">
+
+            <p class="status-code m-0">
+                404 Bad Request
+            </p>
+
+            <p class="intro-msg m-0">
+                Listen to us very carefully. There are three ways of doing things around here: the right way, the wrong way, and the way that we do it. You understand?
+            </p>
+
+            <hr class="my-2 bg-white w-80"/>
+
+            <h3 class="m-0">
+                <a id="go-back" class="index-text-link fw-bolder">Go back</a>
+            </h3>
+        </div>
+
+        <div class="my-4 text-center">
+            <img class="img-fluid border border-5 border-white rounded-3 err-fun-img"
+                 th:src="@{/images/error/404.jpg}" alt="..." src="">
+        </div>
+    </div>
+
+    <script defer th:src="@{/js/error/go-back.js}"></script>
+</main>
+
+</body>
+
+</html>

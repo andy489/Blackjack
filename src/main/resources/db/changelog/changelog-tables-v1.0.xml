@@ -20,7 +20,7 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="card_cvv" type="INT">
+            <column name="card_cvc" type="INT">
                 <constraints nullable="false"/>
             </column>
             <column name="card_holder" type="VARCHAR(255)">
@@ -36,7 +36,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="owner_id" type="BIGINT">
-                <constraints unique="true"/>
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
@@ -95,9 +95,6 @@
             <column name="username" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="credit_card_id" type="BIGINT">
-                <constraints unique="true"/>
-            </column>
             <column name="my_game_id" type="BIGINT">
                 <constraints unique="true"/>
             </column>
@@ -106,7 +103,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="andreystoev" id="7">
+    <changeSet author="andreystoev" id="17197556598-7">
         <createTable tableName="users_roles">
             <column name="user_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -130,39 +127,38 @@
         </createTable>
     </changeSet>
     <changeSet author="andreystoev" id="9">
+        <createIndex indexName="FK2ycif7hrrfm42c8vbt5mhk6do" tableName="credit_cards">
+            <column name="owner_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andreystoev" id="10">
         <createIndex indexName="FKj6m8fwv7oqv74fcehir1a9ffy" tableName="users_roles">
             <column name="role_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="andreystoev" id="10">
+    <changeSet author="andreystoev" id="11">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles"
                                  constraintName="FK2o0jvgh89lemvvo17cbqvdxaa" deferrable="false"
                                  initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="id" referencedTableName="users" validate="true"/>
     </changeSet>
-    <changeSet author="andreystoev" id="11">
+    <changeSet author="andreystoev" id="12">
         <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="credit_cards"
                                  constraintName="FK2ycif7hrrfm42c8vbt5mhk6do" deferrable="false"
                                  initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="id" referencedTableName="users" validate="true"/>
     </changeSet>
-    <changeSet author="andreystoev" id="12">
+    <changeSet author="andreystoev" id="13">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="reset_pass_tokens"
                                  constraintName="FK5syo597w66qi11pv80m4pjt3t" deferrable="false"
                                  initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="id" referencedTableName="users" validate="true"/>
     </changeSet>
-    <changeSet author="andreystoev" id="13">
+    <changeSet author="andreystoev" id="14">
         <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="games"
                                  constraintName="FK5tly2ihx4t84to6lfb4qrjo1b" deferrable="false"
                                  initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="id" referencedTableName="users" validate="true"/>
-    </changeSet>
-    <changeSet author="andreystoev" id="14">
-        <addForeignKeyConstraint baseColumnNames="credit_card_id" baseTableName="users"
-                                 constraintName="FK79uy6vvmr5rq8bmavnmjnsau5" deferrable="false"
-                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
-                                 referencedColumnNames="id" referencedTableName="credit_cards" validate="true"/>
     </changeSet>
     <changeSet author="andreystoev" id="15">
         <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="wallets"

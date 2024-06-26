@@ -2,7 +2,8 @@ package com.casino.blackjack.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +29,9 @@ public class CreditCardEntity extends BaseEntity {
     private Integer expiredYear;
 
     @Column(nullable = false)
-    private Integer cardCvv;
+    private Integer cardCvc;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
     private UserEntity owner;
 }

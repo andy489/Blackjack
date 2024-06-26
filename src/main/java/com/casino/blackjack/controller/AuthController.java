@@ -4,6 +4,7 @@ import com.casino.blackjack.model.dto.RecaptchaResponseDTO;
 import com.casino.blackjack.model.dto.ResetPasswordDTO;
 import com.casino.blackjack.model.dto.UserRegistrationDTO;
 import com.casino.blackjack.model.dto.UserResetPasswordSendInstructionsDTO;
+import com.casino.blackjack.model.user.CustomUserDetails;
 import com.casino.blackjack.service.recaptcha.RecaptchaService;
 import com.casino.blackjack.service.auth.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
@@ -75,7 +77,8 @@ public class AuthController extends BaseController {
             RedirectAttributes redirectAttributes,
             HttpServletRequest request,
             HttpServletResponse response,
-            @RequestParam(value = "g-recaptcha-response") String recaptchaResponse) {
+            @RequestParam(value = "g-recaptcha-response") String recaptchaResponse,
+            @AuthenticationPrincipal CustomUserDetails principal) {
 
         boolean isBot = !recaptchaService.verify(recaptchaResponse)
                 .map(RecaptchaResponseDTO::isSuccess)

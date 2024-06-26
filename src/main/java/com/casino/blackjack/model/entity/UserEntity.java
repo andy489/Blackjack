@@ -10,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -57,8 +58,8 @@ public class UserEntity extends BaseEntity {
     )
     private Set<RoleEntity> roles = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
-    private CreditCardEntity creditCard;
+    @OneToMany(mappedBy = "owner")
+    private Set<CreditCardEntity> creditCard;
 
     @OneToOne(fetch = FetchType.EAGER)
     private GameEntity myGame;

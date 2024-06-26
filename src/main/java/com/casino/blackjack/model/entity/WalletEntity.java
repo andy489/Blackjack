@@ -24,4 +24,10 @@ public class WalletEntity extends BaseEntity{
 
     @OneToOne
     private UserEntity owner;
+
+    public BigDecimal deposit(BigDecimal depositSum){
+        balance = balance.add(depositSum);
+
+        return balance;
+    }
 }

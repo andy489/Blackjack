@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Forbidden</title>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/error/error.css}"/>
+</head>
+
+<body class="err-body">
+
+<main class="container">
+    <div>
+        <div class="container-err rounded mt-4">
+
+            <p class="status-code m-0">
+                403 Forbidden
+            </p>
+
+            <p class="intro-msg m-0">
+                A lot of holes in the desert, and a lot of problems are buried in those holes. But you gotta do it right.
+                There are people buried in those holes for much less than what you are trying to do here.
+            </p>
+
+            <hr class="my-2 bg-white w-80"/>
+
+            <h3 class="m-0">
+                <a id="go-back" class="index-text-link fw-bolder">Go back</a>
+            </h3>
+        </div>
+
+        <div class="my-4 text-center">
+            <img class="img-fluid border border-5 border-white rounded-3 err-fun-img"
+                 th:src="@{/images/error/403.jpg}" alt="..." src="">
+        </div>
+    </div>
+
+    <script defer th:src="@{/js/error/go-back.js}"></script>
+</main>
+
+</body>
+
+</html>

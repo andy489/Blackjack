@@ -12,7 +12,7 @@
     margin-bottom: 5rem;
 }
 
-.container-rules{
+.container-rules {
     background-color: rgba(0, 0, 0, 0.8); /* Black w/opacity/see-through */
     font-weight: bold;
     font-size: larger;
@@ -21,18 +21,28 @@
     padding: 1em 1em 0.5em 1em;
 }
 
-.tab{
+.tab {
     color: var(--primary);
 }
 
-a.nav-tab.active{
+a.nav-tab.active {
     background-color: lightgrey !important;
 }
 
-.tab-content{
+.tab-content {
     color: whitesmoke;
 }
 
-.content-header{
-    font-size:xx-large;
+.content-header {
+    font-size: xx-large;
+}
+
+.ref-bj-link {
+    color: var(--primary);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ref-bj-link:hover {
+    color: whitesmoke;
 }

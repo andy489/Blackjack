@@ -9,6 +9,7 @@ import com.casino.blackjack.model.entity.UserForgotPassEntity;
 import com.casino.blackjack.model.enumerated.UserRoleEnum;
 import com.casino.blackjack.model.event.UserRegisteredEvent;
 import com.casino.blackjack.model.event.UserForgotPasswordEvent;
+import com.casino.blackjack.model.user.CustomUserDetails;
 import com.casino.blackjack.repo.RoleRepository;
 import com.casino.blackjack.repo.UserActivationTokenRepository;
 import com.casino.blackjack.repo.UserRepository;
@@ -17,6 +18,7 @@ import com.casino.blackjack.service.mail.MailService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -231,7 +233,7 @@ public class UserService {
 
         Optional<UserForgotPassEntity> byToken = userResetPassTokenRepository.findByToken(token);
 
-        if(byToken.isEmpty()){
+        if (byToken.isEmpty()) {
             return "/auth/pass?changed=false";
         }
 
@@ -244,5 +246,21 @@ public class UserService {
         userResetPassTokenRepository.deleteByUserId(currentUser.getId());
 
         return "/auth/pass?changed=true";
+    }
+
+    public Boolean isUserLogged(CustomUserDetails principal) {
+        return principal != null;
+    }
+
+    public Long getCurrentLoggedUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+
+            return principal.getId();
+        } else {
+            return null;
+        }
     }
 }
