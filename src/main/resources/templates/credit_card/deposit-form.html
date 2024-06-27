@@ -12,7 +12,19 @@
 <header th:replace="~{fragment/common::navbar}"></header>
 
 <div class="wrapper" id="app">
-    <div id="deposit-form" class="card-form col-6">
+    <div id="deposit-form" class="card-form col-6 mt-5">
+
+        <!-- Modal -->
+        <div class="successful-dep-modal m-auto mb-3 rounded-3 animated fade-out"
+             th:if="${modalSucDep}">
+            <div class="p-4">
+                <div class="">
+                    <h4 class="text-center m-auto fs-3"
+                        th:text="#{modal.successful.deposit}">Successful deposit</h4>
+                </div>
+            </div>
+        </div>
+
         <div class="card-form__inner_deposit">
             <form th:action="@{/credit-card/deposit}"
                   th:method="post"
@@ -101,234 +113,9 @@
                 <button class="card-form__button" th:text="#{cc.dep.form.dep.btn}">
                     Deposit
                 </button>
+
             </form>
-        </div>
-    </div>
 
-    <div id="reg-credit-card-form" class="card-form col-6 d-none">
-        <div class="card-list">
-            <div class="card-item" v-bind:class="{ '-active' : isCardFlipped }">
-                <div class="card-item__side -front" style="box-shadow: 0 0 1.5em 0.1em white;">
-                    <div class="card-item__focus" v-bind:class="{'-active' : focusElementStyle }"
-                         v-bind:style="focusElementStyle" ref="focusElement"></div>
-                    <div class="card-item__cover">
-                        <img v-bind:src="creditCardFaceBackPath + currentCardBackground + '.jpeg'"
-                             class="card-item__bg">
-                    </div>
-
-                    <div class="card-item__wrapper">
-                        <div class="card-item__top">
-                            <img v-bind:src="creditCardChipPath + 'chip.png'"
-                                 class="card-item__chip">
-                            <div class="card-item__type">
-                                <transition name="slide-fade-up">
-                                    <img v-bind:src="creditCardTypeLogoPath + getCardType + '.png'"
-                                         v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
-                                </transition>
-                            </div>
-                        </div>
-                        <label for="cardNumber" class="card-item__number" ref="cardNumber">
-                            <template v-if="getCardType === 'amex'">
-                 <span v-for="(n, $index) in amexCardMask" :key="$index">
-                  <transition name="slide-fade-up">
-                    <div class="card-item__numberItem"
-                         v-if="$index > 4 && $index < 14 && cardNumber.length > $index && n.trim() !== ''">*</div>
-                    <div class="card-item__numberItem"
-                         :class="{ '-active' : n.trim() === '' }"
-                         :key="$index" v-else-if="cardNumber.length > $index">
-                      {{cardNumber[$index]}}
-                    </div>
-                    <div class="card-item__numberItem"
-                         :class="{ '-active' : n.trim() === '' }"
-                         v-else
-                         :key="$index + 1">{{n}}</div>
-                  </transition>
-                </span>
-                            </template>
-                            <template v-else>
-
-                  <span v-for="(n, $index) in otherCardMask" :key="$index">
-                    <transition name="slide-fade-up">
-                      <div class="card-item__numberItem"
-                           v-if="$index > 4 && $index < 15 && cardNumber.length > $index && n.trim() !== ''">*</div>
-                      <div class="card-item__numberItem"
-                           :class="{ '-active' : n.trim() === '' }"
-                           :key="$index" v-else-if="cardNumber.length > $index">{{cardNumber[$index]}}
-                      </div>
-                      <div class="card-item__numberItem"
-                           :class="{ '-active' : n.trim() === '' }"
-                           v-else
-                           :key="$index + 1">{{n}}
-                      </div>
-                    </transition>
-                  </span>
-                            </template>
-                        </label>
-                        <div class="card-item__content">
-                            <label for="cardName" class="card-item__info" ref="cardName">
-                                <div class="card-item__holder">Card Holder</div>
-                                <transition name="slide-fade-up">
-                                    <div class="card-item__name" v-if="cardName.length" key="1">
-                                        <transition-group name="slide-fade-right">
-                                            <span class="card-item__nameItem"
-                                                  v-for="(n, $index) in cardName.replace(/\s\s+/g, ' ')"
-                                                  v-if="$index === $index" v-bind:key="$index + 1">{{n}}</span>
-                                        </transition-group>
-                                    </div>
-                                    <div class="card-item__name" v-else key="2">Full Name</div>
-                                </transition>
-                            </label>
-                            <div class="card-item__date" ref="cardDate">
-                                <label for="cardMonth" class="card-item__dateTitle">Expires</label>
-                                <label for="cardMonth" class="card-item__dateItem">
-                                    <transition name="slide-fade-up">
-                                        <span v-if="cardMonth" v-bind:key="cardMonth">{{cardMonth}}</span>
-                                        <span v-else key="2">MM</span>
-                                    </transition>
-                                </label>
-                                /
-                                <label for="cardYear" class="card-item__dateItem">
-                                    <transition name="slide-fade-up">
-                                        <span v-if="cardYear"
-                                              v-bind:key="cardYear">{{String(cardYear).slice(2, 4)}}</span>
-                                        <span v-else key="2">YY</span>
-                                    </transition>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-item__side -back">
-                    <div class="card-item__cover">
-                        <img v-bind:src="creditCardFaceBackPath + currentCardBackground + '.jpeg'"
-                             class="card-item__bg">
-                    </div>
-                    <div class="card-item__band"></div>
-                    <div class="card-item__cvc">
-                        <div class="card-item__cvcTitle">CVC</div>
-                        <div class="card-item__cvcBand">
-                  <span v-for="(n, $index) in cardCvc" :key="$index">
-                    *
-                  </span>
-
-                        </div>
-                        <div class="card-item__type">
-                            <img v-bind:src="creditCardTypeLogoPath + getCardType + '.png'"
-                                 v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-form__inner">
-            <form th:action="@{/credit-card/register}"
-                  th:method="post"
-                  th:object="${creditCardDTO}">
-
-                <div id="add-card-btn" class="card-input">
-                    <div class="btn btn-back">
-                        <span class="align-middle">
-                            <i class="fa-solid fa-chevron-left chevron-left"></i>
-                            <span th:text="#{cc.dep.form.back}">Back</span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="card-input">
-                    <label for="cardNumber" class="card-input__label"
-                           th:text="#{credit-card.card.number}">Card Number</label>
-                    <input type="text" id="cardNumber" class="card-input__input" v-mask="generateCardNumberMask"
-                           v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber"
-                           autocomplete="off"
-                           th:field="*{cardNumber}"
-                           th:errorclass="'is-invalid'">
-                    <span class="invalid-feedback alert alert-danger fs-6 p-1">
-                    <span th:if="${#fields.errors('cardNumber').size() > 0}"
-                          th:text="${#fields.errors('cardNumber').get(0)}"></span>
-                    </span>
-                </div>
-                <div class="card-input">
-                    <label for="cardName" class="card-input__label"
-                           th:text="#{credit-card.card.holder}">Card Holder</label>
-                    <input type="text" id="cardName" class="card-input__input" v-model="cardName"
-                           v-on:focus="focusInput"
-                           v-on:blur="blurInput" data-ref="cardName" autocomplete="off"
-                           th:field="*{cardHolder}"
-                           th:errorclass="'is-invalid'">
-                    <span class="invalid-feedback alert alert-danger fs-6 p-1">
-                    <span th:if="${#fields.errors('cardHolder').size() > 0}"
-                          th:text="${#fields.errors('cardHolder').get(0)}"></span>
-                    </span>
-                </div>
-                <div class="card-form__row">
-                    <div class="card-form__col d-inline-flex">
-
-                        <div class="card-form__group">
-                            <label for="cardMonth" class="card-input__label"
-                                   th:text="#{credit-card.expiration.month}">Expiration Month</label>
-                            <select th:field="*{expiredMonth}"
-                                    th:errorclass="'is-invalid'"
-                                    class="card-input__input -select" id="cardMonth" v-model="cardMonth"
-                                    v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
-                                <option value="" disabled selected
-                                        th:text="#{credit-card.choose.expiration.month}">Month
-                                </option>
-                                <option value=""
-                                        v-bind:value="n"
-                                        v-for="n in 12"
-                                        v-bind:disabled="n < minCardMonth"
-                                        v-bind:key="n">
-                                    {{n < 10 ? '0' + n : n}}
-                                </option>
-                            </select>
-                            <span class="invalid-feedback alert alert-danger fs-6 p-1">
-                            <span th:if="${#fields.errors('expiredMonth').size() > 0}"
-                                  th:text="${#fields.errors('expiredMonth').get(0)}"></span>
-                            </span>
-                        </div>
-                        <div class="card-form__group">
-                            <label for="cardMonth" class="card-input__label"
-                                   th:text="#{credit-card.expiration.year}">Expiration Year</label>
-                            <select th:field="*{expiredYear}"
-                                    th:errorclass="'is-invalid'"
-                                    class="card-input__input -select" id="cardYear" v-model="cardYear"
-                                    v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
-                                <option value="" disabled selected
-                                        th:text="#{credit-card.choose.expiration.year}">Year
-                                </option>
-                                <option value=""
-                                        v-bind:value="$index + minCardYear"
-                                        v-for="(n, $index) in 12"
-                                        v-bind:key="n">
-                                    {{$index + minCardYear}}
-                                </option>
-                            </select>
-                            <span class="invalid-feedback alert alert-danger fs-6 p-1">
-                            <span th:if="${#fields.errors('expiredYear').size() > 0}"
-                                  th:text="${#fields.errors('expiredYear').get(0)}"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="card-form__col -cvc">
-                        <div class="card-input">
-                            <label for="card-cvc" class="card-input__label">CVC</label>
-                            <input type="number" class="card-input__input" id="card-cvc" v-mask="'###'" maxlength="3"
-                                   v-model="cardCvc" v-on:focus="flipCard(true)" v-on:blur="flipCard(false)"
-                                   autocomplete="off"
-                                   th:field="*{cardCvc}"
-                                   th:errorclass="'is-invalid'">
-                            <span class="invalid-feedback alert alert-danger fs-6 p-1">
-                            <span th:if="${#fields.errors('cardCvc').size() > 0}"
-                                  th:text="${#fields.errors('cardCvc').get(0)}"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="card-form__button" th:text="#{credit-card.register.btn}">
-                    Register Card
-                </button>
-            </form>
         </div>
     </div>
 </div>

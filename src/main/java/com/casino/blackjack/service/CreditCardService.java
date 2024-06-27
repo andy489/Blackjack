@@ -14,8 +14,6 @@ import java.util.Optional;
 @Service
 public class CreditCardService {
 
-    private static final int MAX_REGISTERED_CREDIT_CARDS = 3;
-
     private final UserService userService;
 
     private final CreditCardRepository creditCardRepository;
@@ -36,12 +34,6 @@ public class CreditCardService {
         }
 
         UserEntity currentUser = byId.get();
-
-        List<CreditCardEntity> currentCards = creditCardRepository.findByOwner(currentUser);
-
-        if (currentCards.size() >= MAX_REGISTERED_CREDIT_CARDS) {
-            return Optional.empty();
-        }
 
         CreditCardEntity creditCardEntity = new CreditCardEntity()
                 .setCardNumber(creditCardDTO.getCardNumber())

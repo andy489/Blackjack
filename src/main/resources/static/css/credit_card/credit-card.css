@@ -2,6 +2,7 @@
 
 :root {
     --electric: #03e9f4;
+    --success: #4bb543;
 }
 
 body {
@@ -724,7 +725,7 @@ body {
     }
 }
 
-/**/
+/* deposit / add credit card */
 .btn-back {
     color: #2364D2FF !important;
     font-weight: bolder !important;
@@ -752,4 +753,37 @@ body {
 
 .add-btn:hover {
     background-color: lightgrey !important
+}
+
+/* fade away modal after deposit*/
+.successful-dep-modal {
+    background-color: var(--success);
+    color: white;
+}
+
+.animated {
+    background-position: left top;
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+    box-shadow: 0 0 8em whitesmoke;
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1.0;
+    }
+    36% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0.0;
+    }
+}
+
+.fade-out {
+    -webkit-animation-name: fade-out;
+    animation-name: fade-out;
 }

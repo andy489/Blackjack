@@ -6,10 +6,12 @@ import com.casino.blackjack.model.entity.CreditCardEntity;
 import com.casino.blackjack.model.user.CustomUserDetails;
 import com.casino.blackjack.service.CreditCardService;
 import com.casino.blackjack.service.WalletService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -48,21 +52,21 @@ public class CreditCardController extends BaseController {
 
     @GetMapping("/register")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getRegisterCardForm(@AuthenticationPrincipal CustomUserDetails currentUser) {
+    public ModelAndView getRegisterCardForm() {
 
-        ModelAndView mav = new ModelAndView();
-        List<CreditCardDTO> userRegisteredCreditCards = creditCardService.getRegisteredCreditCards(currentUser.getId());
-
-        mav.addObject("registered_credit_cards", userRegisteredCreditCards);
-
-        return super.view("credit_card/register-card-form", mav);
+        return super.view("credit_card/register-card-form");
     }
 
     @GetMapping("/deposit")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getDepositForm() {
+    public ModelAndView getDepositForm(@AuthenticationPrincipal CustomUserDetails currentUser,
+                                       ModelAndView mav) {
 
-        return super.view("credit_card/deposit-form");
+        List<CreditCardDTO> userRegisteredCreditCards = creditCardService.getRegisteredCreditCards(currentUser.getId());
+
+        mav.addObject("registered_credit_cards", userRegisteredCreditCards);
+
+        return super.view("credit_card/deposit-form", mav);
     }
 
     @PostMapping("/register")
@@ -87,7 +91,6 @@ public class CreditCardController extends BaseController {
             ModelAndView mav = new ModelAndView();
             mav.addObject("limit_reached", true);
             return redirect("/credit-card/register", mav);
-
         }
 
         return redirect("/credit-card/register");
@@ -96,7 +99,6 @@ public class CreditCardController extends BaseController {
     @PostMapping("/deposit")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView postDeposit(
-            @AuthenticationPrincipal CustomUserDetails currentUser,
             @Valid @ModelAttribute(name = "depositDTO") DepositDTO depositDTO,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
@@ -119,7 +121,7 @@ public class CreditCardController extends BaseController {
 
         walletService.deposit(depositDTO.getDepositSum(), ownerId.get());
 
-        // TODO add deposited amount to fade away
+        redirectAttributes.addFlashAttribute("modalSucDep", true);
 
         return super.redirect("/credit-card/deposit");
     }
