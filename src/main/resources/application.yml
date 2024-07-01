@@ -5,7 +5,7 @@ spring:
     banner-mode: off
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/blackjack?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/bjdb?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
     username: ${DB_USER}
     password:
   jpa:

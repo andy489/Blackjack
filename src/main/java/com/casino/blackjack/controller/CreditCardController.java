@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -81,6 +83,16 @@ public class CreditCardController extends BaseController {
             redirectAttributes.addFlashAttribute("creditCardDTO", creditCardDTO);
             redirectAttributes.addFlashAttribute(BINDING_RESULT_PATH + "creditCardDTO", bindingResult);
 
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError currErr : allErrors) {
+                String code = currErr.getCode();
+
+                if (Objects.requireNonNull(code).startsWith("MaxCreditCardRegisteredLimitReached")) {
+                    redirectAttributes.addFlashAttribute("modalLimitReached", true);
+                    break;
+                }
+            }
+
             return super.redirect("/credit-card/register");
         }
 
@@ -88,10 +100,11 @@ public class CreditCardController extends BaseController {
                 creditCardService.registerNewCreditCard(creditCardDTO, currentUser.getId());
 
         if (creditCardEntity.isEmpty()) {
-            ModelAndView mav = new ModelAndView();
-            mav.addObject("limit_reached", true);
-            return redirect("/credit-card/register", mav);
+            redirectAttributes.addFlashAttribute("modalLimitReached", true);
+            return redirect("/credit-card/register");
         }
+
+        redirectAttributes.addFlashAttribute("modalSucRegCreditCard", true);
 
         return redirect("/credit-card/register");
     }

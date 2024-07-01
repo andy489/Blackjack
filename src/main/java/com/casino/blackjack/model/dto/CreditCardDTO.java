@@ -2,6 +2,7 @@ package com.casino.blackjack.model.dto;
 
 import com.casino.blackjack.model.validation.creditcard.CustomCreditCardNumber;
 import com.casino.blackjack.model.validation.creditcard.FutureExpirationDate;
+import com.casino.blackjack.model.validation.creditcard.MaxCreditCardRegisteredLimitReached;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +19,11 @@ import lombok.experimental.Accessors;
         expiredMonthField = "expiredMonth",
         expiredYearField = "expiredYear",
         message = "{constraint.expired.date}"
+)
+@MaxCreditCardRegisteredLimitReached(
+        max = 3,
+        cardNumberField = "cardNumber",
+        message="{constraint.credit.card.limit.reached}"
 )
 public class CreditCardDTO {
 

@@ -13,6 +13,29 @@
 
 <div class="wrapper" id="app">
     <div id="reg-credit-card-form" class="card-form mt-5">
+
+        <!-- Modal successful credit card registration -->
+        <div class="successful-modal m-auto mb-3 rounded-3 animated fade-out"
+             th:if="${modalSucRegCreditCard}">
+            <div class="p-4">
+                <div class="">
+                    <h4 class="text-center m-auto fs-3"
+                        th:text="#{modal.successful.credit.card.reg}">Successful credit card registration</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal limit reached -->
+        <div class="fail-modal m-auto mb-3 rounded-3 animated fade-out"
+             th:if="${modalLimitReached}">
+            <div class="p-4">
+                <div class="">
+                    <h4 class="text-center m-auto fs-3"
+                        th:text="#{modal.fail.credit.card.reg}">Failed to register credit card</h4>
+                </div>
+            </div>
+        </div>
+
         <div class="card-list">
             <div class="card-item" v-bind:class="{ '-active' : isCardFlipped }">
                 <div class="card-item__side -front" style="box-shadow: 0 0 1.5em 0.1em white;">

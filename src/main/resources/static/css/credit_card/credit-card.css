@@ -3,6 +3,7 @@
 :root {
     --electric: #03e9f4;
     --success: #4bb543;
+    --fail: #ff4350;
 }
 
 body {
@@ -755,9 +756,14 @@ body {
     background-color: lightgrey !important
 }
 
-/* fade away modal after deposit*/
-.successful-dep-modal {
+/* fade away modal after deposit/credit card register*/
+.successful-modal {
     background-color: var(--success);
+    color: white;
+}
+
+.fail-modal {
+    background-color: var(--fail);
     color: white;
 }
 

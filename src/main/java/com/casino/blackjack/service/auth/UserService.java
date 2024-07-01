@@ -74,7 +74,7 @@ public class UserService {
         this.encoder = encoder;
         this.userDetailsService = userDetailsService;
         this.autoLogin = autoLogin;
-        blackjackUserDetailsService = new BlackjackUserDetailsService(userRepository);
+        this.blackjackUserDetailsService = new BlackjackUserDetailsService(userRepository);
         this.appEventPublisher = appEventPublisher;
         this.userActivationTokenRepository = userActivationTokenRepository;
         this.userResetPassTokenRepository = userResetPassTokenRepository;

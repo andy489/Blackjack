@@ -10,16 +10,16 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Constraint(validatedBy = FutureExpirationDateValidator.class)
-public @interface FutureExpirationDate {
+@Constraint(validatedBy = MaxCreditCardRegisteredLimitReachedValidator.class)
+public @interface MaxCreditCardRegisteredLimitReached {
 
-    String message() default "{constraint.expired.date.default}";
+    String message() default "{constraint.credit.card.limit.reached.default}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    String expiredMonthField();
+    int max() default 1;
 
-    String expiredYearField();
+    String cardNumberField();
 }
