@@ -7,36 +7,10 @@
     <link rel="stylesheet" th:href="@{/css/error/error.css}"/>
 </head>
 
-<body class="err-body">
+<header th:replace="~{fragment/common::navbar}"></header>
 
-<main class="container">
-    <div>
-        <div class="container-err rounded mt-4">
-
-            <p class="status-code m-0">
-                500 Internal Server Error
-            </p>
-
-            <p class="intro-msg m-0">
-                I tried to do everything I could for you, even though I knew, deep down inside, you would bury me.
-            </p>
-
-            <hr class="my-2 bg-white w-80"/>
-
-            <h3 class="m-0">
-                <a id="go-back" class="index-text-link fw-bolder">Go back</a>
-            </h3>
-        </div>
-
-        <div class="my-4 text-center">
-            <img class="img-fluid border border-5 border-white rounded-3 err-fun-img"
-                 th:src="@{/images/error/500.jpg}" alt="..." src="">
-        </div>
-    </div>
-
-    <script defer th:src="@{/js/error/go-back.js}"></script>
-</main>
-
-</body>
+<div th:replace="~{error/parametrized-err
+                                :: formField(errTitle='err.code.500.title', errMsg='err.code.500.msg', code='500')}">
+</div>
 
 </html>

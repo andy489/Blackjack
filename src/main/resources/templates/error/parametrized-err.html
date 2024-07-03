@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parametrized error html template</title>
+</head>
+
+<body class="err-body" th:fragment="formField (errTitle, errMsg, code)">
+
+<main class="container" th:fragment="formField (errTitle, errMsg, code)">
+    <div>
+        <div class="container-err rounded mt-4">
+
+            <p class="status-code m-0" th:text="#{${errTitle}}">
+                400 Bad Request
+            </p>
+
+            <p class="intro-msg m-0" th:text="#{${errMsg}}">
+                At night, you could not see the desert that surrounds Las Vegas.
+                But It’s in the desert where lots of the town’s problems are solved.
+            </p>
+
+            <hr class="my-2 bg-white w-80"/>
+
+            <h3 class="m-0">
+                <a id="go-back" class="index-text-link fw-bolder">Go back</a>
+            </h3>
+        </div>
+
+        <div class="my-4 text-center">
+            <img class="img-fluid border border-5 border-white rounded-3 err-fun-img"
+                 th:src="@{'/images/error/' + ${code} + '.jpg'}" alt="..." src="">
+        </div>
+    </div>
+
+    <script defer th:src="@{/js/error/go-back.js}"></script>
+</main>
+
+</body>
+</html>
