@@ -166,7 +166,7 @@
 
                 <div class="card-input">
                     <label for="cardNumber" class="card-input__label"
-                           th:text="#{credit-card.card.number}">Card Number</label>
+                           th:text="#{cc.reg.number}">Card Number</label>
                     <input type="text" id="cardNumber" class="card-input__input" v-mask="generateCardNumberMask"
                            v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber"
                            autocomplete="off"
@@ -179,7 +179,7 @@
                 </div>
                 <div class="card-input">
                     <label for="cardName" class="card-input__label"
-                           th:text="#{credit-card.card.holder}">Card Holder</label>
+                           th:text="#{cc.reg.holder}">Card Holder</label>
                     <input type="text" id="cardName" class="card-input__input" v-model="cardName"
                            v-on:focus="focusInput"
                            v-on:blur="blurInput" data-ref="cardName" autocomplete="off"
@@ -195,13 +195,13 @@
 
                         <div class="card-form__group">
                             <label for="cardMonth" class="card-input__label"
-                                   th:text="#{credit-card.expiration.month}">Expiration Month</label>
+                                   th:text="#{cc.reg.expiration.month}">Expiration Month</label>
                             <select th:field="*{expiredMonth}"
                                     th:errorclass="'is-invalid'"
                                     class="card-input__input -select" id="cardMonth" v-model="cardMonth"
                                     v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
                                 <option value="" disabled selected
-                                        th:text="#{credit-card.choose.expiration.month}">Month
+                                        th:text="#{cc.reg.choose.expiration.month}">Month
                                 </option>
                                 <option value=""
                                         v-bind:value="n"
@@ -218,13 +218,13 @@
                         </div>
                         <div class="card-form__group">
                             <label for="cardMonth" class="card-input__label"
-                                   th:text="#{credit-card.expiration.year}">Expiration Year</label>
+                                   th:text="#{cc.reg.expiration.year}">Expiration Year</label>
                             <select th:field="*{expiredYear}"
                                     th:errorclass="'is-invalid'"
                                     class="card-input__input -select" id="cardYear" v-model="cardYear"
                                     v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
                                 <option value="" disabled selected
-                                        th:text="#{credit-card.choose.expiration.year}">Year
+                                        th:text="#{cc.reg.choose.expiration.year}">Year
                                 </option>
                                 <option value=""
                                         v-bind:value="$index + minCardYear"
@@ -255,7 +255,7 @@
                     </div>
                 </div>
 
-                <button class="card-form__button" th:text="#{credit-card.register.btn}">
+                <button class="card-form__button" th:text="#{cc.reg.btn}">
                     Register Card
                 </button>
             </form>

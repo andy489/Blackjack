@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -53,14 +51,12 @@ public class CreditCardController extends BaseController {
     }
 
     @GetMapping("/register")
-    @PreAuthorize("isAuthenticated()")
     public ModelAndView getRegisterCardForm() {
 
         return super.view("credit_card/register-card-form");
     }
 
     @GetMapping("/deposit")
-    @PreAuthorize("isAuthenticated()")
     public ModelAndView getDepositForm(@AuthenticationPrincipal CustomUserDetails currentUser,
                                        ModelAndView mav) {
 
@@ -72,7 +68,6 @@ public class CreditCardController extends BaseController {
     }
 
     @PostMapping("/register")
-    @PreAuthorize("isAuthenticated()")
     public ModelAndView postCreditCardForm(
             @AuthenticationPrincipal CustomUserDetails currentUser,
             @Valid @ModelAttribute(name = "creditCardDTO") CreditCardDTO creditCardDTO,
@@ -110,7 +105,6 @@ public class CreditCardController extends BaseController {
     }
 
     @PostMapping("/deposit")
-    @PreAuthorize("isAuthenticated()")
     public ModelAndView postDeposit(
             @Valid @ModelAttribute(name = "depositDTO") DepositDTO depositDTO,
             BindingResult bindingResult,
@@ -137,5 +131,15 @@ public class CreditCardController extends BaseController {
         redirectAttributes.addFlashAttribute("modalSucDep", true);
 
         return super.redirect("/credit-card/deposit");
+    }
+
+    @GetMapping("/manage")
+    public ModelAndView getManageCreditCards(ModelAndView modelAndView) {
+
+        // import current user as an argument
+        // check current user
+        // TODO: add all current user cards List<DTOs>
+
+        return super.view("credit_card/card-management", modelAndView);
     }
 }

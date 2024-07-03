@@ -4,6 +4,7 @@
     --electric: #03e9f4;
     --success: #4bb543;
     --fail: #ff4350;
+    --btn-blue: #2364d2;
 }
 
 body {
@@ -138,7 +139,7 @@ body {
 .card-form__button {
     width: 100%;
     height: 55px;
-    background: #2364d2;
+    background: var(--btn-blue);
     border: none;
     border-radius: 5px;
     font-size: 22px;
@@ -148,6 +149,12 @@ body {
     color: #fff;
     margin-top: 20px;
     cursor: pointer;
+}
+
+.card-form__button:hover {
+    background: whitesmoke;
+    border: solid var(--btn-blue) 2px;
+    color: var(--btn-blue);
 }
 
 @media screen and (max-width: 480px) {
@@ -728,14 +735,14 @@ body {
 
 /* deposit / add credit card */
 .btn-back {
-    color: #2364D2FF !important;
-    font-weight: bolder !important;
+    color: #2364D2FF;
+    font-weight: bolder;
 }
 
 .btn-back:hover {
-    background-color: #2364D2FF !important;
-    color: whitesmoke !important;
-    font-weight: bolder !important;
+    background-color: #2364D2FF;
+    color: whitesmoke;
+    font-weight: bolder;
 }
 
 .mid {
@@ -748,12 +755,12 @@ body {
 }
 
 .dash {
-    border: dashed 2px dimgray !important;
-    border-radius: 0.7em !important;
+    border: dashed 2px dimgray;
+    border-radius: 0.8em;
 }
 
 .add-btn:hover {
-    background-color: lightgrey !important
+    background-color: lightgrey
 }
 
 /* fade away modal after deposit/credit card register*/
@@ -792,4 +799,19 @@ body {
 .fade-out {
     -webkit-animation-name: fade-out;
     animation-name: fade-out;
+}
+
+.card-management-btn {
+    border-radius: 0.6em;
+}
+
+.card-management-btn {
+    text-decoration: none;
+    color: var(--btn-blue);
+}
+
+.card-management-btn:hover {
+    color: white;
+    background-color: var(--btn-blue);
+    font-weight: bold;
 }

@@ -50,9 +50,9 @@ public class SecurityConfig {
                                     "/error/**",
                                     "/login-error",
                                     "/rules",
-                                    "/test/**",
-                                    "/credit-card/**")
+                                    "/test/**")
                             .permitAll()
+                            .requestMatchers("/credit-card/**").authenticated()
                             .requestMatchers(HttpMethod.POST, "/auth/**")
                             .anonymous()
                             .requestMatchers(HttpMethod.GET, "/auth/**")
