@@ -11,5 +11,7 @@ public interface CreditCardRepository extends JpaRepository<CreditCardEntity, Lo
 
     List<CreditCardEntity> findByOwner(UserEntity owner);
 
+    List<CreditCardEntity> findByOwnerId(Long ownerId);
+
     Optional<CreditCardEntity> findByCardNumber(String cardNumber);
 }

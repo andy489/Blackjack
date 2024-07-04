@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class CreditCardService {
 
@@ -115,5 +117,17 @@ public class CreditCardService {
                 .setCardHolder(creditCardEntity.getCardHolder());
 
         return Optional.of(creditCardDTO);
+    }
+
+    public List<CreditCardDTO> getByOwnerId(Long ownerId) {
+        List<CreditCardEntity> byOwnerId = creditCardRepository.findByOwnerId(ownerId);
+
+        return byOwnerId.stream().map(c ->
+                        new CreditCardDTO().setCardNumber(c.getCardNumber())
+                                .setCardCvc(c.getCardCvc())
+                                .setCardHolder(c.getCardHolder())
+                                .setExpiredYear(c.getExpiredYear())
+                                .setExpiredMonth(c.getExpiredMonth()))
+                .toList();
     }
 }

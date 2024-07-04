@@ -61,7 +61,7 @@
     <div class="container-header-right d-flex align-items-center">
 
         <div class="dropdown locale-dropdown me-3">
-            <button class="btn btn-secondary dropdown-toggle py-0"
+            <button class="btn btn-secondary dropdown-toggle py-0 w-100"
                     type="button"
                     id=""
                     data-bs-toggle="dropdown"
@@ -80,7 +80,7 @@
         </div>
         <div sec:authorize="isAuthenticated()"
              class="d-flex align-items-center logout-container">
-            <div class="d-inline-block login-greeter">
+            <div class="d-inline-block login-greeter fs-5">
                 <th:block th:if="${#authentication.getPrincipal().getGender().toString()} == 'FEMALE'"
                           th:text="#{nav.greeter.female}">Welcome,</th:block>
                 <th:block th:unless="${#authentication.getPrincipal().getGender().toString()} == 'FEMALE'"

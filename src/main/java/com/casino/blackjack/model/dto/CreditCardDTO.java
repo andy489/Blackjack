@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 @Getter
@@ -25,6 +26,7 @@ import lombok.experimental.Accessors;
         cardNumberField = "cardNumber",
         message="{constraint.credit.card.limit.reached}"
 )
+@ToString
 public class CreditCardDTO {
 
     private static final int FIRST_REVEALED_DIGITS = 4;

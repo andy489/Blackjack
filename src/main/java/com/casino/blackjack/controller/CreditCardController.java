@@ -6,12 +6,9 @@ import com.casino.blackjack.model.entity.CreditCardEntity;
 import com.casino.blackjack.model.user.CustomUserDetails;
 import com.casino.blackjack.service.CreditCardService;
 import com.casino.blackjack.service.WalletService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -134,11 +131,15 @@ public class CreditCardController extends BaseController {
     }
 
     @GetMapping("/manage")
-    public ModelAndView getManageCreditCards(ModelAndView modelAndView) {
+    public ModelAndView getManageCreditCards(
+            @AuthenticationPrincipal CustomUserDetails currentUser,
+            ModelAndView modelAndView) {
 
-        // import current user as an argument
-        // check current user
-        // TODO: add all current user cards List<DTOs>
+        List<CreditCardDTO> byOwnerId = creditCardService.getByOwnerId(currentUser.getId());
+
+        modelAndView.addObject("cards", byOwnerId);
+
+        System.out.println(byOwnerId);
 
         return super.view("credit_card/card-management", modelAndView);
     }

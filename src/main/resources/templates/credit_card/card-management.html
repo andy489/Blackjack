@@ -3,8 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Card Management</title>
+    <th:block th:insert="~{fragment/common::head}"></th:block>
+
 </head>
 <body>
+
+<header th:replace="~{fragment/common::navbar}"></header>
+
+<div class="wrapper">
+
+    <div class="container-card-manage rounded mt-4">
+
+        <div>
+            <span class="fs-4">Card Management</span>
+        </div>
+
+        <div class="card-container">
+            <div class="card-template-holder">
+                <img th:src="@{/images/credit_card/template.png}" alt="card_template" src=""/>
+            </div>
+
+            <div class="card-data">
+                <div class="card-num">
+                    1234 56XX XXXX 7890
+                </div>
+
+                <div class="card-name col-12">
+                    PESHO PESHEV
+                </div>
+
+                <div class="card-date col-12">
+                    09/2032
+                </div>
+            </div>
+
+            <div class="card-btn">
+                <div class="btn btn-success">
+                    Deposit
+                </div>
+
+                <div class="btn btn-outline-secondary">
+                    Delete
+                </div>
+            </div>
+        </div>
+
+        <div class="add-card-btn">
+            <span>Add new card</span>
+        </div>
+
+    </div>
+</div>
+
+<link th:href="@{/css/credit_card/card-manage.css}" rel="stylesheet">
+
+<link rel="stylesheet" th:href="@{/css/index.css}"/>
+
 
 </body>
 </html>
