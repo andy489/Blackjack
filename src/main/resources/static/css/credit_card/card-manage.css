@@ -1,5 +1,5 @@
 :root {
-    --gray-btn: #5c6784
+    --dark-gray: #5c6784
 }
 
 body {
@@ -90,15 +90,35 @@ img {
 }
 
 .add-card-btn {
-    background-color: var(--gray-btn);
+    background-color: var(--dark-gray);
     margin: 1em;
     border-radius: 0.4em;
     padding: 0.8em;
-    border: 2px solid var(--gray-btn);
+    border: 2px solid var(--dark-gray);
 }
 
 .add-card-btn:hover {
     filter: brightness(118%);
     cursor: pointer;
-    border: 2px solid var(--gray-btn);
+    border: 2px solid var(--dark-gray);
+}
+
+.card-logo-wrapper {
+    margin: auto;
+    padding: 0.5em;
+    border-radius: 0.3em;
+    background-color: var(--dark-gray);
+}
+
+.card-logo-img {
+    width: 54%;
+    height: 54%;
+}
+
+.expired {
+    color: red;
+}
+
+.valid {
+    color: forestgreen;
 }

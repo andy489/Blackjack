@@ -3,6 +3,7 @@ package com.casino.blackjack.service;
 import com.casino.blackjack.model.dto.CreditCardDTO;
 import com.casino.blackjack.model.entity.CreditCardEntity;
 import com.casino.blackjack.model.entity.UserEntity;
+import com.casino.blackjack.model.view.CreditCardsManageView;
 import com.casino.blackjack.repo.CreditCardRepository;
 import com.casino.blackjack.service.auth.UserService;
 import jakarta.transaction.Transactional;
@@ -10,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class CreditCardService {
@@ -119,12 +118,11 @@ public class CreditCardService {
         return Optional.of(creditCardDTO);
     }
 
-    public List<CreditCardDTO> getByOwnerId(Long ownerId) {
+    public List<CreditCardsManageView> getByOwnerId(Long ownerId) {
         List<CreditCardEntity> byOwnerId = creditCardRepository.findByOwnerId(ownerId);
 
         return byOwnerId.stream().map(c ->
-                        new CreditCardDTO().setCardNumber(c.getCardNumber())
-                                .setCardCvc(c.getCardCvc())
+                        new CreditCardsManageView().setCardNumber(c.getCardNumber())
                                 .setCardHolder(c.getCardHolder())
                                 .setExpiredYear(c.getExpiredYear())
                                 .setExpiredMonth(c.getExpiredMonth()))

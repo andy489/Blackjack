@@ -4,6 +4,7 @@ import com.casino.blackjack.model.dto.CreditCardDTO;
 import com.casino.blackjack.model.dto.DepositDTO;
 import com.casino.blackjack.model.entity.CreditCardEntity;
 import com.casino.blackjack.model.user.CustomUserDetails;
+import com.casino.blackjack.model.view.CreditCardsManageView;
 import com.casino.blackjack.service.CreditCardService;
 import com.casino.blackjack.service.WalletService;
 import jakarta.validation.Valid;
@@ -135,11 +136,9 @@ public class CreditCardController extends BaseController {
             @AuthenticationPrincipal CustomUserDetails currentUser,
             ModelAndView modelAndView) {
 
-        List<CreditCardDTO> byOwnerId = creditCardService.getByOwnerId(currentUser.getId());
+        List<CreditCardsManageView> byOwnerId = creditCardService.getByOwnerId(currentUser.getId());
 
         modelAndView.addObject("cards", byOwnerId);
-
-        System.out.println(byOwnerId);
 
         return super.view("credit_card/card-management", modelAndView);
     }

@@ -18,23 +18,37 @@
             <span class="fs-4">Card Management</span>
         </div>
 
-        <div class="card-container">
+        <div class="card-container" th:each="c: ${cards}" th:object="${c}">
             <div class="card-template-holder">
                 <img th:src="@{/images/credit_card/template.png}" alt="card_template" src=""/>
             </div>
 
             <div class="card-data">
-                <div class="card-num">
+                <div class="card-num" th:text="*{getCardNumberPartlyHidden()}">
                     1234 56XX XXXX 7890
                 </div>
 
-                <div class="card-name col-12">
+                <div class="card-name col-12" th:text="${#strings.toUpperCase(c.getCardHolder())}">
                     PESHO PESHEV
                 </div>
 
                 <div class="card-date col-12">
-                    09/2032
+                    <span th:text="${c.getExpiredMonthAndYear()}">09/2032</span>
+                    <span th:unless="${c.notExpired()}"
+                          class="expired">
+                        (expired)
+                    </span>
+                    <span th:if="${c.notExpired()}"
+                          class="valid">
+                        (valid)
+                    </span>
                 </div>
+            </div>
+
+            <div class="card-logo-wrapper">
+                <img class="card-logo-img"
+                     th:src="@{${'/images/credit_card/type_logo/' + c.getTypeLogo() + '.png'}}" alt="card_logo"
+                     src="">
             </div>
 
             <div class="card-btn">

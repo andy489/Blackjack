@@ -31,14 +31,20 @@ public class NotExpiredValidator implements ConstraintValidator<NotExpired, Stri
         Integer expiredYear = creditCardDTO.getExpiredYear();
         Integer expiredMonth = creditCardDTO.getExpiredMonth();
 
+        return checkCurrentMonthBeforeExpiredMonth(expiredYear, expiredMonth);
+    }
+
+    public static boolean checkCurrentMonthBeforeExpiredMonth(Integer expiredYear, Integer expiredMonth) {
         Calendar c = Calendar.getInstance();
         int currentYear = c.get(Calendar.YEAR);
         int currentMonth = c.get(Calendar.MONTH);
 
         if (currentYear < expiredYear) {
             return true;
+        } else if (currentYear == expiredYear) {
+            return currentMonth < expiredMonth;
+        } else {
+            return false;
         }
-
-        return currentMonth < expiredMonth;
     }
 }

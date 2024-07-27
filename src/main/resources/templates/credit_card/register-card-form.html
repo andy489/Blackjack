@@ -267,9 +267,7 @@
 <script th:src="@{/js/credit_card/cloudflare-ajax-vue.js}"></script>
 <script th:src="@{/js/credit_card/unpkg-vue-the-mask.js}"></script>
 
-<script th:src="@{/js/credit_card/switch-forms.js}"></script>
-
-<!--<script th:src="@{/js/credit_card/credit-card.js}"></script>-->
+<!--<script th:src="@{/js/credit_card/credit-card-original.js}"></script>-->
 <script th:inline="javascript">
     new Vue({
         el: "#app",
@@ -357,22 +355,6 @@
             }
         }
     });
-
-    document.querySelector('#deposit-sum').addEventListener('input', function (e) {
-        const parts = e.target.value.split('.');
-        const value = parts[0].replace(/\D/g, '');
-        const decimal = parts[1];
-
-        let newValue = new Intl.NumberFormat('en-EN').format(value);
-
-        // prevent non-numeric decimal
-        if (!isNaN(decimal)) {
-            newValue = `${newValue}.${decimal}`;
-        }
-
-        // prevent placing 0 when empty
-        e.target.value = value === '' && newValue === '0' ? '' : newValue;
-    })
 </script>
 
 </body>

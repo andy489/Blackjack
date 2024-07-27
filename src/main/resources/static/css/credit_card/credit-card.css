@@ -111,12 +111,12 @@ body {
     }
 }
 
-.card-form__col.-cvv {
+.card-form__col.-cvc {
     max-width: 150px;
 }
 
 @media screen and (max-width: 480px) {
-    .card-form__col.-cvv {
+    .card-form__col.-cvc {
         max-width: initial;
     }
 }
@@ -541,24 +541,24 @@ body {
     }
 }
 
-.card-item__cvv {
+.card-item__cvc {
     text-align: right;
     position: relative;
     z-index: 2;
     padding: 15px;
 }
 
-.card-item__cvv .card-item__type {
+.card-item__cvc .card-item__type {
     opacity: 0.7;
 }
 
 @media screen and (max-width: 360px) {
-    .card-item__cvv {
+    .card-item__cvc {
         padding: 10px 15px;
     }
 }
 
-.card-item__cvvTitle {
+.card-item__cvcTitle {
     padding-right: 10px;
     font-size: 15px;
     font-weight: 500;
@@ -566,7 +566,7 @@ body {
     margin-bottom: 5px;
 }
 
-.card-item__cvvBand {
+.card-item__cvcBand {
     height: 45px;
     background: #fff;
     margin-bottom: 30px;
@@ -582,14 +582,14 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-    .card-item__cvvBand {
+    .card-item__cvcBand {
         height: 40px;
         margin-bottom: 20px;
     }
 }
 
 @media screen and (max-width: 360px) {
-    .card-item__cvvBand {
+    .card-item__cvcBand {
         margin-bottom: 15px;
     }
 }
