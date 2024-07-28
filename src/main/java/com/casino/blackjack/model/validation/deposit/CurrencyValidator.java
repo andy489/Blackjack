@@ -11,7 +11,8 @@ public class CurrencyValidator implements ConstraintValidator<Currency, String> 
 
     @Override
     public boolean isValid(String currency, ConstraintValidatorContext context) {
-
+        currency = currency.replaceAll(",", "");
+        System.out.println(currency);
         return currency.matches(CURRENCY_PATTERN);
     }
 }

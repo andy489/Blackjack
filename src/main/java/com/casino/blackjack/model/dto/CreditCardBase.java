@@ -8,11 +8,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 @Getter
 @Setter
 @Accessors(chain = true)
+@ToString
 public abstract class CreditCardBase {
 
     @NotBlank(message = "{constraint.not.blank}")

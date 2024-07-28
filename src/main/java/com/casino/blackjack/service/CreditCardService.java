@@ -2,7 +2,9 @@ package com.casino.blackjack.service;
 
 import com.casino.blackjack.model.dto.CreditCardDTO;
 import com.casino.blackjack.model.entity.CreditCardEntity;
+import com.casino.blackjack.model.entity.RoleEntity;
 import com.casino.blackjack.model.entity.UserEntity;
+import com.casino.blackjack.model.enumerated.UserRoleEnum;
 import com.casino.blackjack.model.view.CreditCardsManageView;
 import com.casino.blackjack.repo.CreditCardRepository;
 import com.casino.blackjack.service.auth.UserService;
@@ -10,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -122,10 +125,51 @@ public class CreditCardService {
         List<CreditCardEntity> byOwnerId = creditCardRepository.findByOwnerId(ownerId);
 
         return byOwnerId.stream().map(c ->
-                        new CreditCardsManageView().setCardNumber(c.getCardNumber())
+                        new CreditCardsManageView().setId(c.getId())
+                                .setCardNumber(c.getCardNumber())
                                 .setCardHolder(c.getCardHolder())
                                 .setExpiredYear(c.getExpiredYear())
                                 .setExpiredMonth(c.getExpiredMonth()))
                 .toList();
+    }
+
+    public Boolean isOwner(Long cardId, Long userId) {
+        return isOwner(creditCardRepository.findById(cardId).orElse(null), userId);
+    }
+
+    private boolean isOwner(CreditCardEntity creditCardEntity, Long userId) {
+        if (creditCardEntity == null || userId == null) {
+            // anonymous users have not registered any credit cards
+            // missing creditCard is meaningless
+            return false;
+        }
+
+        Optional<UserEntity> byId = userService.findById(userId);
+
+        if (byId.isEmpty()) {
+            throw new IllegalStateException("anonymous user");
+        }
+
+        UserEntity userEntity = byId.get();
+
+        if (isAdmin(userEntity)) {
+            // all admins own all offers
+            return true;
+        }
+
+        return Objects.equals(
+                creditCardEntity.getOwner().getId(),
+                userEntity.getId());
+    }
+
+    private Boolean isAdmin(UserEntity userEntity) {
+        return userEntity.getRoles().stream()
+                .map(RoleEntity::getRole)
+                .anyMatch(r -> UserRoleEnum.ADMIN == r);
+    }
+
+    @Transactional
+    public void deleteCard(Long cardId) {
+        creditCardRepository.deleteById(cardId);
     }
 }

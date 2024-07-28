@@ -21,10 +21,10 @@ body {
     text-align: center;
 }
 
-
 .card-container {
     background-color: lightgrey;
-    margin: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
     border-radius: 0.4em;
 
     display: flex;
@@ -52,9 +52,8 @@ img {
 }
 
 .card-btn {
-    margin: auto 0 auto auto;
-    text-align: right;
-    padding-right: 0.8em;
+    margin: auto;
+    padding-right: 1em;
 }
 
 .card-num {
@@ -76,31 +75,23 @@ img {
     font-weight: bold;
 }
 
-.btn-success {
-    margin-bottom: 1em;
-    background-color: forestgreen;
-    border-color: forestgreen;
-}
-
-.btn-success:hover {
-    margin-bottom: 1em;
-    background-color: whitesmoke;
-    border-color: forestgreen;
-    color: forestgreen;
-}
-
 .add-card-btn {
+    display: inline-block;
+    width: 100%;
     background-color: var(--dark-gray);
-    margin: 1em;
+    color: lightgrey;
     border-radius: 0.4em;
     padding: 0.8em;
-    border: 2px solid var(--dark-gray);
+    border: 1px solid var(--dark-gray);
+    text-decoration: none;
 }
 
 .add-card-btn:hover {
-    filter: brightness(118%);
+    /*filter: brightness(118%);*/
+    background-color: lightgrey;
+    color: var(--dark-gray);
     cursor: pointer;
-    border: 2px solid var(--dark-gray);
+    border: 1px solid var(--dark-gray);
 }
 
 .card-logo-wrapper {
@@ -121,4 +112,9 @@ img {
 
 .valid {
     color: forestgreen;
+}
+
+.no-card-msg{
+    color: red;
+    font-size: 2em;
 }

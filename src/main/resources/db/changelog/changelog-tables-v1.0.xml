@@ -20,7 +20,7 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="card_cvc" type="INT">
+            <column name="card_cvc" type="VARCHAR(15)">
                 <constraints nullable="false"/>
             </column>
             <column name="card_holder" type="VARCHAR(255)">

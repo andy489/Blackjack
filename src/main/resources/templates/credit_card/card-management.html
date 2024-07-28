@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Card Management</title>
+    <title th:text="#{card.man.tab.title}">Card Management</title>
     <th:block th:insert="~{fragment/common::head}"></th:block>
 
 </head>
@@ -15,15 +15,21 @@
     <div class="container-card-manage rounded mt-4">
 
         <div>
-            <span class="fs-4">Card Management</span>
+            <span class="fs-4" th:text="#{card.man.page.title}">Credit Card Management</span>
+        </div>
+
+        <div th:if="${cards.size() == 0}">
+            <div class="card-container">
+                <span class="m-auto p-5 no-card-msg" th:text="#{card.man.not.yet}">No credit cards registered yet</span>
+            </div>
         </div>
 
         <div class="card-container" th:each="c: ${cards}" th:object="${c}">
-            <div class="card-template-holder">
+            <div class="card-template-holder col-3">
                 <img th:src="@{/images/credit_card/template.png}" alt="card_template" src=""/>
             </div>
 
-            <div class="card-data">
+            <div class="card-data col-3">
                 <div class="card-num" th:text="*{getCardNumberPartlyHidden()}">
                     1234 56XX XXXX 7890
                 </div>
@@ -35,37 +41,52 @@
                 <div class="card-date col-12">
                     <span th:text="${c.getExpiredMonthAndYear()}">09/2032</span>
                     <span th:unless="${c.notExpired()}"
-                          class="expired">
+                          class="expired" th:text="'(' + #{card.man.expired} + ')'">
                         (expired)
                     </span>
                     <span th:if="${c.notExpired()}"
-                          class="valid">
+                          class="valid" th:text="'(' + #{card.man.valid} + ')'">
                         (valid)
                     </span>
                 </div>
             </div>
 
-            <div class="card-logo-wrapper">
+            <div class="card-logo-wrapper col-3">
                 <img class="card-logo-img"
                      th:src="@{${'/images/credit_card/type_logo/' + c.getTypeLogo() + '.png'}}" alt="card_logo"
                      src="">
             </div>
 
-            <div class="card-btn">
-                <div class="btn btn-success">
-                    Deposit
+            <div class="card-btn col-3">
+                <div>
+                    <form th:method="get"
+                          th:action="@{/credit-card/deposit/{cardNumber}(cardNumber=*{cardNumber})}">
+
+                        <button class="btn btn-outline-success w-50"
+                                th:text="#{card.man.deposit}">
+                            Deposit
+                        </button>
+                    </form>
                 </div>
 
-                <div class="btn btn-outline-secondary">
-                    Delete
+                <div class="mt-3">
+                    <form th:method="delete"
+                          th:action="@{/credit-card/{cardId}(cardId=*{id})}">
+
+                        <button class="btn btn-outline-danger w-50"
+                                th:text="#{card.man.delete}">
+                            Delete
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <div class="add-card-btn">
-            <span>Add new card</span>
+        <div class="">
+            <a class="add-card-btn" th:href="@{/credit-card/register}" th:text="#{card.man.add.new}">
+                Add new card
+            </a>
         </div>
-
     </div>
 </div>
 

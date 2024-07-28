@@ -802,12 +802,7 @@ body {
 }
 
 .card-management-btn {
-    border-radius: 0.6em;
-}
-
-.card-management-btn {
-    text-decoration: none;
-    color: var(--btn-blue);
+    font-weight: bold !important;
 }
 
 .card-management-btn:hover {

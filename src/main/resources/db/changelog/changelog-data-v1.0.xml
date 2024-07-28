@@ -63,7 +63,7 @@
             <column header="card_holder" name="card_holder" type="STRING"/>
             <column header="expired_month" name="expired_month" type="NUMERIC"/>
             <column header="expired_year" name="expired_year" type="NUMERIC"/>
-            <column header="card_cvc" name="card_cvc" type="NUMERIC"/>
+            <column header="card_cvc" name="card_cvc" type="STRING"/>
             <column header="owner_id" name="owner_id" type="NUMERIC"/>
         </loadData>
     </changeSet>

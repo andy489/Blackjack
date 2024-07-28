@@ -40,8 +40,9 @@
                     Make a deposit from an already used card or make a new one
                 </div>
 
+                <!-- th:field does not work with th:select-->
                 <div class="card-input">
-                    <select th:field="*{cardNumber}"
+                    <select name="cardNumber"
                             th:errorclass="'is-invalid'"
                             id="select-card" class="card-input__input">
                         <option hidden readonly selected value=""
@@ -49,6 +50,7 @@
                             Select Card
                         </option>
                         <option th:each="c: ${registered_credit_cards}"
+                                th:selected="${c.getCardNumber()} == ${cardNumber}"
                                 th:value="${c.getCardNumber()}"
                                 th:text="${c.getCardNumberPartlyHidden()} +
                                 ' (' + ${c.getTypeDisplay()} + ' | ' + #{cc.dep.form.expired} + ': ' + ${c.getValidThru()} + ')'">
@@ -57,8 +59,9 @@
                     </select>
                     <span class="invalid-feedback alert alert-danger fs-6 p-1">
                         <span th:if="${#fields.errors('cardNumber').size() > 0}"
-                              th:text="${#fields.errors('cardNumber').get(0)}">
-
+                              th:text="${#fields.errors('cardNumber').get(0).endsWith('expired')?
+                              #fields.errors('cardNumber').get(1) :
+                              #fields.errors('cardNumber').get(0)}">
                         </span>
                     </span>
                 </div>

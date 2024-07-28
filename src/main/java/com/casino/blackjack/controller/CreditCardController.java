@@ -8,12 +8,16 @@ import com.casino.blackjack.model.view.CreditCardsManageView;
 import com.casino.blackjack.service.CreditCardService;
 import com.casino.blackjack.service.WalletService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,14 +59,23 @@ public class CreditCardController extends BaseController {
     }
 
     @GetMapping("/deposit")
-    public ModelAndView getDepositForm(@AuthenticationPrincipal CustomUserDetails currentUser,
-                                       ModelAndView mav) {
+    public ModelAndView getDepositForm(@AuthenticationPrincipal CustomUserDetails currentUser, ModelAndView mav,
+                                       Model model) {
 
         List<CreditCardDTO> userRegisteredCreditCards = creditCardService.getRegisteredCreditCards(currentUser.getId());
-
         mav.addObject("registered_credit_cards", userRegisteredCreditCards);
+        mav.addObject("cardNumber", model.getAttribute("cardNumber"));
 
         return super.view("credit_card/deposit-form", mav);
+    }
+
+    @GetMapping("/deposit/{cardNumber}")
+    public ModelAndView getDepositFormFromManagement(@PathVariable("cardNumber") String cardNum,
+                                                     RedirectAttributes redirectAttributes, ModelAndView mav) {
+
+        redirectAttributes.addFlashAttribute("cardNumber", cardNum);
+
+        return super.redirect("/credit-card/deposit", mav);
     }
 
     @PostMapping("/register")
@@ -141,5 +154,22 @@ public class CreditCardController extends BaseController {
         modelAndView.addObject("cards", byOwnerId);
 
         return super.view("credit_card/card-management", modelAndView);
+    }
+
+    @PreAuthorize("@creditCardService.isOwner(#cardId, principal.id)")
+    @DeleteMapping("/{cardId}")
+    public ModelAndView deleteCreditCardByCardId(
+            @AuthenticationPrincipal CustomUserDetails principal,
+            ModelAndView modelAndView,
+            @PathVariable("cardId") Long cardId) {
+
+
+        creditCardService.deleteCard(cardId);
+
+        return super.redirect("/credit-card/manage");
+    }
+
+    private boolean isDataSet(CreditCardDTO creditCardDTO) {
+        return creditCardDTO.getCardCvc() != null;
     }
 }

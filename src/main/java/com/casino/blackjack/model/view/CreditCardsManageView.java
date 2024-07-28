@@ -13,6 +13,8 @@ import static com.casino.blackjack.model.validation.deposit.NotExpiredValidator.
 @Accessors(chain = true)
 public class CreditCardsManageView extends CreditCardBase {
 
+    private Long id;
+
     public String getCardNumber() {
         return super.cardNumber;
     }
